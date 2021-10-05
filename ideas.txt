@@ -1,0 +1,7 @@
+ - Página inicio con mensaje bienvenida y boton a log in o recogida de credenciales.
+ - Una vez registrado, se redirige a recogida de acta conciliar.
+ - Los miembros podrán proponer juegos y horarios.
+ - Un calendario mostrará los eventos por horas.
+ - Una pagina para votar juegos/actividades
+ - Los miembros se pueden enviar misivas.
+ - La pagina tendra musiquita  
