@@ -26,6 +26,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
+                    <%= link_to "Log out", logout_path, method: :delete %>
                         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
                         <li class="nav-item"><a class="nav-link" href="#signup">Contact</a></li>
@@ -40,7 +41,11 @@
                     <div class="text-center">
                         <h1 class="mx-auto my-0 text-uppercase">Bienvenido </h1>
                         <h2 class="text-white-50 mx-auto mt-2 mb-5">Deje atrás aquello que fue, aquello que es, despójese de la felicidad y la amargura que trae para entrar en los terrritorios de la gran aventura.</h2>
-                        <a class="btn btn-primary" href="#about">Presentarse al Guardián</a>
+                        <% if Current.user.present? %>
+                          <a class="btn btn-primary" href="/sign_in">Entrar al Consejo</a>
+                        <% else %>
+                          <a class="btn btn-primary" href="/sign_in">Presentarse al Guardián</a>
+                        <% end %>
                     </div>
                 </div>
             </div>

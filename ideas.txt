@@ -4,4 +4,5 @@
  - Un calendario mostrará los eventos por horas.
  - Una pagina para votar juegos/actividades
  - Los miembros se pueden enviar misivas.
- - La pagina tendra musiquita  
+ - La pagina tendra musiquita
+ - Añadir admin  

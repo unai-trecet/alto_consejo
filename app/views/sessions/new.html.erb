@@ -7,6 +7,7 @@
     <p>
     <%= f.label 'password:'%><br>
     <%= f.password_field :password, id: 'password' %>
+    <%= link_to 'Forgot your password?', password_reset_path %>
     </p>
     <p>
     <%= f.submit 'Log In' %>
