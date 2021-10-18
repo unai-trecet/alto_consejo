@@ -43,7 +43,7 @@ RSpec.describe 'Sessions', type: :request do
 
   describe 'DELETE /logout' do
     it 'removes user id from session' do
-      log_in_user
+      sign_in_user
 
       expect(session[:user_id]).to be_a(Integer)
 

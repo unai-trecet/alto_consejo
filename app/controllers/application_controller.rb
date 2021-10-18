@@ -9,8 +9,7 @@ class ApplicationController < ActionController::Base
 
   def require_user_logged_in!
     if Current.user.nil?
-      redirect_to :sign_in_path,
-                  alert: 'Para acceder, debe identificarse como un miembro del Consejo'
+      redirect_to(sign_in_path, alert: 'Para acceder, debe identificarse como un miembro del Consejo')
     end
   end
 end
