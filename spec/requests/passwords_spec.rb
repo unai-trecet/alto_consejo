@@ -26,7 +26,7 @@ RSpec.describe 'Passwords', type: :request do
   describe 'PATCH /password' do
     context 'when authenticated' do
       let(:password) { '87654321' }
-      let(:user) { User.create(email: 'test2@test.com', password: password, password_confirmation: password) }
+      let(:user) { create(:user, password: password, password_confirmation: password) }
       before { sign_in_user(user) }
 
       context 'with valid input' do

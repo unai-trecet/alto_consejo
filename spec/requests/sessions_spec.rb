@@ -12,8 +12,8 @@ RSpec.describe 'Sessions', type: :request do
   end
 
   describe 'POST /sign_in' do
-    let(:password) { '123456' }
-    let(:user) { User.create(email: 'test2@test.com', password: password, password_confirmation: password) }
+    let(:password) { '12345678' }
+    let(:user) { create(:user, password: password, password_confirmation: password) }
 
     context 'given correct credentials' do
       it 'sets user id in session' do
@@ -30,7 +30,7 @@ RSpec.describe 'Sessions', type: :request do
     end
 
     context 'given incorrect credentials' do
-      let(:wrong_password) { '12345' }
+      let(:wrong_password) { '123456789' }
 
       it 'renders new without setting session' do
         post '/sign_in', params: { email: user.email, password: wrong_password }

@@ -13,7 +13,7 @@ RSpec.describe 'Registrations', type: :request do
   describe 'POST /sign_up' do
     context 'correct params' do
       let(:valid_params) do
-        { user: { email: 'test1@test.com', password: '123456', password_confirmation: '123456' } }
+        { user: { email: 'test1@test.com', password: '12345678', password_confirmation: '12345678' } }
       end
 
       it 'creates a new user' do
@@ -39,11 +39,7 @@ RSpec.describe 'Registrations', type: :request do
     context 'incorrect params' do
       # we pass an invalid email
       let(:invalid_params) do
-<<<<<<< HEAD
         { user: { email: 'test1#test.com', password: '123456', password_confirmation: '123456' } }
-=======
-        { user: { email: 'test1#test.com', password: '123456' } }
->>>>>>> 1c1fcc7c3875b77a593467776e8a26aa6009e16d
       end
 
       it 'renders new template without creating an user' do
