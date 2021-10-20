@@ -14,6 +14,7 @@ RSpec.configure do |config|
   end
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
+
   config.include Helpers::AuthenticationHelper, type: :request
 
   config.include FactoryBot::Syntax::Methods
@@ -32,5 +33,5 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
-  end  
+  end
 end
