@@ -43,6 +43,7 @@ Rails.application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   # This line let us to use expect(...).to have_enqueued_job.on_queue('mailers')
   config.active_job.queue_adapter = :test
