@@ -1,3 +1,7 @@
+*= require bootstrap
+*= require_tree .
+*= require_self
+
 @charset "UTF-8";
 /*!
 * Start Bootstrap - Grayscale v7.0.3 (https://startbootstrap.com/theme/grayscale)

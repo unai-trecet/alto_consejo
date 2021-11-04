@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'pages/index'
   root to: 'pages#index'
 
+  get 'consejo', to: 'pages#main_menu'
+
   get 'sign_up', to: 'registrations#new'
   post 'sign_up', to: 'registrations#create'
 

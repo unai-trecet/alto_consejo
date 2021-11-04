@@ -1,9 +1,9 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: db
-  username: postgres
-  password: password
+  host: localhost
+  username: postgres 
+  password: 12345678
   pool: 5
 
 development:
@@ -14,3 +14,16 @@ development:
 test:
   <<: *default
   database: alto_consejo_test
+
+
+
+
+
+
+
+
+
+
+
+
+
