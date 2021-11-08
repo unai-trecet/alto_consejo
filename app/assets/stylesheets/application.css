@@ -1,6 +1,4 @@
-*= require bootstrap
-*= require_tree .
-*= require_self
+@import "bootstrap";
 
 @charset "UTF-8";
 /*!
