@@ -17,9 +17,6 @@ import "@fortawesome/fontawesome-free/css/all";
 
 import "./styles/application.scss";
 
-import('./sidebar');
-
-
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
