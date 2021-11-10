@@ -92,6 +92,7 @@ GEM
     diff-lcs (1.4.4)
     e2mmap (0.1.0)
     erubi (1.10.0)
+    eventmachine (1.2.7)
     eventmachine (1.2.7-x64-mingw32)
     factory_bot (6.2.0)
       activesupport (>= 5.0.0)
@@ -100,6 +101,7 @@ GEM
       railties (>= 5.0.0)
     faker (2.19.0)
       i18n (>= 1.6, < 2)
+    ffi (1.15.4)
     ffi (1.15.4-x64-mingw32)
     globalid (0.5.2)
       activesupport (>= 5.0)
@@ -141,6 +143,8 @@ GEM
       ruby2_keywords (~> 0.0.1)
     nio4r (2.5.8)
     nokogiri (1.12.5-x64-mingw32)
+      racc (~> 1.4)
+    nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     parallel (1.21.0)
     parser (3.0.2.0)
@@ -224,13 +228,15 @@ GEM
       rubocop-ast (>= 1.12.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.12.0)
+    rubocop-ast (1.13.0)
       parser (>= 3.0.1.1)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     sassc (2.4.0-x64-mingw32)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -287,9 +293,6 @@ GEM
     thor (1.1.0)
     tilt (2.0.10)
     timecop (0.9.4)
-    turbolinks (5.2.1)
-      turbolinks-source (~> 5.2)
-    turbolinks-source (5.2.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2021.5)
@@ -333,7 +336,7 @@ DEPENDENCIES
   mailcatcher
   pg
   pry
-  puma (~> 5.0)
+  puma
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.4, >= 6.1.4.1)
   rails-controller-testing
@@ -344,11 +347,10 @@ DEPENDENCIES
   shoulda-matchers (~> 5.0)
   solargraph
   timecop
-  turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)
   webdrivers
-  webpacker (~> 5.0)
+  webpacker
 
 RUBY VERSION
    ruby 3.0.2p107
