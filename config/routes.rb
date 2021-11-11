@@ -1,23 +1,43 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'pages/index'
   root to: 'pages#index'
 
+  devise_for :admins,
+             path: 'admin_auth',
+             path_names: {
+               sign_in: 'login',
+               sign_out: 'logout',
+               password: 'secret',
+               confirmation: 'verification',
+               registration: 'register',
+               sign_up: 'cmon_let_me_in'
+             },
+             controllers: {
+               confirmations: 'admins/confirmations',
+               passwords: 'admins/passwords',
+               registrations: 'admins/registrations',
+               sessions: 'admins/sessions'
+             }
+
+  devise_for :users,
+             path: 'auth',
+             path_names: {
+               sign_in: 'login',
+               sign_out: 'logout',
+               password: 'secret',
+               confirmation: 'verification',
+               registration: 'register',
+               sign_up: 'cmon_let_me_in'
+             },
+             controllers: {
+               confirmations: 'users/confirmations',
+               passwords: 'users/passwords',
+               registrations: 'users/registrations',
+               sessions: 'users/sessions'
+             }
+
+  get 'pages/index'
+
   get 'consejo', to: 'pages#main_menu'
-
-  get 'sign_up', to: 'registrations#new'
-  post 'sign_up', to: 'registrations#create'
-
-  get 'sign_in', to: 'sessions#new'
-  post 'sign_in', to: 'sessions#create', as: 'log_in'
-  delete 'logout', to: 'sessions#destroy'
-
-  get 'password', to: 'passwords#edit', as: 'edit_password'
-  patch 'password', to: 'passwords#update'
-
-  get 'password/reset', to: 'password_resets#new'
-  post 'password/reset', to: 'password_resets#create'
-  get 'password/reset/edit', to: 'password_resets#edit'
-  patch 'password/reset/edit', to: 'password_resets#update'
 end
