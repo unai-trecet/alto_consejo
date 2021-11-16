@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @game.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @game.description %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @game.author %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @game.user_id %>
+</p>
+
+<p>
+  <strong>Bbg link:</strong>
+  <%= @game.bbg_link %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <%= @game.image %>
+</p>
+
+<%= link_to 'Edit', edit_game_path(@game) %> |
+<%= link_to 'Back', games_path %>
