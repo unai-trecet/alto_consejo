@@ -15,8 +15,6 @@ RSpec.configure do |config|
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-  config.include Helpers::AuthenticationHelper, type: :request
-
   config.include FactoryBot::Syntax::Methods
 
   config.before(:suite) do
@@ -34,4 +32,9 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
+  config.include Devise::Test::IntegrationHelpers, type: :feature
+  config.include Devise::Test::IntegrationHelpers, type: :request
 end

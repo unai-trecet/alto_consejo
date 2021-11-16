@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root to: 'pages#index'
+  root to: 'pages#dashboard'
+  get 'dashboard', to: 'pages#dashboard'
+
+  get 'welcome', to: 'pages#welcome'
 
   devise_for :admins,
              path: 'admin_auth',
@@ -36,8 +39,4 @@ Rails.application.routes.draw do
                registrations: 'users/registrations',
                sessions: 'users/sessions'
              }
-
-  get 'pages/index'
-
-  get 'consejo', to: 'pages#main_menu'
 end

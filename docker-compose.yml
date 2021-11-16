@@ -15,10 +15,10 @@ services:
       - "3000:3000"
     depends_on:
       - db
-  #   links:
-  #     - mailcatcher
-  # mailcatcher:
-  #   image: schickling/mailcatcher
-  #   ports:
-  #     - "1080:1080"
-  #     - "1025:1025"
+    links:
+      - mailcatcher
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "1080:1080"
+      - "1025:1025"

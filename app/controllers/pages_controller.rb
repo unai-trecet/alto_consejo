@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  def index; end
+  skip_before_action :authenticate_user!, only: :welcome
 
-  def main_menu; end
+  def welcome; end
+
+  def dashboard; end
 end
