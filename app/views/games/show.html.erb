@@ -1,34 +1,49 @@
-<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @game.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @game.description %>
-</p>
-
-<p>
-  <strong>Author:</strong>
-  <%= @game.author %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @game.user_id %>
-</p>
-
-<p>
-  <strong>Bbg link:</strong>
-  <%= @game.bbg_link %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= @game.image %>
-</p>
-
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+      <div class="form-group mb-3">
+    <p><strong>Name:</strong></p>
+    <div>
+      <%= @game.name %>
+    </div>
+  </div>
+  
+      <div class="form-group mb-3">
+    <p><strong>Description:</strong></p>
+    <div>
+      <%= @game.description %>
+    </div>
+  </div>
+  
+      <div class="form-group mb-3">
+    <p><strong>Author:</strong></p>
+    <div>
+      <%= @game.author %>
+    </div>
+  </div>
+  
+      <div class="form-group mb-3">
+    <p><strong>User:</strong></p>
+    <div>
+      <%= @game.user_id %>
+    </div>
+  </div>
+  
+      <div class="form-group mb-3">
+    <p><strong>Bbg link:</strong></p>
+    <div>
+      <%= @game.bbg_link %>
+    </div>
+  </div>
+  
+      <div class="form-group mb-3">
+    <p><strong>Image:</strong></p>
+    <div>
+      <%= @game.image %>
+    </div>
+  </div>
+  
+  
+  <%= link_to 'Edit', edit_game_path(@game), class: "btn btn-primary min-width-btn" %>
+  <%= link_to 'Back', games_path, class: "btn btn-light min-width-btn" %>
+</div>
