@@ -7,17 +7,17 @@ RSpec.describe 'games/index', type: :view do
                name: 'Name',
                description: 'Description',
                author: '',
-               user: nil,
+               user: build(:user),
                bbg_link: 'MyText',
-               image: 'MyText'
+               image: 'MyImage'
              ),
              Game.create!(
                name: 'Name',
                description: 'Description',
                author: '',
-               user: nil,
+               user: build(:user),
                bbg_link: 'MyText',
-               image: 'MyText'
+               image: 'MyImage'
              )
            ])
   end

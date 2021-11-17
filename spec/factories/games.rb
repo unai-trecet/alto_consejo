@@ -3,7 +3,7 @@ FactoryBot.define do
     name { 'MyString' }
     description { 'MyString' }
     author { '' }
-    user { nil }
+    user { create(:user) }
     bbg_link { 'MyText' }
     image { 'MyText' }
   end
