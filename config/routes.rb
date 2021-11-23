@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'welcome', to: 'pages#welcome'
 
+  get 'autocomplete', to: 'pages#autocomplete'
+
   devise_for :admins,
              path: 'admin_auth',
              path_names: {

@@ -20,6 +20,9 @@ import "./styles/application.scss";
 
 import('./admin');
 
+import { autocompleteSearch } from './autocomplete';
+
+autocompleteSearch();
 
 Rails.start()
 // Turbolinks.start()
