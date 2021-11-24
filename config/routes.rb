@@ -43,4 +43,5 @@ Rails.application.routes.draw do
              }
 
   resources :games
+  resources :matches
 end

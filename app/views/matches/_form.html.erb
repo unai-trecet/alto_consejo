@@ -1,0 +1,57 @@
+<%= form_with(model: match) do |form| %>
+  <% if match.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(match.errors.count, "error") %> prohibited this match from being saved:</h2>
+
+      <ul>
+        <% match.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group mb-3">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_area :title, class:"form-control" %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, class:"form-control" %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= form.label :user_id %>
+    <%= form.collection_select :user_id, User.all, :id, :name, { prompt: true }, { class: "form-select" }  %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= form.label :game_id %>
+    <%= form.collection_select :game_id, Game.all, :id, :name, { prompt: true }, { class: "form-select" }  %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= form.label :location, class: "form-label" %>
+    <%= form.text_area :location, class:"form-control" %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= form.label :number_of_players, class: "form-label" %>
+    <%= form.number_field :number_of_players, class:"form-control" %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= form.label :start_at, class: "form-label" %>
+    <%= form.datetime_select :start_at, class:"form-control" %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= form.label :end_at, class: "form-label" %>
+    <%= form.datetime_select :end_at, class:"form-control" %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>
