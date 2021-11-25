@@ -13,16 +13,23 @@ import "jquery";
 
 window.bootstrap = require("bootstrap");
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
 import "@fortawesome/fontawesome-free/css/all";
 
 import "./styles/application.scss";
 
 import('./admin');
 
-import { autocompleteSearch } from './autocomplete';
+// import { autocompleteSearch } from './autocomplete';
+// autocompleteSearch();
 
-autocompleteSearch();
+require("flatpickr")
+import flatpickr from "flatpickr";
+
+$("#match_start_at, #match_end_at").flatpickr({
+  enableTime: true,
+  dateFormat: "F, d Y H:i"
+});
+
 
 Rails.start()
 // Turbolinks.start()

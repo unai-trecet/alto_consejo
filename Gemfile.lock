@@ -304,6 +304,9 @@ GEM
     thor (1.1.0)
     tilt (2.0.10)
     timecop (0.9.4)
+    turbolinks (5.2.1)
+      turbolinks-source (~> 5.2)
+    turbolinks-source (5.2.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2021.5)
@@ -362,6 +365,7 @@ DEPENDENCIES
   shoulda-matchers (~> 5.0)
   solargraph
   timecop
+  turbolinks (~> 5.2.0)
   tzinfo-data
   web-console (>= 4.1.0)
   webdrivers
