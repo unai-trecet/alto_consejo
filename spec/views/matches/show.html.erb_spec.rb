@@ -1,18 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe "matches/show", type: :view do
+RSpec.describe 'matches/show', type: :view do
   before(:each) do
     @match = assign(:match, Match.create!(
-      title: "MyText",
-      description: "MyText",
-      user: nil,
-      game: nil,
-      location: "MyText",
-      number_of_players: 2
-    ))
+                              title: 'MyText',
+                              description: 'MyText',
+                              user: nil,
+                              game: nil,
+                              location: 'MyText',
+                              number_of_players: 2
+                            ))
   end
 
-  it "renders attributes in <p>" do
+  it 'renders attributes in <p>' do
     render
     expect(rendered).to match(/MyText/)
     expect(rendered).to match(/MyText/)
