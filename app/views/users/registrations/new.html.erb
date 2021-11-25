@@ -11,9 +11,14 @@
           <%= form_for(resource, as: resource_name, url: registration_path(resource_name), class: "auth-form auth-signup-form") do |f| %>
             <%= render "users/shared/error_messages", resource: resource %>
 
+            <div class="field username mb-3">
+              <%= f.label :username,  class: "sr-only" %><br />
+              <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "form-control", placeholder: "Username", required: true %>
+            </div>
+
             <div class="field email mb-3">
               <%= f.label :email,  class: "sr-only" %><br />
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control signup-email", placeholder: "Email", required: true %>
+              <%= f.email_field :email, autocomplete: "email", class: "form-control signup-email", placeholder: "Email", required: true %>
             </div>
 
             <div class="field password mb-3">
