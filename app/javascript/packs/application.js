@@ -19,8 +19,8 @@ import "./styles/application.scss";
 
 import('./admin');
 
-// import { autocompleteSearch } from './autocomplete';
-// autocompleteSearch();
+import { autocompleteSearch } from './autocomplete';
+autocompleteSearch();
 
 require("flatpickr")
 import flatpickr from "flatpickr";
