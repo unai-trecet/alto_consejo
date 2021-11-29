@@ -44,4 +44,5 @@ Rails.application.routes.draw do
 
   resources :games
   resources :matches
+  resources :users, only: %i[index]
 end
