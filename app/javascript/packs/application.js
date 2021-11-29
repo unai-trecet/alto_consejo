@@ -10,6 +10,7 @@ import Rails from "@rails/ujs";
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import "jquery";
+import "jquery-ui";
 
 window.bootstrap = require("bootstrap");
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -19,11 +20,12 @@ import "./styles/application.scss";
 
 import('./admin');
 
-import { autocompleteSearch } from './autocomplete';
-autocompleteSearch();
+// import { autocompleteSearch } from './autocomplete';
+// autocompleteSearch();
+
+import './autocompleteUsername';
 
 require("flatpickr")
-import flatpickr from "flatpickr";
 
 $("#match_start_at, #match_end_at").flatpickr({
   enableTime: true,

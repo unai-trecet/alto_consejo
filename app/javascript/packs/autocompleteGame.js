@@ -5,7 +5,7 @@ const renderItem = function (item) {
   return `<div class="autocomplete-suggestion" data-val="${item.name}"><span>${item.name}</span></div>`
 };
 
-const autocompleteSearch = function() {
+const autocompleteGameSearch = function() {
   const names = JSON.parse(document.getElementById('search-data').dataset.names)
   var searchInput = document.getElementById('game_name');
 
@@ -31,4 +31,4 @@ const autocompleteSearch = function() {
   }
 };
 
-export { autocompleteSearch };
+export { autocompleteGameSearch };
