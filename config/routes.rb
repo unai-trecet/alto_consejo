@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'match_participants/create'
+  get 'match_participants/destroy'
   root to: 'pages#dashboard'
   get 'dashboard', to: 'pages#dashboard'
 
