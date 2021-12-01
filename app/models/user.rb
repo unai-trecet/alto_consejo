@@ -8,4 +8,6 @@ class User < ApplicationRecord
          :confirmable, :trackable
 
   validates :email, :username, presence: true, uniqueness: true
+
+  has_many :notifications, as: :recipient
 end
