@@ -9,6 +9,6 @@ class PagesController < ApplicationController
 
   def autocomplete
     names = AutocompleteGameName.new(params[:q]).call
-    render json: { names: names }
+    render json: names
   end
 end

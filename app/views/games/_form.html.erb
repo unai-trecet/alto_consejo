@@ -13,7 +13,7 @@
 
   <%= form.hidden_field :user_id, value: current_user.id %>
 
-  <div id="search-data" class="form-group search-data mb-3" data-names="<%= @names.to_json %>">
+  <div id="search-name" class="form-group search-data mb-3" data-names="<%= @names.to_json %>">
     <%= form.label :name, class: "form-label" %>
     <%= form.text_field :name, autocomplete: :off, class: "form-control search-input", placeholder: "" %>
   </div>

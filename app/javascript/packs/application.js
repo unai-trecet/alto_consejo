@@ -24,6 +24,7 @@ import('./admin');
 // autocompleteSearch();
 
 import './autocompleteUsername';
+import './autocompleteGameName';
 
 require("flatpickr")
 
