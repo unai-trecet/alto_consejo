@@ -1,115 +1,229 @@
 require 'rails_helper'
 
 RSpec.describe '/matches', type: :request do
-  let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+  let(:user) { create(:user, :confirmed) }
+  let(:game) { create(:game) }
+
+  let(:valid_params) do
+    {
+      title: 'Testing matches',
+      description: 'I hope they pass.',
+      user_id: user.id,
+      game_id: game.id,
+      location: 'my place',
+      number_of_players: 3,
+      start_at: '2021-11-24 18:09:43',
+      end_at: '2021-11-24 18:09:43'
+    }
   end
 
-  let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+  def set_params(params = {})
+    valid_params.merge(params)
+  end
+
+  let(:invalid_params) do
+    {
+      title: '',
+      description: 'I hope they pass.',
+      user: create(:user),
+      game: create(:game),
+      location: 'my place',
+      number_of_players: 5,
+      start_at: '2021-11-24 18:09:43',
+      end_at: '2021-11-24 18:09:43'
+    }
   end
 
   describe 'GET /index' do
-    it 'renders a successful response' do
-      Match.create! valid_attributes
+    def call_action
       get matches_url
-      expect(response).to be_successful
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    context 'user authenticated' do
+      before { sign_in(user) }
+
+      it 'renders a successful response' do
+        Match.create! valid_params
+
+        call_action
+
+        expect(response).to be_successful
+      end
     end
   end
 
   describe 'GET /show' do
-    it 'renders a successful response' do
-      match = Match.create! valid_attributes
+    def call_action(match = create(:match))
       get match_url(match)
-      expect(response).to be_successful
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    context 'user authenticated' do
+      before { sign_in(user) }
+
+      it 'renders a successful response' do
+        call_action
+        expect(response).to be_successful
+        expect(response).to render_template(:show)
+      end
     end
   end
 
   describe 'GET /new' do
-    it 'renders a successful response' do
+    def call_action
       get new_match_url
-      expect(response).to be_successful
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    context 'user authenticated' do
+      before { sign_in(user) }
+
+      it 'renders a successful response' do
+        call_action
+
+        expect(response).to be_successful
+        expect(response).to render_template(:new)
+      end
     end
   end
 
   describe 'GET /edit' do
-    it 'render a successful response' do
-      match = Match.create! valid_attributes
+    def call_action(match = create(:match, valid_params))
       get edit_match_url(match)
-      expect(response).to be_successful
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    context 'user authenticated' do
+      before { sign_in(user) }
+
+      it 'render a successful response' do
+        call_action
+
+        expect(response).to be_successful
+        expect(response).to render_template(:edit)
+      end
     end
   end
 
   describe 'POST /create' do
-    context 'with valid parameters' do
-      it 'creates a new Match' do
-        expect do
-          post matches_url, params: { match: valid_attributes }
-        end.to change(Match, :count).by(1)
-      end
-
-      it 'redirects to the created match' do
-        post matches_url, params: { match: valid_attributes }
-        expect(response).to redirect_to(match_url(Match.last))
-      end
+    let(:invited_users) { build_list(:user, 2) }
+    let(:valid_params_with_usernames) do
+      set_params({ usernames: "@#{invited_users.first.username} @#{invited_users.last.username}" })
     end
 
-    context 'with invalid parameters' do
-      it 'does not create a new Match' do
-        expect do
-          post matches_url, params: { match: invalid_attributes }
-        end.to change(Match, :count).by(0)
+    def call_action(params = valid_params_with_usernames)
+      post matches_url, params: { match: params }
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    context 'user authenticated' do
+      before { sign_in(user) }
+
+      context 'with valid parameters' do
+        it 'creates a new Match' do
+          expect do
+            call_action(valid_params_with_usernames)
+          end.to change(Match, :count).by(1)
+        end
+
+        it 'redirects to the created match' do
+          call_action(valid_params_with_usernames)
+
+          expect(response).to redirect_to(match_url(Match.last))
+        end
       end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
-        post matches_url, params: { match: invalid_attributes }
-        expect(response).to be_successful
+      context 'with invalid parameters' do
+        it 'does not create a new Match' do
+          expect do
+            call_action(invalid_params)
+          end.to change(Match, :count).by(0)
+        end
+
+        it "renders a successful response (i.e. to display the 'new' template)" do
+          call_action(invalid_params)
+
+          expect(response).to render_template(:new)
+          expect(response).to have_http_status(422)
+        end
       end
     end
   end
 
   describe 'PATCH /update' do
-    context 'with valid parameters' do
-      let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
-      end
+    let(:match) { create(:match, set_params({ title: 'Old title' })) }
 
-      it 'updates the requested match' do
-        match = Match.create! valid_attributes
-        patch match_url(match), params: { match: new_attributes }
-        match.reload
-        skip('Add assertions for updated state')
-      end
-
-      it 'redirects to the match' do
-        match = Match.create! valid_attributes
-        patch match_url(match), params: { match: new_attributes }
-        match.reload
-        expect(response).to redirect_to(match_url(match))
-      end
+    def call_action(params = valid_params)
+      patch match_url(match), params: { match: params }
     end
 
-    context 'with invalid parameters' do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
-        match = Match.create! valid_attributes
-        patch match_url(match), params: { match: invalid_attributes }
-        expect(response).to be_successful
+    it_behaves_like 'not_logged_in'
+
+    context 'user authenticated' do
+      before { sign_in(user) }
+
+      context 'with valid parameters' do
+        let(:new_params) do
+          set_params({ title: 'New title' })
+        end
+
+        it 'updates the requested match' do
+          expect(match.title).to eq('Old title')
+
+          call_action(new_params)
+
+          match.reload
+          expect(match.title).to eq('New title')
+        end
+
+        it 'redirects to the match' do
+          call_action(new_params)
+
+          match.reload
+          expect(response).to redirect_to(match_url(match))
+        end
+      end
+
+      context 'with invalid parameters' do
+        it "renders a successful response (i.e. to display the 'edit' template)" do
+          call_action(invalid_params)
+
+          expect(response).to render_template(:edit)
+          expect(response).to have_http_status(422)
+        end
       end
     end
   end
 
   describe 'DELETE /destroy' do
-    it 'destroys the requested match' do
-      match = Match.create! valid_attributes
-      expect do
-        delete match_url(match)
-      end.to change(Match, :count).by(-1)
+    let!(:match) { create(:match, valid_params) }
+
+    def call_action
+      delete match_url(match)
     end
 
-    it 'redirects to the matches list' do
-      match = Match.create! valid_attributes
-      delete match_url(match)
-      expect(response).to redirect_to(matches_url)
+    it_behaves_like 'not_logged_in'
+
+    context 'user authenticated' do
+      before { sign_in(user) }
+
+      it 'destroys the requested match' do
+        expect do
+          call_action
+        end.to change(Match, :count).from(1).to(0)
+      end
+
+      it 'redirects to the matches list' do
+        call_action
+
+        expect(response).to redirect_to(matches_url)
+      end
     end
   end
 end
