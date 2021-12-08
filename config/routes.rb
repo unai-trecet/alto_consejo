@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'match_participants/create'
-  get 'match_participants/destroy'
   root to: 'pages#dashboard'
   get 'dashboard', to: 'pages#dashboard'
 
@@ -47,4 +45,5 @@ Rails.application.routes.draw do
   resources :games
   resources :matches
   resources :users, only: %i[index]
+  resources :match_participants, only: %i[create destroy]
 end
