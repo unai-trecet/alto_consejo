@@ -23,6 +23,8 @@ class MatchesController < ApplicationController
 
     respond_to do |format|
       if @match.save
+        MatchInvitation.with(match: Match.last).deliver(User.where(username: usernames))
+
         format.html { redirect_to @match, notice: 'Match was successfully created.' }
         format.json { render :show, status: :created, location: @match }
       else
@@ -65,5 +67,9 @@ class MatchesController < ApplicationController
   def match_params
     params.require(:match).permit(:title, :description, :user_id, :game_id, :location, :number_of_players, :start_at,
                                   :end_at)
+  end
+
+  def usernames
+    usernames = params['match']['usernames']&.gsub('@', '').split
   end
 end

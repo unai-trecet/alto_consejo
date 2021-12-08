@@ -31,3 +31,6 @@
 
 en:
   hello: "Hello world"
+  notifications:
+    match_invitacion:
+      message: ''

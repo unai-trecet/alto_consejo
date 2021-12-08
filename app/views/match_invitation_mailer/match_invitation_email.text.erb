@@ -1,0 +1,32 @@
+Has sido invitado/a a una partida, <%= @recipient.username %>!</h1>
+
+La partida ha sido organizada por: <%= @match.user.username %>.<br>
+Aquí tienes toda la información:
+
+<%= @match.title %>
+  
+Description:
+<%= @match.description %>
+  
+Organizador:
+<%= @match.user.username %>
+  
+Juego:
+<%= @match.game.name %>
+  
+Lugar:
+<%= @match.location %>
+  
+Número de jugadores:
+<%= @match.number_of_players %>
+  
+Día y hora de inicio:
+<%= @match.start_at %>
+  
+Terminaría:
+<%= @match.end_at %>
+
+Para aceptar la invitación. por favor pulsa: <%= @url %>.
+
+Pasadlo genial!
+
