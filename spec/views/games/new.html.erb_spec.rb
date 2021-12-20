@@ -1,15 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'games/new', type: :view do
+  let(:user) { create(:user, :confirmed) }
+
   before(:each) do
-    assign(:game, Game.new(
-                    name: 'MyString',
-                    description: 'MyString',
-                    author: '',
-                    user: build(:user),
-                    bbg_link: 'MyText',
-                    image: 'MyImage'
-                  ))
+    sign_in user
+    assign(:game, Game.new)
   end
 
   it 'renders new game form' do

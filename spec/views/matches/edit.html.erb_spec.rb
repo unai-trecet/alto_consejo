@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'matches/edit', type: :view do
+  let(:user) { create(:user, :confirmed) }
+
   before(:each) do
-    @match = assign(:match, Match.create!(
-                              title: 'MyText',
-                              description: 'MyText',
-                              user: nil,
-                              game: nil,
-                              location: 'MyText',
-                              number_of_players: 1
-                            ))
+    sign_in user
+    @match = assign(:match, create(:match,
+                                   title: 'MyText',
+                                   description: 'MyText',
+                                   location: 'MyText',
+                                   number_of_players: 1))
   end
 
   it 'renders the edit match form' do
@@ -22,7 +22,7 @@ RSpec.describe 'matches/edit', type: :view do
 
       assert_select 'input[name=?]', 'match[user_id]'
 
-      assert_select 'input[name=?]', 'match[game_id]'
+      assert_select 'select[name=?]', 'match[game_id]'
 
       assert_select 'textarea[name=?]', 'match[location]'
 

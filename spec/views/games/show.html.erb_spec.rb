@@ -1,15 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe 'games/show', type: :view do
+  let(:user) { create(:user, :confirmed) }
+
   before(:each) do
-    @game = assign(:game, Game.create!(
-                            name: 'Name',
-                            description: 'Description',
-                            author: '',
-                            user: build(:user),
-                            bbg_link: 'MyText',
-                            image: 'MyImage'
-                          ))
+    sign_in user
+    @game = assign(:game, create(:game,
+                                 name: 'Name',
+                                 description: 'Description',
+                                 author: '',
+                                 bbg_link: 'MyText',
+                                 image: 'MyImage'))
   end
 
   it 'renders attributes in <p>' do

@@ -24,6 +24,7 @@
 
         <div class="form-group mb-3">
           <%= form.label :game_id %>
+
             <%= form.collection_select :game_id, Game.all, :id, :name, { prompt: true }, { class: "form-select" } %>
         </div>
 

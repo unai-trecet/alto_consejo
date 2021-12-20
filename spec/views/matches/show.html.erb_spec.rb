@@ -2,14 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'matches/show', type: :view do
   before(:each) do
-    @match = assign(:match, Match.create!(
-                              title: 'MyText',
-                              description: 'MyText',
-                              user: nil,
-                              game: nil,
-                              location: 'MyText',
-                              number_of_players: 2
-                            ))
+    @match = assign(:match, create(:match,
+                                   title: 'MyText',
+                                   description: 'MyText',
+                                   location: 'MyText',
+                                   number_of_players: 2))
   end
 
   it 'renders attributes in <p>' do

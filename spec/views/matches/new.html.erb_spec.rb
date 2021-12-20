@@ -1,15 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'matches/new', type: :view do
+  let(:user) { create(:user, :confirmed) }
+
   before(:each) do
-    assign(:match, Match.new(
-                     title: 'MyText',
-                     description: 'MyText',
-                     user: nil,
-                     game: nil,
-                     location: 'MyText',
-                     number_of_players: 1
-                   ))
+    sign_in user
+    assign(:match, Match.new)
   end
 
   it 'renders new match form' do
@@ -22,7 +18,7 @@ RSpec.describe 'matches/new', type: :view do
 
       assert_select 'input[name=?]', 'match[user_id]'
 
-      assert_select 'input[name=?]', 'match[game_id]'
+      assert_select 'select[name=?]', 'match[game_id]'
 
       assert_select 'textarea[name=?]', 'match[location]'
 

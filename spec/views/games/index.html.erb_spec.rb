@@ -3,32 +3,29 @@ require 'rails_helper'
 RSpec.describe 'games/index', type: :view do
   before(:each) do
     assign(:games, [
-             Game.create!(
-               name: 'Name',
-               description: 'Description',
-               author: '',
-               user: build(:user),
-               bbg_link: 'MyText',
-               image: 'MyImage'
-             ),
-             Game.create!(
-               name: 'Name',
-               description: 'Description',
-               author: '',
-               user: build(:user),
-               bbg_link: 'MyText',
-               image: 'MyImage'
-             )
+             create(:game,
+                    name: 'Name',
+                    description: 'Description',
+                    author: '',
+                    bbg_link: 'MyText',
+                    image: 'MyImage'),
+             create(:game,
+                    name: 'Name 2',
+                    description: 'Description',
+                    author: '',
+                    bbg_link: 'MyText',
+                    image: 'MyImage')
            ])
   end
 
   it 'renders a list of games' do
     render
-    assert_select 'tr>td', text: 'Name'.to_s, count: 2
-    assert_select 'tr>td', text: 'Description'.to_s, count: 2
-    assert_select 'tr>td', text: ''.to_s, count: 2
-    assert_select 'tr>td', text: nil.to_s, count: 2
-    assert_select 'tr>td', text: 'MyText'.to_s, count: 2
-    assert_select 'tr>td', text: 'MyText'.to_s, count: 2
+
+    assert_select 'tr>td', text: 'Name', count: 1
+    assert_select 'tr>td', text: 'Name 2', count: 1
+    assert_select 'tr>td', text: 'Description', count: 2
+    assert_select 'tr>td', text: '', count: 2
+    assert_select 'tr>td', text: 'MyText', count: 2
+    assert_select 'tr>td', text: 'MyText', count: 2
   end
 end

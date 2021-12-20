@@ -1,15 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'games/edit', type: :view do
+  let(:user) { create(:user, :confirmed) }
+
   before(:each) do
-    @game = assign(:game, Game.create!(
-                            name: 'MyString',
-                            description: 'MyString',
-                            author: '',
-                            user: build(:user),
-                            bbg_link: 'MyText',
-                            image: 'MyImage'
-                          ))
+    sign_in user
+    @game = assign(:game, create(:game))
   end
 
   it 'renders the edit game form' do
