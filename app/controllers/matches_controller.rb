@@ -23,7 +23,7 @@ class MatchesController < ApplicationController
 
     respond_to do |format|
       if @match.save
-        MatchInvitation.with(match: Match.last).deliver(User.where(username: usernames))
+        MatchInvitation.with(match: @match).deliver(User.where(username: usernames))
 
         format.html { redirect_to @match, notice: 'Match was successfully created.' }
         format.json { render :show, status: :created, location: @match }

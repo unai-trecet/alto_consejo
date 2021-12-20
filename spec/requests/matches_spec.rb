@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe '/matches', type: :request do
   let(:user) { create(:user, :confirmed) }
-  let(:game) { create(:game) }
+  let(:game) { create(:game, user: user) }
 
   let(:valid_params) do
     {
@@ -25,7 +25,7 @@ RSpec.describe '/matches', type: :request do
     {
       title: '',
       description: 'I hope they pass.',
-      user: create(:user),
+      user: user,
       game: create(:game),
       location: 'my place',
       number_of_players: 5,
@@ -111,7 +111,7 @@ RSpec.describe '/matches', type: :request do
   end
 
   describe 'POST /create' do
-    let(:invited_users) { build_list(:user, 2) }
+    let(:invited_users) { create_list(:user, 2) }
     let(:valid_params_with_usernames) do
       set_params({ usernames: "@#{invited_users.first.username} @#{invited_users.last.username}" })
     end
@@ -123,13 +123,23 @@ RSpec.describe '/matches', type: :request do
     it_behaves_like 'not_logged_in'
 
     context 'user authenticated' do
-      before { sign_in(user) }
+      before do
+        sign_in(user)
+      end
 
       context 'with valid parameters' do
-        it 'creates a new Match' do
+        it 'creates a new Match notifying invited users' do
+          invited_users
+          ActionMailer::Base.deliveries.clear
+
+          expect(MatchInvitation).to receive(:with).and_call_original
           expect do
             call_action(valid_params_with_usernames)
           end.to change(Match, :count).by(1)
+
+          expect(ActionMailer::Base.deliveries.count).to eq(invited_users.count)
+          expect(ActionMailer::Base.deliveries.map{ |el| el.to.join }).
+            to match_array(invited_users.pluck(:email))
         end
 
         it 'redirects to the created match' do
