@@ -6,7 +6,7 @@ class MatchInvitationMailer < ApplicationMailer
   def match_invitation_email
     @match = params[:match]
     @recipient = params[:recipient]
-    @url = params[:url]
+    @url = match_participants_url(match_id: params[:match].id, user_id: @recipient.id)
 
     mail(to: @recipient.email, subject: 'Has sido invitado/a a una partida!')
   end

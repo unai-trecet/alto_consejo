@@ -26,7 +26,8 @@ Día y hora de inicio:
 Terminaría:
 <%= @match.end_at %>
 
-Para aceptar la invitación. por favor pulsa: <%= @url %>.
+Para aceptar la invitación. por favor pulsa <%= button_to('aquí', @url, method: :post, form: {target: '_blank'}) %>
+
 
 Pasadlo genial!
 

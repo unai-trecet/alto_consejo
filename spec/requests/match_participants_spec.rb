@@ -26,7 +26,9 @@ RSpec.describe 'MatchParticipants', type: :request do
           call_action
         end.to change(MatchParticipant, :count).from(0).to(1)
 
-        expect(response).to have_http_status(:success)
+        match = MatchParticipant.last.match
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(match_path(match))
       end
 
       it 'return fail status when match_participant could not be created' do
@@ -34,7 +36,8 @@ RSpec.describe 'MatchParticipants', type: :request do
           call_action(set_params({ user_id: nil }))
         end.not_to change(MatchParticipant, :count)
 
-        expect(response).to have_http_status(422)
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to redirect_to(root_path)
       end
     end
   end

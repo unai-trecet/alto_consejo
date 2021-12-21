@@ -23,6 +23,6 @@ class MatchInvitation < Noticed::Base
   end
 
   def url
-    match_path(params[:match])
+    match_participants_url(match_id: params[:match].id, user_id: recipient.id)
   end
 end
