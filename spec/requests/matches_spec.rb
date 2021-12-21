@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe '/matches', type: :request do
@@ -138,8 +140,8 @@ RSpec.describe '/matches', type: :request do
           end.to change(Match, :count).by(1)
 
           expect(ActionMailer::Base.deliveries.count).to eq(invited_users.count)
-          expect(ActionMailer::Base.deliveries.map{ |el| el.to.join }).
-            to match_array(invited_users.pluck(:email))
+          expect(ActionMailer::Base.deliveries.map { |el| el.to.join })
+            .to match_array(invited_users.pluck(:email))
         end
 
         it 'redirects to the created match' do
