@@ -7,6 +7,7 @@ ruby '3.0.2'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 
 gem 'active_model_serializers'
+gem 'awesome_print'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise'
