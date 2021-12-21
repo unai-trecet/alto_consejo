@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MatchInvitationMailer < ApplicationMailer
   default from: 'altoconsejo@gmail.com'
 

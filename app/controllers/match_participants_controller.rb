@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MatchParticipantsController < ApplicationController
   before_action :set_match_participant, only: :destroy
 

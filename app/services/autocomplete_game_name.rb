@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AutocompleteGameName
   include HTTParty
   base_uri 'https://www.boardgamegeek.com'
