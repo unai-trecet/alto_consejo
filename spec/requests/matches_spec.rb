@@ -132,9 +132,8 @@ RSpec.describe '/matches', type: :request do
       context 'with valid parameters' do
         it 'creates a new Match notifying invited users' do
           invited_users
-          ActionMailer::Base.deliveries.clear
+          expect_any_instance_of(ManageMatchParticipants).to receive(:call).and_call_original
 
-          expect(MatchInvitation).to receive(:with).and_call_original
           expect do
             call_action(valid_params_with_usernames)
           end.to change(Match, :count).by(1)

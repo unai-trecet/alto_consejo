@@ -8,10 +8,12 @@ class MatchParticipantsController < ApplicationController
     @match_paticipant = MatchParticipant.new(match_participant_params)
     respond_to do |format|
       if @match_paticipant.save
-        format.html { redirect_to match_path(@match_paticipant.match), notice: 'Te has inscrito con éxito en la partida!' }
+        format.html do
+          redirect_to match_path(@match_paticipant.match), notice: 'Te has inscrito con éxito en la partida!'
+        end
         format.json { render :show, status: :created, location: @match_paticipant.game }
       else
-        format.html { redirect_toredirect_to root_path, status: :unprocessable_entity }
+        format.html { redirect_to root_path, status: :unprocessable_entity }
         format.json { render json: @match_paticipant.errors, status: :unprocessable_entity }
       end
     end
