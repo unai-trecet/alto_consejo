@@ -26,10 +26,10 @@ class MatchesController < ApplicationController
     respond_to do |format|
       if @match.save
         ManageMatchParticipants.new(
-            creator: params[:creator_participates], 
-            invited_usernames: usernames, 
-            match: @match
-          ).call
+          creator_id: params['match']['creator_participates'],
+          invited_usernames: usernames,
+          match: @match
+        ).call
 
         format.html { redirect_to @match, notice: 'Match was successfully created.' }
         format.json { render :show, status: :created, location: @match }
@@ -76,6 +76,6 @@ class MatchesController < ApplicationController
   end
 
   def usernames
-    usernames = params['match']['usernames']&.gsub('@', '').split
+    params['match']['usernames']&.gsub('@', '').split
   end
 end

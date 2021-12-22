@@ -13,7 +13,7 @@ class MatchParticipantsController < ApplicationController
         end
         format.json { render :show, status: :created, location: @match_paticipant.game }
       else
-        format.html { redirect_to root_path, status: :unprocessable_entity }
+        format.html { redirect_to root_path, error: @match_paticipant.errors }
         format.json { render json: @match_paticipant.errors, status: :unprocessable_entity }
       end
     end

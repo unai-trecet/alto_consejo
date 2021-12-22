@@ -124,28 +124,27 @@ RSpec.describe '/matches', type: :request do
 
     it_behaves_like 'not_logged_in'
 
-    context 'user authenticated' do
+    context 'useauthenticated' do
       before do
         sign_in(user)
       end
 
       context 'with valid parameters' do
         it 'creates a new Match notifying invited users' do
-          invited_users
+          valid_params_with_usernmames_and_creator = set_params({ 'usernames' => "@#{invited_users.first.username} @#{invited_users.last.username}",
+                                                                  'creator_participates' => user.id })
+
           expect_any_instance_of(ManageMatchParticipants).to receive(:call).and_call_original
 
           expect do
-            call_action(valid_params_with_usernames)
+            call_action(valid_params_with_usernmames_and_creator)
           end.to change(Match, :count).by(1)
+                                      .and change(MatchParticipant, :count).from(0).to(1)
 
           expect(ActionMailer::Base.deliveries.count).to eq(invited_users.count)
           expect(ActionMailer::Base.deliveries.map { |el| el.to.join })
             .to match_array(invited_users.pluck(:email))
-        end
-
-        it 'redirects to the created match' do
-          call_action(valid_params_with_usernames)
-
+          expect(MatchParticipant.last.user).to eq(user)
           expect(response).to redirect_to(match_url(Match.last))
         end
       end

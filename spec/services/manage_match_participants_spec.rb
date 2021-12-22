@@ -10,7 +10,9 @@ RSpec.describe ManageMatchParticipants do
     context 'with creator participating in the match' do
       subject do
         described_class
-          .new(creator: creator, invited_usernames: invited_usernames, match: match)
+          .new(creator_id: creator.id,
+               invited_usernames: invited_usernames,
+               match: match)
       end
 
       it 'triggers invited users notifications' do

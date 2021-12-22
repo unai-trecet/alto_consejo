@@ -36,7 +36,7 @@ RSpec.describe 'MatchParticipants', type: :request do
           call_action(set_params({ user_id: nil }))
         end.not_to change(MatchParticipant, :count)
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(root_path)
       end
     end

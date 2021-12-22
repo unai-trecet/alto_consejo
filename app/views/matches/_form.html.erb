@@ -34,7 +34,7 @@
         </div>
 
         <div class="form-group mb-3">
-          <%= form.check_box :creator_participates, { checked: true }, current_user.username, nil %>
+          <%= form.check_box :creator_participates, { checked: true }, current_user.id, nil %>
           <%= form.label :creator_participates, class: "form-check-label", for: "match_creator_participation" %>
         </div>
 

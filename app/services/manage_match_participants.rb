@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ManageMatchParticipants
-  def initialize(invited_usernames:, match:, creator: nil)
-    @creator = creator
+  def initialize(invited_usernames:, match:, creator_id: nil)
+    @creator = User.find_by(id: creator_id)
     @invited_usernames = invited_usernames
     @match = match
   end
