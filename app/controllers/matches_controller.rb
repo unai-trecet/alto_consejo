@@ -25,9 +25,11 @@ class MatchesController < ApplicationController
 
     respond_to do |format|
       if @match.save
-        ManageMatchParticipants
-          .new(creator: params[:invite_creator], invited_usernames: usernames, match: @match)
-          .call
+        ManageMatchParticipants.new(
+            creator: params[:creator_participates], 
+            invited_usernames: usernames, 
+            match: @match
+          ).call
 
         format.html { redirect_to @match, notice: 'Match was successfully created.' }
         format.json { render :show, status: :created, location: @match }

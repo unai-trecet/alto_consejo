@@ -34,6 +34,11 @@
         </div>
 
         <div class="form-group mb-3">
+          <%= form.check_box :creator_participates, { checked: true }, current_user.username, nil %>
+          <%= form.label :creator_participates, class: "form-check-label", for: "match_creator_participation" %>
+        </div>
+
+        <div class="form-group mb-3">
           <%= form.label :description, class: "form-label" %>
             <%= form.text_area :description, class:"form-control" %>
         </div>
