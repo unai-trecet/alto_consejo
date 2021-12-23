@@ -5,7 +5,13 @@ class PagesController < ApplicationController
 
   def welcome; end
 
-  def dashboard; end
+  def dashboard
+    @games = current_user.games
+    @organised_matches = current_user.matches
+    @played_participations = current_user.participations.played
+    @not_played_participations = current_user.participations.not_played
+    @notification = current_user.notifications
+  end
 
   def autocomplete
     names = AutocompleteGameName.new(params[:q]).call

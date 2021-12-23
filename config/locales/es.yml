@@ -29,11 +29,15 @@
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
 
-en:
-  hello: "Hello world"
+es:
+  hello: "Hola mundo"
   notifications:
     match_invitacion:
       message: ''
-  dashboard:
-    overview: 'Overview'
-    played_games: 'Played games'
+  pages:
+    dashboard:
+      overview: 'Resumen'
+      played_games: 'Partidas jugadas'
+    sidebar:
+      overview: 'Resumen'
+      matches: 'Partidas'
