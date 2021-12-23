@@ -5,4 +5,7 @@ class Match < ApplicationRecord
   belongs_to :game
 
   validates :title, :start_at, :end_at, presence: true
+
+  scope :played, -> { where('end_at < ?', DateTime.now) }
+  scope :not_played, -> { where('end_at > ?', DateTime.now) }
 end
