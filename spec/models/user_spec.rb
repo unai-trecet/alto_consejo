@@ -10,4 +10,8 @@ RSpec.describe User, type: :model do
   it { should validate_uniqueness_of(:username) }
 
   it { should have_many(:notifications) }
+  it { should have_many(:games) }
+  it { should have_many(:matches) }
+  it { should have_many(:match_participants) }
+  it { should have_many(:participations) }
 end
