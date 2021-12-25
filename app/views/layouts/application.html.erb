@@ -21,19 +21,23 @@
   </head>
 
   <body class="app">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= render partial: 'navigation/sidebar' %>
-    <div class="app-wrapper">
-
-      <div class="app-content pt-3 p-md-3 p-lg-4">
-        <div class="container-xl">
-          <%= yield %>
+    <header class="app-header fixed-top">
+      <%= render partial: 'navigation/sidebar' %>
+      <%= render partial: 'navigation/header_menu' %>
+    </header><!--//app-header-->
+      <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+          <div class="container-xl">
+            <!-- <p class="notice"><%= notice %></p>
+             <p class="alert"><%= alert %></p> %> -->
+            
+            <%= yield %>
+          </div>
         </div>
+        <%= render partial: 'navigation/footer' %>
+        <!--//app-footer-->     
       </div>
-      <%= render partial: 'navigation/footer' %>
-      <!--//app-footer-->     
-    </div>
+    
   </body>
 
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
