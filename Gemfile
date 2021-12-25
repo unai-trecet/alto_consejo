@@ -35,6 +35,7 @@ group :development do
   gem 'rubocop'
   gem 'solargraph'
   gem 'web-console', '>= 4.1.0'
+  gem 'brakeman'
 end
 
 group :test do
