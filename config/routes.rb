@@ -46,4 +46,5 @@ Rails.application.routes.draw do
   resources :matches
   resources :users, only: %i[index]
   resources :match_participants, only: %i[create destroy]
+  resources :notifications, only: %i[index show]
 end

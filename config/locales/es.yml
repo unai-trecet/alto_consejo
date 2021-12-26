@@ -35,9 +35,14 @@ es:
     match_invitacion:
       message: ''
   pages:
+    portal: 'Alto Consejo' 
     dashboard:
       overview: 'Resumen'
       played_games: 'Partidas jugadas'
     sidebar:
       overview: 'Resumen'
       matches: 'Partidas'
+      games: 'Juegos'
+      players: 'Jugadores'
+      notifications: 'Notificaciones'
+      calendar: 'Calendario'
