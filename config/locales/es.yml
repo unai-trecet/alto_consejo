@@ -31,9 +31,6 @@
 
 es:
   hello: "Hola mundo"
-  notifications:
-    match_invitacion:
-      message: ''
   pages:
     portal: 'Alto Consejo' 
     dashboard:
@@ -46,3 +43,20 @@ es:
       players: 'Jugadores'
       notifications: 'Notificaciones'
       calendar: 'Calendario'
+  notifications:
+    actions:
+      index:
+        message: 'Mensaje'
+        type: 'Tipo'
+        url: 'Enlace'
+        created: 'Creada el'
+        read: 'Leída el'
+      show:
+    match_invitation_notification:
+      message: 'Invitatión a una partida'
+  activerecord:
+    models:
+        
+    attributes:
+      notification:
+        recipient: ''

@@ -2,8 +2,8 @@
 
 # To deliver this notification:
 #
-# MatchInvitacion.with(post: @post).deliver_later(current_user)
-# MatchInvitacion.with(post: @post).deliver(current_user)
+# MatchInvitationNotification.with(post: @post).deliver_later(current_user)
+# MatchInvitationNotification.with(post: @post).deliver(current_user)
 
 class MatchInvitationNotification < Noticed::Base
   # Add your delivery methods
@@ -23,6 +23,10 @@ class MatchInvitationNotification < Noticed::Base
   end
 
   def url
-    match_participants_url(match_id: params[:match].id, user_id: recipient.id)
+    match_url(id: params[:match].id)
+  end
+
+  def self.human_name
+    I18n.t('notifications.match_invitation_notification')
   end
 end

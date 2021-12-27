@@ -2,9 +2,9 @@
 
 FactoryBot.define do
   factory :notification do
-    recipient { nil }
-    type { '' }
-    params { '' }
+    recipient { create(:user) }
+    type { 'MatchInvitationNotification' }
+    params { { match: create(:match).attributes } }
     read_at { '2021-12-01 17:47:54' }
   end
 end
