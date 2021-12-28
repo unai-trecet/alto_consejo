@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'notifications/show', type: :view do
   before(:each) do
-    @notification = assign(:notification, Notification.create!)
+    @notification = assign(:notification, create(:notification, :match_invitation_notification))
   end
 
   it 'renders attributes in <p>' do
