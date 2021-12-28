@@ -1,0 +1,8 @@
+<div class="container-fluid">
+  <h1><%= t('.profile_edit')%></h1>
+
+  <%= render 'form', user: @user %>
+
+  <%= link_to 'Show', @user, class: "btn btn-light min-width-btn" %> |
+  <%= link_to 'Back', matches_path, class: "btn btn-light min-width-btn" %>
+</div>

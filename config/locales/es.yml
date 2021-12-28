@@ -36,6 +36,8 @@ es:
       default: "%d/%m/%Y %H:%M:%S"
       long: "%a, %-d %b %Y %H:%M:%S +%H%M"
       short: "%b %d"
+  custom_errors:
+    unauthorized: 'No estás autorizado a realizar esa acción.'
   pages:
     portal: 'Alto Consejo' 
     dashboard:
@@ -58,6 +60,14 @@ es:
     show:
       notification: 'Notificación'
       details: 'Ver detalles'
+      photo: 'Foto'
+      username: 'Nombre de usuario'
+      email: 'Correo electrónico'
+    edit:
+      profile_edit: 'Editar perfil'
+
+    update:
+      user_changed: 'Datos de usuario cambiados con éxito'
     match_invitation_notification:
       message: 'Has sido invitado/a a una partida organizada por @%{organizer}'
   users:
