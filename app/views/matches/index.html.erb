@@ -30,8 +30,8 @@
             <td><%= match.start_at %></td>
             <td><%= match.end_at %></td>
             <td><%= link_to 'Show', match %></td>
-          <td><%= link_to 'Edit', edit_match_path(match) %></td>
-          <td><%= link_to 'Destroy', match, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to('Edit', edit_match_path(match)) if current_user == match.user %></td>
+          <td><%= link_to('Destroy', match, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == match.user  %></td>
         </tr>
       <% end %>
     </tbody>

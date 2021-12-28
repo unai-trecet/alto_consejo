@@ -109,6 +109,16 @@ RSpec.describe '/matches', type: :request do
         expect(response).to be_successful
         expect(response).to render_template(:edit)
       end
+
+      it 'redirects to root if current user is not the creator' do
+        another_user = create(:user, :confirmed)
+        match = create(:match, user: another_user)
+
+        call_action(match)
+
+        expect(response).to redirect_to(root_path)
+        expect(flash[:error]).to eq('No estás autorizado a realizar esa acción.')
+      end
     end
   end
 
@@ -124,7 +134,7 @@ RSpec.describe '/matches', type: :request do
 
     it_behaves_like 'not_logged_in'
 
-    context 'useauthenticated' do
+    context 'user authenticated' do
       before do
         sign_in(user)
       end
@@ -190,13 +200,22 @@ RSpec.describe '/matches', type: :request do
 
           match.reload
           expect(match.title).to eq('New title')
+          expect(response).to redirect_to(match_url(match))
         end
 
-        it 'redirects to the match' do
+        it 'redirects to root if current user is not the creator' do
+          sign_out(user)
+          another_user = create(:user, :confirmed)
+          sign_in(another_user)
+
+          expect(match.title).to eq('Old title')
+
           call_action(new_params)
 
           match.reload
-          expect(response).to redirect_to(match_url(match))
+          expect(match.title).to eq('Old title')
+          expect(flash[:error]).to eq('No estás autorizado a realizar esa acción.')
+          expect(response).to redirect_to(root_path)
         end
       end
 

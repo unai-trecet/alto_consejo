@@ -2,6 +2,7 @@
 
 class MatchesController < ApplicationController
   before_action :set_match, only: %i[show edit update destroy]
+  before_action :require_permission, only: %i[edit update destroy]
 
   # GET /matches or /matches.json
   def index
@@ -77,5 +78,11 @@ class MatchesController < ApplicationController
 
   def usernames
     params['match']['usernames']&.gsub('@', '').split
+  end
+
+  def require_permission
+    return if current_user == @match.creator
+
+    redirect_to root_path, flash: { error: t('custom_errors.unauthorized') }
   end
 end

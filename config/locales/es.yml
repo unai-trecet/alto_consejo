@@ -63,6 +63,7 @@ es:
       photo: 'Foto'
       username: 'Nombre de usuario'
       email: 'Correo electrónico'
+      manage_profile: 'Gestionar perfil'
     edit:
       profile_edit: 'Editar perfil'
 
