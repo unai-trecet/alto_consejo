@@ -31,11 +31,11 @@ group :development, :test do
 end
 
 group :development do
+  gem 'brakeman'
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'rubocop'
   gem 'solargraph'
   gem 'web-console', '>= 4.1.0'
-  gem 'brakeman'
 end
 
 group :test do

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe "/notifications", type: :request do
+RSpec.describe '/notifications', type: :request do
   let(:user) { create(:user, :confirmed) }
 
   let(:valid_attributes) do
@@ -12,11 +12,11 @@ RSpec.describe "/notifications", type: :request do
       read_at: nil }
   end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     valid_attributes.merge(recipient: nil)
-  }
+  end
 
-  describe "GET /index" do
+  describe 'GET /index' do
     def call_action
       get notifications_url
     end
@@ -26,7 +26,7 @@ RSpec.describe "/notifications", type: :request do
     context 'authenticated' do
       before { sign_in(user) }
 
-      it "renders only notifications belong current_user" do
+      it 'renders only notifications belong current_user' do
         match1 = create(:match, user: create(:user, username: 'darklidia'))
         match2 = create(:match, user: create(:user, username: 'tempestus'))
 
@@ -44,13 +44,11 @@ RSpec.describe "/notifications", type: :request do
         expect(response.body).not_to include('Has sido invitado/a a una partida organizada por @mynemesis')
       end
     end
-
   end
 
-  describe "GET /show" do
-
+  describe 'GET /show' do
     let(:notification) do
-      create(:notification, 
+      create(:notification,
              :match_invitation_notification,
              valid_attributes)
     end
@@ -64,14 +62,14 @@ RSpec.describe "/notifications", type: :request do
     context 'authenticated' do
       before { sign_in(user) }
 
-      it "renders a successful response" do
+      it 'renders a successful response' do
         call_action
 
-        expect(response.body).to include("Has sido invitado/a a una partida organizada por @testingnotifications")
+        expect(response.body).to include('Has sido invitado/a a una partida organizada por @testingnotifications')
         expect(response).to be_successful
       end
 
-      it "sets notification as read" do
+      it 'sets notification as read' do
         call_action
 
         notification.reload
@@ -80,7 +78,7 @@ RSpec.describe "/notifications", type: :request do
     end
   end
 
-  describe "DELETE /destroy" do
+  describe 'DELETE /destroy' do
     let!(:notification) { create(:notification, :match_invitation_notification, valid_attributes) }
 
     def call_action
@@ -92,15 +90,15 @@ RSpec.describe "/notifications", type: :request do
     context 'when authenticated' do
       before { sign_in(user) }
 
-      it "destroys the requested notification" do
-        expect {
+      it 'destroys the requested notification' do
+        expect do
           call_action
-        }.to change(Notification, :count).from(1).to(0)
+        end.to change(Notification, :count).from(1).to(0)
       end
-  
-      it "redirects to the notifications list" do
+
+      it 'redirects to the notifications list' do
         call_action
-  
+
         expect(response).to redirect_to(notifications_url)
       end
     end
