@@ -8,8 +8,8 @@ RSpec.describe "/notifications", type: :request do
   let(:valid_attributes) do
     { recipient: user,
       type: 'MatchInvitationNotification',
-      params: { match: create(:match).attributes },
-      read_at: '2021-12-01 17:47:54' }
+      params: { match: create(:match, user: create(:user, username: 'testingnotifications')) },
+      read_at: nil }
   end
 
   let(:invalid_attributes) {
@@ -27,110 +27,82 @@ RSpec.describe "/notifications", type: :request do
       before { sign_in(user) }
 
       it "renders only notifications belong current_user" do
-        create_list(:notification, 2, recipient: user)
-        create(:notification)
+        match1 = create(:match, user: create(:user, username: 'darklidia'))
+        match2 = create(:match, user: create(:user, username: 'tempestus'))
+
+        create(:notification, :match_invitation_notification, params: { match: match1 }, recipient: user)
+        create(:notification, :match_invitation_notification, params: { match: match2 }, recipient: user)
+
+        match3 = create(:match, user: create(:user, username: 'mynemesis'))
+        create(:notification, :match_invitation_notification, params: { match: match3 })
 
         call_action
-        binding.pry
+
         expect(response).to be_successful
+        expect(response.body).to include('Has sido invitado/a a una partida organizada por @darklidia')
+        expect(response.body).to include('Has sido invitado/a a una partida organizada por @tempestus')
+        expect(response.body).not_to include('Has sido invitado/a a una partida organizada por @mynemesis')
       end
     end
 
   end
 
   describe "GET /show" do
-    it "renders a successful response" do
-      notification = Notification.create! valid_attributes
+
+    let(:notification) do
+      create(:notification, 
+             :match_invitation_notification,
+             valid_attributes)
+    end
+
+    def call_action
       get notification_url(notification)
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /new" do
-    it "renders a successful response" do
-      get new_notification_url
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /edit" do
-    it "render a successful response" do
-      notification = Notification.create! valid_attributes
-      get edit_notification_url(notification)
-      expect(response).to be_successful
-    end
-  end
-
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Notification" do
-        expect {
-          post notifications_url, params: { notification: valid_attributes }
-        }.to change(Notification, :count).by(1)
-      end
-
-      it "redirects to the created notification" do
-        post notifications_url, params: { notification: valid_attributes }
-        expect(response).to redirect_to(notification_url(Notification.last))
-      end
     end
 
-    context "with invalid parameters" do
-      it "does not create a new Notification" do
-        expect {
-          post notifications_url, params: { notification: invalid_attributes }
-        }.to change(Notification, :count).by(0)
-      end
+    it_behaves_like 'not_logged_in'
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
-        post notifications_url, params: { notification: invalid_attributes }
+    context 'authenticated' do
+      before { sign_in(user) }
+
+      it "renders a successful response" do
+        call_action
+
+        expect(response.body).to include("Has sido invitado/a a una partida organizada por @testingnotifications")
         expect(response).to be_successful
       end
-    end
-  end
 
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      it "sets notification as read" do
+        call_action
 
-      it "updates the requested notification" do
-        notification = Notification.create! valid_attributes
-        patch notification_url(notification), params: { notification: new_attributes }
         notification.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "redirects to the notification" do
-        notification = Notification.create! valid_attributes
-        patch notification_url(notification), params: { notification: new_attributes }
-        notification.reload
-        expect(response).to redirect_to(notification_url(notification))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
-        notification = Notification.create! valid_attributes
-        patch notification_url(notification), params: { notification: invalid_attributes }
-        expect(response).to be_successful
+        expect(notification.read?).to eq(true)
       end
     end
   end
 
   describe "DELETE /destroy" do
-    it "destroys the requested notification" do
-      notification = Notification.create! valid_attributes
-      expect {
-        delete notification_url(notification)
-      }.to change(Notification, :count).by(-1)
+    let!(:notification) { create(:notification, :match_invitation_notification, valid_attributes) }
+
+    def call_action
+      delete notification_url(notification)
     end
 
-    it "redirects to the notifications list" do
-      notification = Notification.create! valid_attributes
-      delete notification_url(notification)
-      expect(response).to redirect_to(notifications_url)
+    it_behaves_like 'not_logged_in'
+
+    context 'when authenticated' do
+      before { sign_in(user) }
+
+      it "destroys the requested notification" do
+        expect {
+          call_action
+        }.to change(Notification, :count).from(1).to(0)
+      end
+  
+      it "redirects to the notifications list" do
+        call_action
+  
+        expect(response).to redirect_to(notifications_url)
+      end
     end
   end
 end

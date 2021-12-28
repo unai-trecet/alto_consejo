@@ -1,7 +1,8 @@
 <div class="container-fluid">
   <p id="notice"><%= notice %></p>
-
-  
-  <%= link_to 'Edit', edit_notification_path(@notification), class: "btn btn-primary min-width-btn" %>
+  <h3><%= t('.notification') %></h3>
+  <%= @notification.to_notification.message %>
+  <%= link_to(t('.details'), @notification.to_notification.url, class: "btn btn-light min-width-btn") %>
+  <br>
   <%= link_to 'Back', notifications_path, class: "btn btn-light min-width-btn" %>
 </div>

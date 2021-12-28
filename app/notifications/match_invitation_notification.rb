@@ -19,7 +19,7 @@ class MatchInvitationNotification < Noticed::Base
   # Define helper methods to make rendering easier.
   #
   def message
-    t('.message')
+    t('.message', organizer: params[:match].user.username)
   end
 
   def url

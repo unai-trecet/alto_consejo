@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "notifications/index", type: :view do
   before(:each) do
     assign(:notifications, [
-      Notification.create!(),
-      Notification.create!()
+      create(:notification, :match_invitation_notification),
+      create(:notification, :match_invitation_notification)
     ])
   end
 

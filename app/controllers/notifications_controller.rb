@@ -8,6 +8,7 @@ class NotificationsController < ApplicationController
 
   # GET /notifications/1 or /notifications/1.json
   def show
+    @notification.mark_as_read!
   end
 
   # GET /notifications/new
