@@ -47,7 +47,7 @@ RSpec.describe '/matches', type: :request do
       before { sign_in(user) }
 
       it 'renders a successful response' do
-        Match.create! valid_params
+        create(:match, valid_params)
 
         call_action
 

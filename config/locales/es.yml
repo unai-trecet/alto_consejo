@@ -60,6 +60,13 @@ es:
       details: 'Ver detalles'
     match_invitation_notification:
       message: 'Has sido invitado/a a una partida organizada por @%{organizer}'
+  users:
+    index:
+      players: 'Jugadores'
+      username: 'Nombre de ususario'
+      email: 'Correo electrónico'
+      created_matches: 'Partidas organizadas'
+      played_matches: 'Partidas jugadas'
   activerecord:
     models:        
     attributes:
@@ -72,6 +79,10 @@ es:
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
+  
+
+  ## Spanish datetime stuff
+  #
   date:
     abbr_day_names:
     - dom

@@ -44,7 +44,7 @@ Rails.application.routes.draw do
 
   resources :games
   resources :matches
-  resources :users, only: %i[index]
+  resources :users, only: %i[index show]
   resources :match_participants, only: %i[create destroy]
   resources :notifications, only: %i[index show new create destroy]
 end

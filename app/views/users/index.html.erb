@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <p id="notice"><%= notice %></p>
+
+  <h1><%= t('.players') %></h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+          <th><%= t('.username') %></th>
+          <th><%= t('.email') %></th>
+          <th><%= t('.created_matches') %></th>
+          <th><%= t('.played_matches') %></th>
+          <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+            <td><%= link_to(user.username, user) %></td>
+            <td><%= user.email %></td>
+            <td><%= user.matches.count %></td>
+            <td><%= user.played_matches.count %></td>
+            <td><%= link_to 'Show', user %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <%= link_to 'New Match', new_match_path, class: "btn btn-success min-width-btn" %>
+
+</div>
