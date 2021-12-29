@@ -13,5 +13,9 @@ RSpec.describe User, type: :model do
   it { should have_many(:games) }
   it { should have_many(:matches) }
   it { should have_many(:match_participants) }
-  it { should have_many(:participations) }
+  it {
+    should have_many(:participations)
+      .through(:match_participants)
+      .source(:match)
+  }
 end

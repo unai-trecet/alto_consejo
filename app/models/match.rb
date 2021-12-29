@@ -4,6 +4,9 @@ class Match < ApplicationRecord
   belongs_to :user
   belongs_to :game
 
+  has_many :match_participants
+  has_many :participants, through: :match_participants, source: :user
+
   alias_attribute :creator, :user
 
   validates :title, :start_at, :end_at, presence: true
