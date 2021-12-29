@@ -53,16 +53,25 @@
   </div>
 
   <div class="form-group mb-3">
+    <p><strong><%= t('.joined_players') %>:</strong></p>
+    <div>
+      <% @match.participants.each do |participant| %>
+        <%= link_to(participant.username, participant) %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
     <p><strong><%= t('.start_at') %>:</strong></p>
     <div>
-      <%= @match.start_at %>
+      <%= l(@match.start_at, format: :long) %>
     </div>
   </div>
 
   <div class="form-group mb-3">
     <p><strong><%= t('.end_at') %>:</strong></p>
     <div>
-      <%= @match.end_at %>
+      <%= l(@match.end_at, format: :long) %>
     </div>
   </div>
 
