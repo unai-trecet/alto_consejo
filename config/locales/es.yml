@@ -66,7 +66,6 @@ es:
       manage_profile: 'Gestionar perfil'
     edit:
       profile_edit: 'Editar perfil'
-
     update:
       user_changed: 'Datos de usuario cambiados con éxito'
     match_invitation_notification:
@@ -81,6 +80,9 @@ es:
   matches:
     create:
       created: 'La partida ha sido creada con éxito.'
+  match_participants:
+    create:
+      created: 'Te has inscrito con éxito en la partida!'
   activerecord:
     models:        
     attributes:
@@ -88,6 +90,10 @@ es:
         recipient: ''
   activerecord:
     errors:
+      models:
+        match_participant:
+          user:
+            unique_user_and_match: 'Esta participación ya existe'
       messages:
         record_invalid: 'La validación falló: %{errors}'
         restrict_dependent_destroy:

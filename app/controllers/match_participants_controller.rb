@@ -9,11 +9,11 @@ class MatchParticipantsController < ApplicationController
     respond_to do |format|
       if @match_paticipant.save
         format.html do
-          redirect_to match_path(@match_paticipant.match), notice: 'Te has inscrito con éxito en la partida!'
+          redirect_to match_path(@match_paticipant.match), notice: t('.created')
         end
-        format.json { render :show, status: :created, location: @match_paticipant.game }
+        format.json { render :show, status: :created, location: @match_paticipant.match }
       else
-        format.html { redirect_to root_path, error: @match_paticipant.errors }
+        format.html { redirect_to root_path, notice: @match_paticipant.errors.full_messages }
         format.json { render json: @match_paticipant.errors, status: :unprocessable_entity }
       end
     end

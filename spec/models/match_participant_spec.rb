@@ -11,6 +11,7 @@ RSpec.describe MatchParticipant, type: :model do
   it 'validates uniqueness of combined user and match' do
     create(:match_participant)
     should validate_uniqueness_of(:user_id).scoped_to(:match_id)
+                                           .with_message('Esta participación ya existe')
   end
 
   describe 'match_creator' do

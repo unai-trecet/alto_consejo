@@ -29,6 +29,7 @@ RSpec.describe 'MatchParticipants', type: :request do
         match = MatchParticipant.last.match
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(match_path(match))
+        expect(flash[:notice]).to eq('Te has inscrito con éxito en la partida!')
       end
 
       it 'return fail status when match_participant could not be created' do
@@ -38,6 +39,18 @@ RSpec.describe 'MatchParticipants', type: :request do
 
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(root_path)
+      end
+
+      it 'return fail status when match_participant already exists' do
+        create(:match_participant, valid_params)
+
+        expect do
+          call_action
+        end.not_to change(MatchParticipant, :count)
+
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(root_path)
+        expect(flash[:notice]).to eq(['User Esta participación ya existe'])
       end
     end
   end
