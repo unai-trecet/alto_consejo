@@ -2,7 +2,6 @@
 
 require 'rails_helper'
 require 'database_cleaner/active_record'
-Dir[Rails.root.join('spec', 'helpers', '**', '*.rb')].each { |file| require file }
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -35,6 +34,7 @@ RSpec.configure do |config|
 
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
+  config.include Devise::Test::ControllerHelpers, type: :helper
   config.include Devise::Test::IntegrationHelpers, type: :feature
   config.include Devise::Test::IntegrationHelpers, type: :request
 end

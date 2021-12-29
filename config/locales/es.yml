@@ -80,6 +80,20 @@ es:
   matches:
     create:
       created: 'La partida ha sido creada con éxito.'
+    show:
+      title: 'Título'
+      description: 'Descripción'
+      creator: 'Creador'
+      game: 'Juego'
+      location: 'Localización'
+      number_of_players: 'Número dde jugadores'
+      invited_users: 'Jugadores invitados'
+      start_at: 'Empieza'
+      end_at: 'Acaba'
+
+      join: 'Unirme a partida'
+      edit: 'Cambiar partida'
+      back: 'Todas las partidas'
   match_participants:
     create:
       created: 'Te has inscrito con éxito en la partida!'
