@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_211_201_182_002) do
+ActiveRecord::Schema.define(version: 20_211_229_095_330) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -100,6 +100,8 @@ ActiveRecord::Schema.define(version: 20_211_201_182_002) do
     t.datetime 'end_at'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
+    t.string 'invited_users', default: [], array: true
+    t.boolean 'public'
     t.index ['game_id'], name: 'index_matches_on_game_id'
     t.index ['user_id'], name: 'index_matches_on_user_id'
   end

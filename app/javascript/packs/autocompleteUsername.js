@@ -1,7 +1,7 @@
 var usernames = [];
 
-$('#match_usernames').autocomplete({
-  minLength: 3,
+$('#match_invited_users').autocomplete({
+  minLength: 2,
   source: function (request, response) {
     var term = request.term;
 
@@ -30,7 +30,7 @@ $('#match_usernames').autocomplete({
   select: function (event, ui) {
     var terms = split(this.value);
     terms.pop();
-    var selection = '@' + ui.item.value
+    var selection = ui.item.value
 
     if (!this.value.includes(selection)) {
       terms.push(selection);

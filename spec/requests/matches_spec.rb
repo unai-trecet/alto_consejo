@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe '/matches', type: :request do
   let(:user) { create(:user, :confirmed) }
   let(:game) { create(:game, user: user) }
+  let(:invited_users) { create_list(:user, 2) }
 
   let(:valid_params) do
     {
@@ -14,27 +15,22 @@ RSpec.describe '/matches', type: :request do
       game_id: game.id,
       location: 'my place',
       number_of_players: 3,
+      invited_users: "#{invited_users.first.username} #{invited_users.last.username}",
       start_at: '2021-11-24 18:09:43',
-      end_at: '2021-11-24 18:09:43'
+      end_at: '2021-11-24 18:09:43',
+      public: false
     }
+  end
+
+  let(:valid_params_with_creator_participates) do
+    valid_params.merge(creator_participates: user.id)
   end
 
   def set_params(params = {})
     valid_params.merge(params)
   end
 
-  let(:invalid_params) do
-    {
-      title: '',
-      description: 'I hope they pass.',
-      user: user,
-      game: create(:game),
-      location: 'my place',
-      number_of_players: 5,
-      start_at: '2021-11-24 18:09:43',
-      end_at: '2021-11-24 18:09:43'
-    }
-  end
+  let(:invalid_params) { valid_params.merge(title: nil) }
 
   describe 'GET /index' do
     def call_action
@@ -57,7 +53,7 @@ RSpec.describe '/matches', type: :request do
   end
 
   describe 'GET /show' do
-    def call_action(match = create(:match))
+    def call_action(match = create(:match, valid_params))
       get match_url(match)
     end
 
@@ -93,6 +89,65 @@ RSpec.describe '/matches', type: :request do
     end
   end
 
+  describe 'POST /create' do
+    def call_action(params = valid_params_with_creator_participates)
+      post matches_url, params: { match: params }
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    context 'user authenticated' do
+      before do
+        sign_in(user)
+      end
+
+      context 'with valid parameters' do
+        it 'creates a new Match notifying invited users' do
+          expect_any_instance_of(ManageMatchParticipants)
+            .to receive(:call).and_call_original
+
+          expect do
+            call_action
+          end.to change(Match, :count).from(0).to(1)
+                                      .and change(MatchParticipant, :count).from(0).to(1)
+                                                                           .and have_enqueued_job(Noticed::DeliveryMethods::Email).twice
+
+          expect(MatchParticipant.last.user).to eq(user)
+
+          expect(response).to redirect_to(match_url(Match.last))
+          expect(flash[:notice]).to eq('La partida ha sido creada con éxito.')
+
+          created_match = Match.last
+          expect(created_match.title).to eq('Testing matches')
+          expect(created_match.description).to eq('I hope they pass.')
+          expect(created_match.creator).to eq(user)
+          expect(created_match.game).to eq(game)
+          expect(created_match.location).to eq('my place')
+          expect(created_match.number_of_players).to eq(3)
+          expect(created_match.invited_users).to match_array(invited_users.pluck(:username))
+          expect(created_match.start_at).to eq('2021-11-24 18:09:43')
+          expect(created_match.end_at).to eq('2021-11-24 18:09:43')
+          expect(created_match.public).to eq(false)
+        end
+      end
+
+      context 'with invalid parameters' do
+        it 'does not create a new Match' do
+          expect do
+            call_action(invalid_params)
+          end.to change(Match, :count).by(0)
+        end
+
+        it "renders a successful response (i.e. to display the 'new' template)" do
+          call_action(invalid_params)
+
+          expect(response).to render_template(:new)
+          expect(response).to have_http_status(422)
+        end
+      end
+    end
+  end
+
   describe 'GET /edit' do
     def call_action(match = create(:match, valid_params))
       get edit_match_url(match)
@@ -122,64 +177,10 @@ RSpec.describe '/matches', type: :request do
     end
   end
 
-  describe 'POST /create' do
-    let(:invited_users) { create_list(:user, 2) }
-    let(:valid_params_with_usernames) do
-      set_params({ usernames: "@#{invited_users.first.username} @#{invited_users.last.username}" })
-    end
-
-    def call_action(params = valid_params_with_usernames)
-      post matches_url, params: { match: params }
-    end
-
-    it_behaves_like 'not_logged_in'
-
-    context 'user authenticated' do
-      before do
-        sign_in(user)
-      end
-
-      context 'with valid parameters' do
-        it 'creates a new Match notifying invited users' do
-          valid_params_with_usernmames_and_creator = set_params({ 'usernames' => "@#{invited_users.first.username} @#{invited_users.last.username}",
-                                                                  'creator_participates' => user.id })
-
-          expect_any_instance_of(ManageMatchParticipants).to receive(:call).and_call_original
-
-          expect do
-            call_action(valid_params_with_usernmames_and_creator)
-          end.to change(Match, :count).by(1)
-                                      .and change(MatchParticipant, :count).from(0).to(1)
-
-          expect(ActionMailer::Base.deliveries.count).to eq(invited_users.count)
-          expect(ActionMailer::Base.deliveries.map { |el| el.to.join })
-            .to match_array(invited_users.pluck(:email))
-          expect(MatchParticipant.last.user).to eq(user)
-          expect(response).to redirect_to(match_url(Match.last))
-        end
-      end
-
-      context 'with invalid parameters' do
-        it 'does not create a new Match' do
-          expect do
-            call_action(invalid_params)
-          end.to change(Match, :count).by(0)
-        end
-
-        it "renders a successful response (i.e. to display the 'new' template)" do
-          call_action(invalid_params)
-
-          expect(response).to render_template(:new)
-          expect(response).to have_http_status(422)
-        end
-      end
-    end
-  end
-
   describe 'PATCH /update' do
-    let(:match) { create(:match, set_params({ title: 'Old title' })) }
+    let(:match) { create(:match, set_params({ title: 'Old title', invited_users: invited_users.pluck(:username) })) }
 
-    def call_action(params = valid_params)
+    def call_action(params = valid_params_with_creator_participates)
       patch match_url(match), params: { match: params }
     end
 
@@ -189,17 +190,31 @@ RSpec.describe '/matches', type: :request do
       before { sign_in(user) }
 
       context 'with valid parameters' do
+        let!(:another_user) { create(:user, :confirmed, username: 'another_user') }
         let(:new_params) do
-          set_params({ title: 'New title' })
+          set_params({ title: 'New title',
+                       invited_users: "#{valid_params[:invited_users]} another_user",
+                       public: true })
         end
 
         it 'updates the requested match' do
           expect(match.title).to eq('Old title')
+          expect_any_instance_of(ManageMatchParticipants)
+            .to receive(:call).and_call_original
 
-          call_action(new_params)
+          expect do
+            call_action(new_params)
+          end.not_to change(MatchParticipant, :count)
+
+          expect(ActiveJob::Base.queue_adapter.enqueued_jobs.count).to eq(1)
+          expect(ActiveJob::Base.queue_adapter.enqueued_jobs.last['job_class'])
+            .to eq('Noticed::DeliveryMethods::Email')
 
           match.reload
           expect(match.title).to eq('New title')
+          expect(match.invited_users)
+            .to match_array(invited_users.pluck(:username) + ['another_user'])
+          expect(match.public).to eq(true)
           expect(response).to redirect_to(match_url(match))
         end
 

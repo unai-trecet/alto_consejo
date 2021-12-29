@@ -78,6 +78,9 @@ es:
       email: 'Correo electrónico'
       created_matches: 'Partidas organizadas'
       played_matches: 'Partidas jugadas'
+  matches:
+    create:
+      created: 'La partida ha sido creada con éxito.'
   activerecord:
     models:        
     attributes:

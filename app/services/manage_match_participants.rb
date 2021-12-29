@@ -22,6 +22,6 @@ class ManageMatchParticipants
 
   def set_creator_as_participant
     MatchParticipant
-      .create(user_id: @creator.id, match_id: @match.id)
+      .first_or_create(user_id: @creator.id, match_id: @match.id)
   end
 end

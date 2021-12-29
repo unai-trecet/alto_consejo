@@ -28,11 +28,11 @@ class MatchesController < ApplicationController
       if @match.save
         ManageMatchParticipants.new(
           creator_id: params['match']['creator_participates'],
-          invited_usernames: usernames,
+          invited_usernames: @match.invited_users,
           match: @match
         ).call
 
-        format.html { redirect_to @match, notice: 'Match was successfully created.' }
+        format.html { redirect_to @match, notice: t('.created') }
         format.json { render :show, status: :created, location: @match }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,8 +43,16 @@ class MatchesController < ApplicationController
 
   # PATCH/PUT /matches/1 or /matches/1.json
   def update
+    previous_invited_users = @match.invited_users
+
     respond_to do |format|
       if @match.update(match_params)
+        ManageMatchParticipants.new(
+          creator_id: params['match']['creator_participates'],
+          invited_usernames: @match.invited_users - previous_invited_users,
+          match: @match
+        ).call
+
         format.html { redirect_to @match, notice: 'Match was successfully updated.' }
         format.json { render :show, status: :ok, location: @match }
       else
@@ -72,12 +80,15 @@ class MatchesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def match_params
-    params.require(:match).permit(:title, :description, :user_id, :game_id, :location, :number_of_players, :start_at,
-                                  :end_at)
+    permited_params = params.require(:match).permit(:title, :description, :user_id, :game_id,
+                                                    :location, :number_of_players, :start_at,
+                                                    :end_at, :public, :invited_users)
+    permited_params[:invited_users] = usernames
+    permited_params
   end
 
   def usernames
-    params['match']['usernames']&.gsub('@', '').split
+    params['match']['invited_users']&.gsub('@', '')&.split
   end
 
   def require_permission
