@@ -52,19 +52,24 @@ RSpec.describe ManageMatchInvitations do
       end
 
       it 'does nothing if something fails' do
-        # allow(MatchParticipant).to receive(:first_or_create)
-        #   .and_wrap_original do |method, args|
-        #     args[:user_id] = nil
-        #     method.call(args)
-        # end
-        # allow(MatchParticipant).to receive(:first_or_create)
-        #   .and_raise(ArgumentError)
+        # We make .to have_enqueued_job(Noticed::DeliveryMethods::Email).twice fail
+        # since  match param  is mandatory.
+        allow(MatchInvitationNotification)
+          .to receive(:with).and_wrap_original do |method, args|
+            args[:match] = nil
+            method.call(args)
+        end
 
-        # expect do
-        #   subject.call
-        # end.not_to change(MatchInvitation, :count)
+        # We ommit the prevvious raised exception with suppress in order to test 
+        # the transaction block
+        suppress(Noticed::ValidationError) do 
+          expect do
+            subject.call
+          end.not_to have_enqueued_job(Noticed::DeliveryMethods::Email)
+        end
 
-        # expect(MatchParticipant.count).to eq(0)
+        expect(MatchInvitation.count).to eq(0)
+        expect(MatchParticipant.count).to eq(0)
       end
     end
 
@@ -79,7 +84,7 @@ RSpec.describe ManageMatchInvitations do
         expect do
           subject.call
         end.to have_enqueued_job(Noticed::DeliveryMethods::Email).twice
-           .and change(MatchInvitation, :count).from(0).to(2) 
+           .and change(MatchInvitation, :count).from(0).to(2)
 
         expect(MatchParticipant.count).to eq(0)
       end
