@@ -103,7 +103,7 @@ RSpec.describe '/matches', type: :request do
 
       context 'with valid parameters' do
         it 'creates a new Match notifying invited users' do
-          expect_any_instance_of(ManageMatchParticipants)
+          expect_any_instance_of(ManageMatchInvitations)
             .to receive(:call).and_call_original
 
           expect do
@@ -199,7 +199,7 @@ RSpec.describe '/matches', type: :request do
 
         it 'updates the requested match' do
           expect(match.title).to eq('Old title')
-          expect_any_instance_of(ManageMatchParticipants)
+          expect_any_instance_of(ManageMatchInvitations)
             .to receive(:call).and_call_original
 
           expect do
