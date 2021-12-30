@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_211_229_153_904) do
+ActiveRecord::Schema.define(version: 20_211_230_103_317) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -78,6 +78,16 @@ ActiveRecord::Schema.define(version: 20_211_229_153_904) do
     t.datetime 'updated_at', precision: 6, null: false
     t.index ['admin_id'], name: 'index_games_on_admin_id'
     t.index ['user_id'], name: 'index_games_on_user_id'
+  end
+
+  create_table 'match_invitations', force: :cascade do |t|
+    t.bigint 'user_id', null: false
+    t.bigint 'match_id', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['match_id'], name: 'index_match_invitations_on_match_id'
+    t.index %w[user_id match_id], name: 'index_match_invitations_on_user_id_and_match_id', unique: true
+    t.index ['user_id'], name: 'index_match_invitations_on_user_id'
   end
 
   create_table 'match_participants', force: :cascade do |t|
@@ -146,6 +156,8 @@ ActiveRecord::Schema.define(version: 20_211_229_153_904) do
   add_foreign_key 'active_storage_variant_records', 'active_storage_blobs', column: 'blob_id'
   add_foreign_key 'games', 'admins'
   add_foreign_key 'games', 'users'
+  add_foreign_key 'match_invitations', 'matches'
+  add_foreign_key 'match_invitations', 'users'
   add_foreign_key 'match_participants', 'matches'
   add_foreign_key 'match_participants', 'users'
   add_foreign_key 'matches', 'games'

@@ -108,6 +108,9 @@ es:
         match_participant:
           user:
             unique_user_and_match: 'Esta participación ya existe'
+        match_invitation:
+          user:
+            unique_user_and_match: 'Esta invitación ya existe'
       messages:
         record_invalid: 'La validación falló: %{errors}'
         restrict_dependent_destroy:
