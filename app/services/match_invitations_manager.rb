@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ManageMatchInvitations
+class MatchInvitationsManager
   def initialize(invited_usernames:, match:, creator_id: nil)
     @creator = User.find_by(id: creator_id)
     @invited_users = User.where(username: invited_usernames)

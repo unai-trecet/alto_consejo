@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ManageMatchInvitations do
+RSpec.describe MatchInvitationsManager do
   describe '#call' do
     let(:creator) { create(:user, :confirmed) }
     let!(:invited_users) { create_list(:user, 2) }
@@ -52,17 +52,17 @@ RSpec.describe ManageMatchInvitations do
       end
 
       it 'does nothing if something fails' do
-        # We make .to have_enqueued_job(Noticed::DeliveryMethods::Email).twice fail
-        # since  match param  is mandatory.
+        # We make MatchInvitationNotification fail to raise a
+        # Noticed::ValidationError exception.
         allow(MatchInvitationNotification)
           .to receive(:with).and_wrap_original do |method, args|
-            args[:match] = nil
-            method.call(args)
+          args[:match] = nil
+          method.call(args)
         end
 
-        # We ommit the prevvious raised exception with suppress in order to test 
-        # the transaction block
-        suppress(Noticed::ValidationError) do 
+        # We ommit the prevvious raised exception with suppress in order
+        # to test the transaction block.
+        suppress(Noticed::ValidationError) do
           expect do
             subject.call
           end.not_to have_enqueued_job(Noticed::DeliveryMethods::Email)
@@ -84,7 +84,7 @@ RSpec.describe ManageMatchInvitations do
         expect do
           subject.call
         end.to have_enqueued_job(Noticed::DeliveryMethods::Email).twice
-           .and change(MatchInvitation, :count).from(0).to(2)
+                                                                 .and change(MatchInvitation, :count).from(0).to(2)
 
         expect(MatchParticipant.count).to eq(0)
       end
