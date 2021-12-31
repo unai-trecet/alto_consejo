@@ -22,6 +22,12 @@ RSpec.describe 'MatchParticipants', type: :request do
       before { sign_in(user) }
 
       it 'returns http success and creates a participant' do
+        expect(MatchParticipationManager).to receive(:new)
+          .with(user_id: user.id.to_s, match_id: match.id.to_s)
+          .and_call_original
+        expect_any_instance_of(MatchParticipationManager).to receive(:call)
+          .and_call_original
+
         expect do
           call_action
         end.to change(MatchParticipant, :count).from(0).to(1)
@@ -49,8 +55,8 @@ RSpec.describe 'MatchParticipants', type: :request do
         end.not_to change(MatchParticipant, :count)
 
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(root_path)
-        expect(flash[:notice]).to eq(['User Esta participación ya existe'])
+        expect(response).to redirect_to(match_path(match))
+        expect(flash[:notice]).to eq('Te has inscrito con éxito en la partida!')
       end
     end
   end

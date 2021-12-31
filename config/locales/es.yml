@@ -33,6 +33,9 @@ es:
   hello: "Hola mundo"
   custom_errors:
     unauthorized: 'No estás autorizado a realizar esa acción.'
+  services:
+    errors:
+      match_participation_manager_sufix: " argumentos pasados: user_id: %{user_id}, match_id: %{match_id}"
   pages:
     portal: 'Alto Consejo' 
     dashboard:

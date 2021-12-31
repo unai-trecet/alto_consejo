@@ -6,16 +6,16 @@ class MatchParticipantsController < ApplicationController
 
   def create
     result = MatchParticipationManager
-             .new(match_participant_params)
+             .new(user_id: params[:user_id], match_id: params[:match_id])
              .call
 
     respond_to do |format|
-      if @match_paticipant.save
-        format.html { redirect_to match_path(@match_paticipant.match), notice: t('.created') }
-        format.json { render :show, status: :created, location: @match_paticipant.match }
+      if (participation = result[:participation])
+        format.html { redirect_to match_path(participation.match), notice: t('.created') }
+        format.json { render :show, status: :created, location: participation.match }
       else
-        format.html { redirect_to root_path, notice: @match_paticipant.errors.full_messages }
-        format.json { render json: @match_paticipant.errors, status: :unprocessable_entity }
+        format.html { redirect_to root_path, notice: result[:errors] }
+        format.json { render json: result[:errors], status: :unprocessable_entity }
       end
     end
   end

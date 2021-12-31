@@ -9,13 +9,27 @@ RSpec.describe MatchParticipationManager do
     subject { described_class.new(user_id: player.id, match_id: match.id) }
 
     it 'creates a match_participant' do
+      result = {}
       expect do
-        subject.call
+        result = subject.call
       end.to change(MatchParticipant, :count).from(0).to(1)
       participation = MatchParticipant.last
 
       expect(participation.user).to eq(player)
       expect(participation.match).to eq(match)
+      expect(result).to eq({ participation: participation, errors: [] })
+    end
+
+    it 'does not create another match_participant if it exists' do
+      create(:match_participant, user: player, match: match)
+      expect(MatchParticipant.count).to eq(1)
+      result = {}
+      expect do
+        result = subject.call
+      end.not_to change(MatchParticipant, :count)
+      participation = MatchParticipant.last
+
+      expect(result).to eq({ participation: participation, errors: [] })
     end
 
     it 'deletes a match_invitation if exists' do
@@ -44,7 +58,7 @@ RSpec.describe MatchParticipationManager do
       end.to have_enqueued_job(Noticed::DeliveryMethods::Email).exactly(3).times
     end
 
-    it 'does nothing if something fails' do
+    it 'does nothing if notification fails' do
       # We create an reviously existing invitation for the player
       # that should not be deleted.
       create(:match_invitation, user: player, match: match)
@@ -56,16 +70,32 @@ RSpec.describe MatchParticipationManager do
         method.call(args)
       end
 
-      # We ommit the prevvious raised exception with suppress in order
-      # to test the transaction block.
-      suppress(Noticed::ValidationError) do
-        expect do
-          subject.call
-        end.not_to have_enqueued_job(Noticed::DeliveryMethods::Email)
-      end
+      result = {}
+      expect do
+        result = subject.call
+      end.not_to have_enqueued_job(Noticed::DeliveryMethods::Email)
 
       expect(MatchParticipant.count).to eq(0)
       expect(MatchInvitation.count).to eq(1)
+      expect(result).to eq({ participation: nil, errors: ['Noticed::ValidationError'] })
+    end
+
+    it 'does nothing if recording fails' do
+      allow(MatchParticipant)
+        .to receive(:first_or_create!).and_wrap_original do |method, args|
+        args[:user_id] = nil
+        method.call(args)
+      end
+
+      result = {}
+      expect do
+        result = subject.call
+      end.not_to have_enqueued_job(Noticed::DeliveryMethods::Email)
+
+      expect(MatchParticipant.count).to eq(0)
+      expect(MatchInvitation.count).to eq(0)
+      expect(result).to eq({ participation: nil,
+                             errors: ['La validación falló: User debe existir, User no puede estar en blanco'] })
     end
   end
 end
