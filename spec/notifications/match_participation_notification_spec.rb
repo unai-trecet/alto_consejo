@@ -17,6 +17,9 @@ RSpec.describe MatchParticipationNotification do
         .to receive(:with)
         .twice
         .and_call_original
+      allow_any_instance_of(MatchParticipationMailer)
+        .to receive(:match_participation_email)
+        .and_call_original
 
       expect do
         subject.deliver(recipients)
