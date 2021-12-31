@@ -24,4 +24,17 @@ RSpec.describe User, type: :model do
       .through(:match_invitations)
       .source(:match)
   }
+
+  describe '#played_matches' do
+    subject { create(:user, :confirmed) }
+
+    it 'returns only passed matches' do
+      played_match = create(:match, end_at: 1.hour.ago)
+      future_match = create(:match, end_at: 1.hour.since)
+      create(:match_participant, user: subject, match: played_match)
+      create(:match_participant, user: subject, match: future_match)
+
+      expect(subject.played_matches).to match_array([played_match])
+    end
+  end
 end
