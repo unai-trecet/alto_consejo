@@ -5,12 +5,13 @@ class MatchParticipantsController < ApplicationController
   skip_forgery_protection(only: :create)
 
   def create
-    @match_paticipant = MatchParticipant.new(match_participant_params)
+    result = MatchParticipationManager
+             .new(match_participant_params)
+             .call
+
     respond_to do |format|
       if @match_paticipant.save
-        format.html do
-          redirect_to match_path(@match_paticipant.match), notice: t('.created')
-        end
+        format.html { redirect_to match_path(@match_paticipant.match), notice: t('.created') }
         format.json { render :show, status: :created, location: @match_paticipant.match }
       else
         format.html { redirect_to root_path, notice: @match_paticipant.errors.full_messages }

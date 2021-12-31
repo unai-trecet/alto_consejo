@@ -31,11 +31,6 @@
 
 es:
   hello: "Hola mundo"
-  time:
-    formats:
-      default: "%d/%m/%Y %H:%M:%S"
-      long: "%a, %-d %b %Y %H:%M:%S +%H%M"
-      short: "%b %d"
   custom_errors:
     unauthorized: 'No estás autorizado a realizar esa acción.'
   pages:
@@ -98,11 +93,6 @@ es:
     create:
       created: 'Te has inscrito con éxito en la partida!'
   activerecord:
-    models:        
-    attributes:
-      notification:
-        recipient: ''
-  activerecord:
     errors:
       models:
         match_participant:
@@ -116,7 +106,10 @@ es:
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
-  
+  # MAILERS
+  match_participation_mailer:
+    match_participation_email:
+      subject: '%{player} se ha unido a la partida!'
 
   ## Spanish datetime stuff
   #

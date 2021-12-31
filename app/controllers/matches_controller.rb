@@ -26,7 +26,7 @@ class MatchesController < ApplicationController
 
     respond_to do |format|
       if @match.save
-        ManageMatchInvitations.new(
+        MatchInvitationsManager.new(
           creator_id: params['match']['creator_participates'],
           invited_usernames: @match.invited_users,
           match: @match
@@ -47,7 +47,7 @@ class MatchesController < ApplicationController
 
     respond_to do |format|
       if @match.update(match_params)
-        ManageMatchInvitations.new(
+        MatchInvitationsManager.new(
           creator_id: params['match']['creator_participates'],
           invited_usernames: @match.invited_users - previous_invited_users,
           match: @match
