@@ -18,4 +18,10 @@ RSpec.describe User, type: :model do
       .through(:match_participants)
       .source(:match)
   }
+  it { should have_many(:match_invitations) }
+  it {
+    should have_many(:invitations)
+      .through(:match_invitations)
+      .source(:match)
+  }
 end
