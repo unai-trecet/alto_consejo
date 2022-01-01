@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 class MatchInvitationsManager
-  def initialize(invited_usernames:, match:, creator_id: nil)
-    @creator = User.find_by(id: creator_id)
-    @invited_users = User.where(username: invited_usernames)
+  def initialize(match:, creator_participates:)
     @match = match
+    @invited_users = User.where(username: @match.invited_users)
+    @creator_participates = creator_participates
   end
 
   def call
     ActiveRecord::Base.transaction do
-      set_creator_as_participant if @creator
+      set_creator_as_participant if @creator_participates
       create_invitations
       send_invitations
     end
@@ -19,11 +19,12 @@ class MatchInvitationsManager
 
   def set_creator_as_participant
     MatchParticipant
-      .first_or_create(user_id: @creator.id, match_id: @match.id)
+      .first_or_create(user_id: @match.creator.id, match_id: @match.id)
   end
 
   def create_invitations
-    MatchInvitation.insert_all(define_creation_params)
+    result = MatchInvitation.insert_all(define_creation_params, returning: %w[user_id])
+    @created_invitations_user_ids = result.rows.map(&:pop)
   end
 
   def define_creation_params
@@ -33,8 +34,9 @@ class MatchInvitationsManager
   end
 
   def send_invitations
+    new_recipients = @invited_users.select { |user| @created_invitations_user_ids.include?(user.id) }
     MatchInvitationNotification
       .with(match: @match)
-      .deliver_later(@invited_users)
+      .deliver_later(new_recipients)
   end
 end

@@ -23,7 +23,7 @@ RSpec.describe '/matches', type: :request do
   end
 
   let(:valid_params_with_creator_participates) do
-    valid_params.merge(creator_participates: user.id)
+    valid_params.merge(creator_participates: true)
   end
 
   def set_params(params = {})
@@ -198,6 +198,10 @@ RSpec.describe '/matches', type: :request do
         end
 
         it 'updates the requested match' do
+          # We create the existing invitations before the update was done.
+          create(:match_invitation, match: match, user: invited_users.first)
+          create(:match_invitation, match: match, user: invited_users.last)
+
           expect(match.title).to eq('Old title')
           expect_any_instance_of(MatchInvitationsManager)
             .to receive(:call).and_call_original

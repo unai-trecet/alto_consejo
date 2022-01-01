@@ -6,7 +6,8 @@ class MatchesController < ApplicationController
 
   # GET /matches or /matches.json
   def index
-    @matches = Match.all.order(start_at: :desc).page(params[:page])
+    @q = Match.ransack(params[:q])
+    @matches = @q.result.page(params[:page])
   end
 
   # GET /matches/1 or /matches/1.json
@@ -27,8 +28,7 @@ class MatchesController < ApplicationController
     respond_to do |format|
       if @match.save
         MatchInvitationsManager.new(
-          creator_id: params['match']['creator_participates'],
-          invited_usernames: @match.invited_users,
+          creator_participates: params['match']['creator_participates'],
           match: @match
         ).call
 
@@ -43,13 +43,10 @@ class MatchesController < ApplicationController
 
   # PATCH/PUT /matches/1 or /matches/1.json
   def update
-    previous_invited_users = @match.invited_users
-
     respond_to do |format|
       if @match.update(match_params)
         MatchInvitationsManager.new(
-          creator_id: params['match']['creator_participates'],
-          invited_usernames: @match.invited_users - previous_invited_users,
+          creator_participates: params['match']['creator_participates'],
           match: @match
         ).call
 

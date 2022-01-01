@@ -4,14 +4,12 @@ RSpec.describe MatchInvitationsManager do
   describe '#call' do
     let(:creator) { create(:user, :confirmed) }
     let!(:invited_users) { create_list(:user, 2) }
-    let!(:invited_usernames) { invited_users.pluck(:username) }
-    let(:match) { create(:match, user: creator) }
+    let(:match) { create(:match, user: creator, invited_users: invited_users.pluck(:username)) }
 
     context 'with creator participating in the match' do
       subject do
         described_class
-          .new(creator_id: creator.id,
-               invited_usernames: invited_usernames,
+          .new(creator_participates: true,
                match: match)
       end
 
@@ -31,6 +29,15 @@ RSpec.describe MatchInvitationsManager do
         expect do
           subject.call
         end.not_to change(MatchInvitation, :count)
+      end
+
+      it 'does not send notifications if the invitations already existed' do
+        create(:match_invitation, user: invited_users.first, match: match)
+        create(:match_invitation, user: invited_users.last, match: match)
+
+        expect do
+          subject.call
+        end.not_to have_enqueued_job(Noticed::DeliveryMethods::Email)
       end
 
       it 'triggers invited users notifications' do
@@ -74,7 +81,7 @@ RSpec.describe MatchInvitationsManager do
     end
 
     context 'creator is not participating' do
-      subject { described_class.new(invited_usernames: invited_usernames, match: match) }
+      subject { described_class.new(match: match, creator_participates: false) }
 
       it 'only sends email to invited users and creates invitations' do
         expect(MatchInvitationNotification)
@@ -93,8 +100,7 @@ RSpec.describe MatchInvitationsManager do
     context 'creator participation already exist' do
       subject do
         described_class
-          .new(invited_usernames: invited_usernames,
-               creator_id: creator.id,
+          .new(creator_participates: true,
                match: match)
       end
 
