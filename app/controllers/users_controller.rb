@@ -6,9 +6,9 @@ class UsersController < ApplicationController
 
   def index
     @users = if params[:q]
-               User.where('username LIKE ?', "%#{params[:q]}%")
+               User.where('username LIKE ?', "%#{params[:q]}%").page(params[:page])
              else
-               User.all
+               User.all.page(params[:page])
              end
 
     respond_to do |format|
