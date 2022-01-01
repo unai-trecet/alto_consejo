@@ -3,22 +3,24 @@
 require 'rails_helper'
 
 RSpec.describe 'matches/index', type: :view do
-  before(:each) do
-    assign(:matches, [
-             create(:match,
-                    title: 'Gloomhaven game',
-                    description: 'Amazing dungeon crawler',
-                    location: 'MyText',
-                    number_of_players: 9),
-             create(:match,
-                    title: 'Terraforming Mars game',
-                    description: 'Terraform next humanity planet',
-                    location: 'MyText',
-                    number_of_players: 10)
-           ])
+  let(:matches) do
+    matches = [
+      create(:match,
+             title: 'Gloomhaven game',
+             description: 'Amazing dungeon crawler',
+             location: 'MyText',
+             number_of_players: 9),
+      create(:match,
+             title: 'Terraforming Mars game',
+             description: 'Terraform next humanity planet',
+             location: 'MyText',
+             number_of_players: 10)
+    ]
+    Kaminari.paginate_array(matches).page(1)
   end
 
   it 'renders a list of matches' do
+    assign(:matches, matches)
     render
 
     assert_select 'tr>td', text: 'Gloomhaven game', count: 1

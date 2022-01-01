@@ -3,24 +3,26 @@
 require 'rails_helper'
 
 RSpec.describe 'games/index', type: :view do
-  before(:each) do
-    assign(:games, [
-             create(:game,
-                    name: 'Name',
-                    description: 'Description',
-                    author: '',
-                    bbg_link: 'MyText',
-                    image: 'MyImage'),
-             create(:game,
-                    name: 'Name 2',
-                    description: 'Description',
-                    author: '',
-                    bbg_link: 'MyText',
-                    image: 'MyImage')
-           ])
+  let(:games) do
+    games = [
+      create(:game,
+             name: 'Name',
+             description: 'Description',
+             author: '',
+             bbg_link: 'MyText',
+             image: 'MyImage'),
+      create(:game,
+             name: 'Name 2',
+             description: 'Description',
+             author: '',
+             bbg_link: 'MyText',
+             image: 'MyImage')
+    ]
+    Kaminari.paginate_array(games).page(1)
   end
 
   it 'renders a list of games' do
+    assign(:games, games)
     render
 
     assert_select 'tr>td', text: 'Name', count: 1
