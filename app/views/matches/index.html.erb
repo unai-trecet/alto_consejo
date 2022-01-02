@@ -5,14 +5,13 @@
   <table class="table">
     <thead>
       <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>User</th>
-          <th>Game</th>
-          <th>Location</th>
-          <th>Number of players</th>
-          <th>Start at</th>
-          <th>End at</th>
+          <th><%= t('.title') %></th>
+          <th><%= t('.creator') %></th>
+          <th><%= t('.game') %></th>
+          <th><%= t('.number_of_players') %></th>
+          <th><%= t('.current_participants') %></th>
+          <th><%= t('.start_at') %></th>
+          <th><%= t('.end_at') %></th>
           <th colspan="3"></th>
       </tr>
     </thead>
@@ -20,17 +19,15 @@
     <tbody>
       <% @matches.each do |match| %>
         <tr>
-            <td><%= match.title %></td>
-            <td><%= match.description %></td>
-            <td><%= match.user_id %></td>
-            <td><%= match.game_id %></td>
-            <td><%= match.location %></td>
+            <td><%= link_to(match.title, match) %></td>
+            <td><%= link_to(match.creator.username, match.creator) %></td>
+            <td><%= link_to(match.game.name, match.game) %></td>
             <td><%= match.number_of_players %></td>
-            <td><%= match.start_at %></td>
-            <td><%= match.end_at %></td>
-            <td><%= link_to 'Show', match %></td>
-          <td><%= link_to('Edit', edit_match_path(match)) if current_user == match.user %></td>
-          <td><%= link_to('Destroy', match, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == match.user  %></td>
+            <td><%= match.participants.count %></td>
+            <td><%= l(match.start_at, format: :long) %></td>
+            <td><%= l(match.end_at, format: :long) %></td>
+            <td><%= link_to('Edit', edit_match_path(match)) if current_user == match.user %></td>
+            <td><%= link_to('Destroy', match, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == match.user  %></td>
         </tr>
       <% end %>
     </tbody>

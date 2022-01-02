@@ -48,7 +48,9 @@
   <div class="form-group mb-3">
     <p><strong><%= t('.invited_users') %>:</strong></p>
     <div>
-      <%= @match.invited_users&.join(' ') %>
+      <% User.where(username: @match.invited_users).each do |invitee| %>
+        <%= link_to(invitee.username, invitee) %>
+      <% end %>
     </div>
   </div>
 

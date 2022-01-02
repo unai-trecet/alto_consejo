@@ -7,9 +7,9 @@
     <thead>
       <tr>
           <th><%= t('.username') %></th>
-          <th><%= t('.email') %></th>
           <th><%= t('.created_matches') %></th>
           <th><%= t('.played_matches') %></th>
+          <th><%= t('.added_games') %></th>
           <th colspan="3"></th>
       </tr>
     </thead>
@@ -18,9 +18,9 @@
       <% @users.each do |user| %>
         <tr>
             <td><%= link_to(user.username, user) %></td>
-            <td><%= user.email %></td>
             <td><%= user.matches.count %></td>
             <td><%= user.played_matches.count %></td>
+            <td><%= user.games.count %></td>
             <td><%= link_to 'Show', user %></td>
         </tr>
       <% end %>
