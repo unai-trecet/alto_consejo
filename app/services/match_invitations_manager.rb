@@ -1,26 +1,21 @@
 # frozen_string_literal: true
 
 class MatchInvitationsManager
-  def initialize(match:, creator_participates:)
+  def initialize(match:)
     @match = match
     @invited_users = User.where(username: @match.invited_users)
-    @creator_participates = creator_participates
   end
 
   def call
+    return if @invited_users.blank?
+
     ActiveRecord::Base.transaction do
-      set_creator_as_participant if @creator_participates
       create_invitations
       send_invitations
     end
   end
 
   private
-
-  def set_creator_as_participant
-    MatchParticipant
-      .first_or_create(user_id: @match.creator.id, match_id: @match.id)
-  end
 
   def create_invitations
     result = MatchInvitation.insert_all(define_creation_params, returning: %w[user_id])

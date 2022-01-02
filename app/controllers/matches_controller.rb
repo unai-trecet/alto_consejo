@@ -27,10 +27,11 @@ class MatchesController < ApplicationController
 
     respond_to do |format|
       if @match.save
-        MatchInvitationsManager.new(
-          creator_participates: params['match']['creator_participates'],
-          match: @match
-        ).call
+        if params['match']['creator_participates']
+          MatchParticipationManager.new(match_id: @match.id,
+                                        user_id: @match.creator.id).call
+        end
+        MatchInvitationsManager.new(match: @match).call
 
         format.html { redirect_to @match, notice: t('.created') }
         format.json { render :show, status: :created, location: @match }
@@ -45,10 +46,11 @@ class MatchesController < ApplicationController
   def update
     respond_to do |format|
       if @match.update(match_params)
-        MatchInvitationsManager.new(
-          creator_participates: params['match']['creator_participates'],
-          match: @match
-        ).call
+        if params['match']['creator_participates']
+          MatchParticipationManager.new(match_id: @match.id,
+                                        user_id: @match_id.creator.id).call
+        end
+        MatchInvitationsManager.new(match: @match).call
 
         format.html { redirect_to @match, notice: 'Match was successfully updated.' }
         format.json { render :show, status: :ok, location: @match }

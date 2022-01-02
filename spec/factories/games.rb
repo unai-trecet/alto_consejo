@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :game do
-    name { Faker::Game.title }
+    name { Faker::Game.unique.title }
     description { Faker::Quotes::Chiquito.sentence }
     author { Faker::Book.author }
     user { create(:user, :confirmed) }

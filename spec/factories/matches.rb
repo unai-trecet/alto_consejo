@@ -10,11 +10,13 @@ FactoryBot.define do
 
     invited_users do
       usernames = []
-      if User.count.positive?
-        rand(8).times do |_x|
-          username = User.order(Arel.sql('RANDOM()')).first.username
-          usernames.push(username)
+      if User.count >= 2
+        rand(6).times do |_x|
+          usernames << User.where.not(id: user.id).order(Arel.sql('RANDOM()')).first.username
         end
+      else
+        rand(8).times { |_x| usernames << create(:user, :confirmed).username }
+        usernames
       end
       usernames
     end

@@ -38,7 +38,7 @@ class MatchParticipationManager
   end
 
   def create_match_participation
-    @match_paticipant = MatchParticipant.first_or_create!(user: @user, match: @match)
+    @match_paticipant = MatchParticipant.find_or_create_by!(user_id: @user.id, match_id: @match.id)
   end
 
   def send_notifications

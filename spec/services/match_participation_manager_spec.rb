@@ -81,8 +81,8 @@ RSpec.describe MatchParticipationManager do
     end
 
     it 'does nothing if recording fails' do
-      allow(MatchParticipant)
-        .to receive(:first_or_create!).and_wrap_original do |method, args|
+      expect(MatchParticipant)
+        .to receive(:find_or_create_by!).and_wrap_original do |method, args|
         args[:user_id] = nil
         method.call(args)
       end
