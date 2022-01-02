@@ -5,7 +5,7 @@ FactoryBot.define do
     name { Faker::Game.title }
     description { Faker::Quotes::Chiquito.sentence }
     author { Faker::Book.author }
-    user { create(:user) }
+    user { create(:user, :confirmed) }
     bbg_link { "www.board_game_geek.com/#{Faker::Number.number(digits: 10)}" }
     image { 'an image' }
   end
