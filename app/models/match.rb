@@ -7,6 +7,9 @@ class Match < ApplicationRecord
   has_many :match_participants
   has_many :participants, through: :match_participants, source: :user
 
+  has_many :match_invitations
+  has_many :invitees, through: :match_invitations, source: :user
+
   alias_attribute :creator, :user
 
   validates :title, :start_at, :end_at, presence: true

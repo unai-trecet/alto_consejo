@@ -10,18 +10,13 @@ FactoryBot.define do
 
     invited_users do
       usernames = []
-      if User.count >= 2
-        rand(6).times do |_x|
-          usernames << User.where.not(id: user.id).order(Arel.sql('RANDOM()')).first.username
-        end
-      else
-        rand(8).times { |_x| usernames << create(:user, :confirmed).username }
-        usernames
+      rand(3).times do |_x|
+        usernames << create(:user, :confirmed).username
       end
       usernames
     end
 
-    number_of_players { invited_users.count + rand(2) }
+    number_of_players { invited_users.count + rand(1) }
     public { Faker::Boolean.boolean }
     start_at { Faker::Time.between(from: 1.month.ago, to: 1.month.since) }
     end_at { Faker::Time.between(from: start_at, to: start_at + 5.hours) }
