@@ -5,11 +5,8 @@ class UsersController < ApplicationController
   before_action :require_permission, except: %i[show index]
 
   def index
-    @users = if params[:q]
-               User.where('username LIKE ?', "%#{params[:q]}%").page(params[:page])
-             else
-               User.all.page(params[:page])
-             end
+    @q = User.ransack(username_or_email_cont: params[:q])
+    @users = @q.result(distinct: true).page(params[:page])
 
     respond_to do |format|
       format.html
