@@ -5,50 +5,19 @@ es:
   services:
     errors:
       match_participation_manager_sufix: " argumentos pasados: user_id: %{user_id}, match_id: %{match_id}"
-  pages:
-    portal: 'Alto Consejo' 
-    dashboard:
-      overview: 'Resumen'
-      played_games: 'Partidas jugadas'
-    sidebar:
-      overview: 'Resumen'
-      matches: 'Partidas'
-      games: 'Juegos'
-      players: 'Jugadores'
-      notifications: 'Notificaciones'
-      calendar: 'Calendario'
-  notifications:
+  games:
     index:
-      message: 'Mensaje'
-      type: 'Tipo'
-      url: 'Enlace'
-      created: 'Creada el'
-      read: 'Leída el'
-    show:
-      notification: 'Notificación'
-      details: 'Ver detalles'
-      photo: 'Foto'
-      username: 'Nombre de usuario'
-      email: 'Correo electrónico'
-      manage_profile: 'Gestionar perfil'
-    edit:
-      profile_edit: 'Editar perfil'
-    update:
-      user_changed: 'Datos de usuario cambiados con éxito'
-    match_invitation_notification:
-      message: 'Has sido invitado/a a una partida organizada por @%{organizer}'
-  users:
-    index:
-      players: 'Jugadores'
-      username: 'Nombre de ususario'
-      email: 'Correo electrónico'
-      created_matches: 'Partidas organizadas'
+      page_title: 'Juegos'
+      name: 'Nombre'
+      author: 'Autor/a'
+      added_by: 'Añadido por'
       played_matches: 'Partidas jugadas'
-      added_games: 'Juegos añadidos'
+      bgg_link: 'BGG link'
   matches:
     create:
       created: 'La partida ha sido creada con éxito.'
     index:
+      page_title: 'Partidas'
       title: 'Título'
       description: 'Descripción'
       creator: 'Creador/a'
@@ -75,6 +44,46 @@ es:
   match_participants:
     create:
       created: 'Te has inscrito con éxito en la partida!'
+  notifications:
+    index:
+      message: 'Mensaje'
+      type: 'Tipo'
+      url: 'Enlace'
+      created: 'Creada el'
+      read: 'Leída el'
+    show:
+      notification: 'Notificación'
+      details: 'Ver detalles'
+      photo: 'Foto'
+      username: 'Nombre de usuario'
+      email: 'Correo electrónico'
+      manage_profile: 'Gestionar perfil'
+    edit:
+      profile_edit: 'Editar perfil'
+    update:
+      user_changed: 'Datos de usuario cambiados con éxito'
+    match_invitation_notification:
+      message: 'Has sido invitado/a a una partida organizada por @%{organizer}'
+  pages:
+    portal: 'Alto Consejo' 
+    dashboard:
+      overview: 'Resumen'
+      played_games: 'Partidas jugadas'
+    sidebar:
+      overview: 'Resumen'
+      matches: 'Partidas'
+      games: 'Juegos'
+      players: 'Jugadores'
+      notifications: 'Notificaciones'
+      calendar: 'Calendario'
+  users:
+    index:
+      players: 'Jugadores'
+      username: 'Nombre de ususario'
+      email: 'Correo electrónico'
+      created_matches: 'Partidas organizadas'
+      played_matches: 'Partidas jugadas'
+      added_games: 'Juegos añadidos'
   activerecord:
     errors:
       models:
