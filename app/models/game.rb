@@ -12,4 +12,12 @@ class Game < ApplicationRecord
   def played_matches
     matches.played
   end
+
+  def planned_matches
+    matches.not_played
+  end
+
+  def players
+    played_matches.includes(:participants).map(&:participants).flatten.uniq
+  end
 end

@@ -2,42 +2,63 @@
   <p id="notice"><%= notice %></p>
 
       <div class="form-group mb-3">
-    <p><strong>Name:</strong></p>
+    <p><strong><%= t('.name') %>:</strong></p>
     <div>
       <%= @game.name %>
     </div>
   </div>
   
       <div class="form-group mb-3">
-    <p><strong>Description:</strong></p>
+    <p><strong><%= t('.description') %>:</strong></p>
     <div>
       <%= @game.description %>
     </div>
   </div>
   
       <div class="form-group mb-3">
-    <p><strong>Author:</strong></p>
+    <p><strong><%= t('.author') %>:</strong></p>
     <div>
       <%= @game.author %>
     </div>
   </div>
   
       <div class="form-group mb-3">
-    <p><strong>User:</strong></p>
+    <p><strong><%= t('.added_by') %>:</strong></p>
     <div>
-      <%= @game.user_id %>
+      <%= link_to(@game.added_by.username, @game.added_by) %>
     </div>
   </div>
   
       <div class="form-group mb-3">
-    <p><strong>Bbg link:</strong></p>
+    <p><strong><%= t('.played_matches') %>:</strong></p>
     <div>
-      <%= @game.bbg_link %>
+      <%= @game.played_matches.count %>
+    </div>
+  </div>
+
+      <div class="form-group mb-3">
+    <p><strong><%= t('.planned_matches') %>:</strong></p>
+    <div>
+      <%= @game.planned_matches.count %>
+    </div>
+  </div>
+
+      <div class="form-group mb-3">
+    <p><strong><%= t('.num_players') %>:</strong></p>
+    <div>
+      <%= @game.players.count %>
+    </div>
+  </div>
+
+      <div class="form-group mb-3">
+    <p><strong><%= t('.bgg_link') %>:</strong></p>
+    <div>
+      <%= link_to(@game.bbg_link, @game.bbg_link) %>
     </div>
   </div>
   
       <div class="form-group mb-3">
-    <p><strong>Image:</strong></p>
+    <p><strong><%= t('.picture') %>:</strong></p>
     <div>
       <%= @game.image %>
     </div>

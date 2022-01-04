@@ -7,12 +7,22 @@ es:
       match_participation_manager_sufix: " argumentos pasados: user_id: %{user_id}, match_id: %{match_id}"
   games:
     index:
-      page_title: 'Juegos'
-      name: 'Nombre'
       author: 'Autor/a'
+      name: 'Nombre'
       added_by: 'Añadido por'
+      page_title: 'Juegos'
       played_matches: 'Partidas jugadas'
       bgg_link: 'BGG link'
+    show:
+      added_by: 'Añadido por'
+      author: 'Autor/a'
+      bgg_link: 'BGG link'
+      description: 'Descripción'
+      name: 'Nombre'
+      picture: 'Imagen'
+      planned_matches: 'Partidas planeadas'
+      played_matches: 'Partidas jugadas'
+      num_players: 'Número de jugadores que lo han jugado'
   matches:
     create:
       created: 'La partida ha sido creada con éxito.'
