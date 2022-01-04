@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_action :require_permission, except: %i[show index]
 
   def index
-    @q = User.ransack(username_or_email_cont: params[:q])
+    @q = User.includes(:games, :matches, :played_matches).ransack(username_or_email_cont: params[:q])
     @users = @q.result(distinct: true).page(params[:page])
 
     respond_to do |format|

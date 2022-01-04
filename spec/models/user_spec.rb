@@ -24,6 +24,11 @@ RSpec.describe User, type: :model do
       .through(:match_invitations)
       .source(:match)
   }
+  it {
+    should have_many(:played_matches)
+      .through(:match_participants)
+      .source(:match)
+  }
 
   describe '#played_matches' do
     subject { create(:user, :confirmed) }

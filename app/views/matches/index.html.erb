@@ -23,7 +23,7 @@
             <td><%= link_to(match.creator.username, match.creator) %></td>
             <td><%= link_to(match.game.name, match.game) %></td>
             <td><%= match.number_of_players %></td>
-            <td><%= match.participants.count %></td>
+            <td><%= match.participants.size %></td>
             <td><%= l(match.start_at, format: :long) %></td>
             <td><%= l(match.end_at, format: :long) %></td>
             <td><%= link_to('Edit', edit_match_path(match)) if current_user == match.user %></td>

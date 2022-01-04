@@ -9,7 +9,18 @@ RSpec.describe Game, type: :model do
   let(:future_match) { create(:match, game: subject, end_at: 1.hour.since) }
 
   it { should belong_to(:user) }
+
   it { should have_many(:matches) }
+  it {
+    should have_many(:played_matches)
+      .conditions("end_at < #{DateTime.now}")
+      .class_name('Match')
+  }
+  it {
+    should have_many(:planned_matches)
+      .conditions("end_at > #{DateTime.now}")
+      .class_name('Match')
+  }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }

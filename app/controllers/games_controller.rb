@@ -5,7 +5,7 @@ class GamesController < ApplicationController
 
   # GET /games or /games.json
   def index
-    @games = Game.all.page(params[:page])
+    @games = Game.includes(:user, :played_matches).all.page(params[:page])
   end
 
   # GET /games/1 or /games/1.json

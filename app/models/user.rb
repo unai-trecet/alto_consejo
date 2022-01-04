@@ -15,11 +15,9 @@ class User < ApplicationRecord
 
   has_many :match_participants
   has_many :participations, through: :match_participants, source: :match
+  has_many :played_matches, -> { played }, through: :match_participants, source: :match
 
   has_many :match_invitations
   has_many :invitations, through: :match_invitations, source: :match
 
-  def played_matches
-    participations.played
-  end
 end
