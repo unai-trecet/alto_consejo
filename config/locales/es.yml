@@ -54,6 +54,17 @@ es:
   match_participants:
     create:
       created: 'Te has inscrito con éxito en la partida!'
+  navigation:
+    sidebar:
+      overview: 'Resumen'
+      matches: 'Partidas'
+      all_matches: 'Todas'
+      my_played_matches: 'Mis pórximas partidas'
+      my_future_matches: 'Partidas jugadas'
+      games: 'Juegos'
+      players: 'Jugadores'
+      notifications: 'Notificaciones'
+      calendar: 'Calendario'
   notifications:
     index:
       message: 'Mensaje'
@@ -79,13 +90,6 @@ es:
     dashboard:
       overview: 'Resumen'
       played_games: 'Partidas jugadas'
-    sidebar:
-      overview: 'Resumen'
-      matches: 'Partidas'
-      games: 'Juegos'
-      players: 'Jugadores'
-      notifications: 'Notificaciones'
-      calendar: 'Calendario'
   users:
     index:
       players: 'Jugadores'

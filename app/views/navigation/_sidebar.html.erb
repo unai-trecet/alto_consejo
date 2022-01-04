@@ -24,13 +24,13 @@
                 <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
               </svg>
             </span>
-            <span class="nav-link-text"><%= t('pages.sidebar.overview') %></span>
+            <span class="nav-link-text"><%= t('.overview') %></span>
           <% end %>
           <!--//nav-link-->
         </li>
         <!--//nav-item-->
-        <li class="nav-item">
-          <%= link_to matches_path, class: 'nav-link' do %>
+        <li class="nav-item has-submenu">
+          <%= link_to matches_path, class: 'nav-link submenu-toggle', "aria-controls" => "submenu-1", "aria-expanded" => "false", "data-bs-target" => "#submenu-1", "data-bs-toggle" => "collapse" do %>
             <span class="nav-icon">
               <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg">
@@ -40,8 +40,20 @@
                   d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z" />
               </svg>
             </span>
-            <span class="nav-link-text"><%= t('pages.sidebar.matches') %></span>
-          <% end %>       
+            <span class="nav-link-text"><%= t('.matches') %></span>
+		        <span class="submenu-arrow">
+		          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+	            </svg>
+	          </span><!--//submenu-arrow-->
+          <% end %>
+          <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
+            <ul class="submenu-list list-unstyled">
+              <li class="submenu-item"><%= link_to(t('.all_matches'), matches_path, class: "submenu-link") %></li>
+              <li class="submenu-item"><%= link_to(t('.my_played_matches'), matches_path, class: "submenu-link") %></li>
+              <li class="submenu-item"><%= link_to(t('.my_future_matches'), matches_path, class: "submenu-link") %></li>
+            </ul>
+          </div>    
           <!--//nav-link-->
         </li>
         <!--//nav-item-->
@@ -59,7 +71,7 @@
                 <circle cx="3.5" cy="10.5" r=".5" />
               </svg>
             </span>
-            <span class="nav-link-text"><%= t('pages.sidebar.games') %></span>
+            <span class="nav-link-text"><%= t('.games') %></span>
           <% end %>  
           <!--//nav-link-->
         </li>
@@ -75,7 +87,7 @@
                   d="M6 0h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1H4a2 2 0 0 1 2-2z" />
               </svg>
             </span>
-            <span class="nav-link-text"><%= t('pages.sidebar.players') %></span>
+            <span class="nav-link-text"><%= t('.players') %></span>
           <% end %>
           <!--//nav-link-->
         </li>
@@ -89,7 +101,7 @@
                   d="M6 1H1v3h5V1zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1zm14 12h-5v3h5v-3zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5zM6 8H1v7h5V8zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H1zm14-6h-5v7h5V1zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1h-5z" />
               </svg>
             </span>
-            <span class="nav-link-text"><%= t('pages.sidebar.notifications') %></span>
+            <span class="nav-link-text"><%= t('.notifications') %></span>
             <!--//submenu-arrow-->
           <% end %>
           <!--//nav-link-->
@@ -106,7 +118,7 @@
                   d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z" />
               </svg>
             </span>
-            <span class="nav-link-text"><%= t('pages.sidebar.calendar') %></span>
+            <span class="nav-link-text"><%= t('.calendar') %></span>
           <% end %>
           <!--//nav-link-->
         </li>
