@@ -6,7 +6,7 @@ class MatchesController < ApplicationController
 
   # GET /matches or /matches.json
   def index
-    @q = Match.includes(:user, :game, :participants).ransack(params[:q])
+    @q = Match.includes(:user, :game, :participants).ransack(name_cont: params[:q])
     @matches = @q.result.page(params[:page])
   end
 

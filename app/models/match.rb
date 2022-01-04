@@ -16,4 +16,5 @@ class Match < ApplicationRecord
 
   scope :played, -> { where('end_at < ?', DateTime.now) }
   scope :not_played, -> { where('end_at > ?', DateTime.now) }
+  scope :open, -> { where(public: true) }
 end
