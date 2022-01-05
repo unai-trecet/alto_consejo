@@ -6,7 +6,7 @@ class MatchesController < ApplicationController
 
   # GET /matches or /matches.json
   def index
-    @q = Match.includes(:user, :game, :participants).ransack(name_cont: params[:q])
+    @q = visible_matches_base.ransack(name_cont: params[:q])
     @matches = @q.result.page(params[:page])
   end
 
@@ -72,12 +72,21 @@ class MatchesController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_match
     @match = Match.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
+  # Returns public matches or matches in which the player
+  # participates, has been invited or has created them.
+  def visible_matches_base
+    Match.eager_load(:user, :game, :participants)
+         .left_joins(:match_participants, :match_invitations)
+         .where(user: current_user)
+         .or(Match.where(public: true))
+         .or(Match.where(match_participants: { user: current_user }))
+         .or(Match.where(match_invitations: { user: current_user }))
+  end
+
   def match_params
     permited_params = params.require(:match).permit(:title, :description, :user_id, :game_id,
                                                     :location, :number_of_players, :start_at,

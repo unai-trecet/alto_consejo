@@ -25,7 +25,6 @@ RSpec.describe Match, type: :model do
   it { should validate_presence_of(:end_at) }
 
   describe 'scopes' do
-
     describe '.public' do
       it 'returns only passed matches' do
         public_match1 = create(:match, public: true)

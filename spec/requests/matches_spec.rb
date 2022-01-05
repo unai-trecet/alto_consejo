@@ -33,8 +33,8 @@ RSpec.describe '/matches', type: :request do
   let(:invalid_params) { valid_params.merge(title: nil) }
 
   describe 'GET /index' do
-    def call_action
-      get matches_url
+    def call_action(format = 'html')
+      get matches_url(format: format)
     end
 
     it_behaves_like 'not_logged_in'
@@ -48,6 +48,34 @@ RSpec.describe '/matches', type: :request do
         call_action
 
         expect(response).to be_successful
+      end
+
+      it 'returns basic filtered matches' do
+        # Index action returns public matches plus the mathes to which
+        # the user is invited, is participating or was created by him/her.
+        another_user = create(:user, :confirmed)
+        _not_public_match = create(:match,
+                                   set_params({ title: 'Not public Match', user_id: another_user.id, public: false }))
+        public_match = create(:match, set_params({ title: 'Public Match', public: true, user_id: another_user.id }))
+        invitation_match = create(:match, set_params({ title: 'Invitation Match', user_id: another_user.id }))
+        participation_match = create(:match, set_params({ title: 'Participation Match', user_id: another_user.id }))
+        created_match = create(:match, set_params(title: 'Created Match'))
+
+        create(:match_invitation, match: invitation_match, user: user)
+        create(:match_participant, match: participation_match, user: user)
+
+        call_action('json')
+
+        matches_data = JSON.parse(response.body)
+        expect(response).to be_successful
+        expect(Match.count).to eq(5)
+        expect(matches_data.size).to eq(4)
+        expect(matches_data.map do |match|
+                 match['title']
+               end).to match_array(['Public Match', 'Invitation Match', 'Participation Match', 'Created Match'])
+        expect(matches_data.map do |match|
+                 match['id']
+               end).to match_array([public_match.id, invitation_match.id, participation_match.id, created_match.id])
       end
     end
   end

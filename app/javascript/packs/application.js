@@ -6,7 +6,7 @@
 require.context('./images', true);
 
 import Rails from "@rails/ujs";
-// import Turbolinks from "turbolinks";
+// import Turbolinks from "turbolinks";  
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import "jquery";
@@ -19,9 +19,6 @@ import "@fortawesome/fontawesome-free/css/all";
 import "./styles/application.scss";
 
 import('./admin');
-
-// import { autocompleteSearch } from './autocomplete';
-// autocompleteSearch();
 
 import './autocompleteUsername';
 import './autocompleteGameName';

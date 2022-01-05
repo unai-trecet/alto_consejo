@@ -20,4 +20,5 @@ class User < ApplicationRecord
   has_many :match_invitations
   has_many :invitations, through: :match_invitations, source: :match
 
+  alias_attribute :created_matches, :matches
 end
