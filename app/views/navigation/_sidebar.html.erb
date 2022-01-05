@@ -49,9 +49,11 @@
           <% end %>
           <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
             <ul class="submenu-list list-unstyled">
-              <li class="submenu-item"><%= link_to(t('.all_matches'), matches_path, class: "submenu-link") %></li>
-              <li class="submenu-item"><%= link_to(t('.my_played_matches'), matches_path, class: "submenu-link") %></li>
-              <li class="submenu-item"><%= link_to(t('.my_future_matches'), matches_path, class: "submenu-link") %></li>
+              <li class="submenu-item"><%= link_to(t('.all_matches'), matches_path(all_by_user: current_user.id), class: "submenu-link") %></li>
+              <li class="submenu-item"><%= link_to(t('.my_played_matches'), matches_path(played_by_user: current_user.id), class: "submenu-link") %></li>
+              <li class="submenu-item"><%= link_to(t('.my_future_matches'), matches_path(not_played_by_user: current_user.id), class: "submenu-link") %></li>
+              <li class="submenu-item"><%= link_to(t('.my_invitations'), matches_path(invitations_by_user: current_user.id), class: "submenu-link") %></li>
+              <li class="submenu-item"><%= link_to(t('.created_by_user'), matches_path(created_by_user: current_user.id), class: "submenu-link") %></li>
             </ul>
           </div>    
           <!--//nav-link-->

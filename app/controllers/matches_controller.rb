@@ -6,7 +6,9 @@ class MatchesController < ApplicationController
 
   # GET /matches or /matches.json
   def index
-    @q = visible_matches_base.ransack(name_cont: params[:q])
+    @q = Match.filter(filtering_params)
+              .eager_load(:user, :game, :participants)
+              .ransack(name_cont: params[:q])
     @matches = @q.result.page(params[:page])
   end
 
@@ -76,15 +78,9 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
   end
 
-  # Returns public matches or matches in which the player
-  # participates, has been invited or has created them.
-  def visible_matches_base
-    Match.eager_load(:user, :game, :participants)
-         .left_joins(:match_participants, :match_invitations)
-         .where(user: current_user)
-         .or(Match.where(public: true))
-         .or(Match.where(match_participants: { user: current_user }))
-         .or(Match.where(match_invitations: { user: current_user }))
+  def filtering_params
+    filter = params.slice(*Match.filter_scopes)
+    filter.present? ? filter : { all_by_user: current_user.id }
   end
 
   def match_params

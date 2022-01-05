@@ -61,6 +61,8 @@ es:
       all_matches: 'Todas'
       my_played_matches: 'Mis pórximas partidas'
       my_future_matches: 'Partidas jugadas'
+      my_invitations: 'Invitado/a a'
+      created_by_user: 'Creadas'
       games: 'Juegos'
       players: 'Jugadores'
       notifications: 'Notificaciones'
