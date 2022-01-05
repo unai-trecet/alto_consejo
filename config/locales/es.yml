@@ -47,7 +47,7 @@ es:
       invited_users: 'Jugadores invitados'
       start_at: 'Empieza'
       end_at: 'Acaba'
-      joined_players: 'Jugadores apuntados' 
+      joined_players: 'Jugadores inscritos' 
       join: 'Unirme a partida'
       edit: 'Cambiar partida'
       back: 'Todas las partidas'
