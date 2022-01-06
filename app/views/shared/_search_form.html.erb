@@ -1,5 +1,10 @@
 
 <%= search_form_for @q do |f| %>
-  <%= f.text_field search_field, class: 'form-control' %>
-  <%= f.submit class: 'btn btn-primary' %>
+  <div class="input-group mb-3">
+    <%= f.text_field search_field, class: 'form-control' %>
+    <div class="input-group-append">
+      <%= f.submit class: 'btn btn-secondary' %>
+    </div>
+  </div>
 <% end %>
+
