@@ -33,7 +33,6 @@ RSpec.describe '/matches', type: :request do
   let(:invalid_params) { valid_params.merge(title: nil) }
 
   describe 'GET /index' do
-  
     def call_action(params: {}, format: 'html')
       get matches_url(params: params, format: format)
     end
