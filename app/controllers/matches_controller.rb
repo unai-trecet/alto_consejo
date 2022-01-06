@@ -3,12 +3,13 @@
 class MatchesController < ApplicationController
   before_action :set_match, only: %i[show edit update destroy]
   before_action :require_permission, only: %i[edit update destroy]
+  before_action :inspect_filters, only: %i[index]
 
   # GET /matches or /matches.json
   def index
     @q = Match.filter(filtering_params)
               .eager_load(:user, :game, :participants)
-              .ransack(name_cont: params[:q])
+              .ransack(params[:q])
     @matches = @q.result.page(params[:page])
   end
 
@@ -78,9 +79,20 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
   end
 
+  def require_permission
+    return if current_user == @match.creator
+
+    redirect_to unauthorized_path
+  end
+
+  def inspect_filters
+    redirect_to unauthorized_path if filtering_params.values.any? { |v| v.to_i != current_user.id }
+  end
+
   def filtering_params
-    filter = params.slice(*Match.filter_scopes)
-    filter.present? ? filter : { all_by_user: current_user.id }
+    return { all_by_user: current_user.id } if (@filter ||= params.slice(*Match.filter_scopes)).blank?
+
+    @filter
   end
 
   def match_params
@@ -93,11 +105,5 @@ class MatchesController < ApplicationController
 
   def usernames
     params['match']['invited_users']&.gsub('@', '')&.split
-  end
-
-  def require_permission
-    return if current_user == @match.creator
-
-    redirect_to root_path, flash: { error: t('custom_errors.unauthorized') }
   end
 end

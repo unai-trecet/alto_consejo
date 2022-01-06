@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   get 'autocomplete', to: 'pages#autocomplete'
 
+  get '403', to: 'error_pages#unauthorized', as: :unauthorized
+
   devise_for :admins,
              path: 'admin_auth',
              path_names: {

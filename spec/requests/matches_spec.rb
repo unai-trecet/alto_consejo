@@ -33,6 +33,7 @@ RSpec.describe '/matches', type: :request do
   let(:invalid_params) { valid_params.merge(title: nil) }
 
   describe 'GET /index' do
+  
     def call_action(params: {}, format: 'html')
       get matches_url(params: params, format: format)
     end
@@ -49,6 +50,7 @@ RSpec.describe '/matches', type: :request do
 
         expect(response).to be_successful
       end
+
       context 'filtering' do
         let(:another_user) { create(:user, :confirmed) }
         let!(:not_public_match) do
@@ -100,6 +102,20 @@ RSpec.describe '/matches', type: :request do
           expect(matches_data.map do |match|
                    match['id']
                  end).to match_array([invitation_match.id])
+        end
+
+        it 'is succesful when using all filter_scopes' do
+          Match.filter_scopes.each do |filter|
+            call_action(params: { filter => user.id })
+            expect(response).to be_successful
+          end
+        end
+
+        it 'redirect to 403 if user id is not current_user id' do
+          Match.filter_scopes.each do |filter|
+            call_action(params: { filter => another_user.id })
+            expect(response).to redirect_to(unauthorized_path)
+          end
         end
       end
     end
@@ -224,8 +240,7 @@ RSpec.describe '/matches', type: :request do
 
         call_action(match)
 
-        expect(response).to redirect_to(root_path)
-        expect(flash[:error]).to eq('No estás autorizado a realizar esa acción.')
+        expect(response).to redirect_to(unauthorized_path)
       end
     end
   end
@@ -286,8 +301,7 @@ RSpec.describe '/matches', type: :request do
 
           match.reload
           expect(match.title).to eq('Old title')
-          expect(flash[:error]).to eq('No estás autorizado a realizar esa acción.')
-          expect(response).to redirect_to(root_path)
+          expect(response).to redirect_to(unauthorized_path)
         end
       end
 

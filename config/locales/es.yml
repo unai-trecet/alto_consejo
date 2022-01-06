@@ -5,6 +5,11 @@ es:
   services:
     errors:
       match_participation_manager_sufix: " argumentos pasados: user_id: %{user_id}, match_id: %{match_id}"
+  error_pages:
+    403: 
+      title: 'No autorizado' 
+      message: 'Lo siento, no tienes permiso para acceder ahí.'
+      button: 'Ir a inicio'
   games:
     index:
       author: 'Autor/a'
