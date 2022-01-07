@@ -1,0 +1,19 @@
+<div class="container-fluid">
+  <p id="notice"><%= notice %></p>
+
+  <h1><%= t('.title') %></h1>
+  <br>
+  
+  <%= month_calendar events: @matches, attribute: :start_at, end_attribute: :end_at do |date, matches| %>
+    <%= date %>
+
+    <% matches.each do |match| %>
+      <div>
+        <%= link_to(match.title, match) %>
+      </div>
+    <% end %>    
+  <% end %>
+
+  <%= link_to 'New Game', new_game_path, class: "btn btn-success min-width-btn" %>
+
+</div>

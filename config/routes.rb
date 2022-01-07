@@ -50,4 +50,6 @@ Rails.application.routes.draw do
   resources :match_participants, only: %i[create destroy]
   resources :match_invitations, only: %i[create destroy]
   resources :notifications, only: %i[index show new create destroy]
+
+  get 'matches_calendar', to: 'calendars#matches_calendar' 
 end

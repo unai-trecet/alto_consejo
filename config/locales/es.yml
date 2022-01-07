@@ -10,6 +10,9 @@ es:
       title: 'No autorizado' 
       message: 'Lo siento, no tienes permiso para acceder ahí.'
       button: 'Ir a inicio'
+  calendars:
+    matches_calendar:
+      title: 'Calendario de partidas'
   games:
     index:
       author: 'Autor/a'
