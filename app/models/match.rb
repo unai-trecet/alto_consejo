@@ -26,6 +26,10 @@ class Match < ApplicationRecord
       .or(where(match_participants: { user_id: user_id }))
       .or(where(match_invitations: { user_id: user_id }))
   }
+  filter_scope :participations_by_user, lambda { |user_id|
+    joins(:match_participants)
+      .where(match_participants: { user_id: user_id })
+  }
   filter_scope :played_by_user, lambda { |user_id|
     played
       .joins(:match_participants)
@@ -41,4 +45,10 @@ class Match < ApplicationRecord
       .where(match_invitations: { user_id: user_id })
   }
   filter_scope :created_by_user, ->(user_id) { where(user_id: user_id) }
+  filter_scope :related_to_user, lambda { |user_id|
+    left_joins(:match_participants, :match_invitations)
+      .where(user_id: user_id)
+      .or(where(match_participants: { user_id: user_id }))
+      .or(where(match_invitations: { user_id: user_id }))
+  }
 end
