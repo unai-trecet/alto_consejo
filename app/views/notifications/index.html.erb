@@ -1,8 +1,8 @@
 <<div class="container-fluid">
   <p id="notice"><%= notice %></p>
 
-  <h1>Notifications</h1>
-
+  <h1><%= t('.title') %></h1>
+  <br>
   <table class="table">
     <thead>
       <tr>
@@ -21,16 +21,14 @@
             <td><%= link_to(nt.message, notification_path(notification)) %></td>
             <td><%= l(notification.created_at, format: :long) %></td>
             <td><%= notification.read_at ? l(notification.read_at, format: :long) : '' %></td>
-            <td><%= link_to 'Show', notification %></td>
-          <td><%= link_to 'Destroy', notification, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Destroy', notification, method: :delete, data: { confirm: t('.delete_confirmation') } %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
+
   <%= paginate @notifications %>
 
   <br>
-
-  <%= link_to 'New Notification', new_notification_path, class: "btn btn-success min-width-btn" %>
 
 </div>>

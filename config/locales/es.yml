@@ -74,11 +74,13 @@ es:
       calendar: 'Calendario'
   notifications:
     index:
+      title: 'Notificaciones'
       message: 'Mensaje'
       type: 'Tipo'
       url: 'Enlace'
       created: 'Creada el'
       read: 'Leída el'
+      delete_confirmation: 'Estás seguro/a?'
     show:
       notification: 'Notificación'
       details: 'Ver detalles'
@@ -90,6 +92,8 @@ es:
       profile_edit: 'Editar perfil'
     update:
       user_changed: 'Datos de usuario cambiados con éxito'
+    match_participation_notification:
+      message: '@%{player} se ha inscrito en una partida en la que participas.'
     match_invitation_notification:
       message: 'Has sido invitado/a a una partida organizada por @%{organizer}'
   pages:

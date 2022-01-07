@@ -18,10 +18,10 @@ class MatchParticipationNotification < Noticed::Base
   # Define helper methods to make rendering easier.
   #
   def message
-    t('.message')
+    t('.message', player: params[:player].username)
   end
 
   def url
-    post_path(params[:post])
+    match_path(params[:match])
   end
 end
