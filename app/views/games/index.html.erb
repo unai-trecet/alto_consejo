@@ -2,14 +2,16 @@
   <p id="notice"><%= notice %></p>
 
   <h1><%= t('.page_title') %></h1>
+  <br>
+  <%= render partial: 'shared/search_form', locals: { search_field: :name_or_user_username_or_author_cont } %>
 
   <table class="table">
     <thead>
       <tr>
-          <th><%= t('.name') %></th>
-          <th><%= t('.author') %></th>
-          <th><%= t('.added_by') %></th>
-          <th><%= t('.played_matches') %></th>
+          <th><%= sort_link(@q, :name, t('.name')) %></th>
+          <th><%= sort_link(@q, :author, t('.author')) %></th>
+          <th><%= sort_link(@q, :user_username, t('.added_by')) %></th>
+          <th><%= sort_link(@q, :matches_count, t('.played_matches')) %></th>
           <th><%= t('.bgg_link') %></th>
           <th colspan="3"></th>
       </tr>
@@ -21,7 +23,7 @@
             <td><%= link_to(game.name, game) %></td>
             <td><%= game.author %></td>
             <td><%= link_to(game.user.username, game.user) %></td>
-            <td><%= game.played_matches.size %></td>
+            <td><%= game.matches.count %></td>
             <td><%= link_to(game.bbg_link, game.bbg_link) %></td>
           <td><%= link_to 'Edit', edit_game_path(game) if game.added_by == current_user %></td>
         </tr>

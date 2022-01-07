@@ -14,4 +14,9 @@ class Game < ApplicationRecord
   def players
     played_matches.includes(:participants).map(&:participants).flatten.uniq
   end
+
+  ransacker :matches_count do
+    query = '(SELECT COUNT(matches.game_id) FROM matches WHERE matches.game_id = games.id GROUP BY matches.game_id)'
+    Arel.sql(query)
+  end
 end
