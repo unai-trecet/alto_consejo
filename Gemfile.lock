@@ -314,6 +314,8 @@ GEM
     semantic_range (3.0.0)
     shoulda-matchers (5.0.0)
       activesupport (>= 5.2.0)
+    simple_calendar (2.4.3)
+      rails (>= 3.0)
     sinatra (2.1.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
@@ -424,6 +426,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver
   shoulda-matchers (~> 5.0)
+  simple_calendar (~> 2.4)
   solargraph
   timecop
   turbolinks (~> 5.2.0)

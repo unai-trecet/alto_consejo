@@ -21,6 +21,7 @@ gem 'pg'
 gem 'puma'
 gem 'ransack'
 gem 'sass-rails', '>= 6'
+gem 'simple_calendar', '~> 2.4'
 gem 'turbolinks', '~> 5.2.0'
 gem 'webpacker'
 
