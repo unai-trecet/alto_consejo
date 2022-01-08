@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'matches/show', type: :view do
   let(:creator) { create(:user, :confirmed, username: 'supercreator') }
+  let!(:pera) { create(:user, :confirmed, username: 'pera') }
+
   before(:each) do
     sign_in(creator)
     @match = assign(:match, create(:match,
@@ -23,7 +25,8 @@ RSpec.describe 'matches/show', type: :view do
     expect(rendered).to match(/Amazing game/)
     expect(rendered).to match(/Dungeon crawler/)
     expect(rendered).to match(/At my place/)
-    expect(rendered).to match(/supercreator pera/)
+    expect(rendered).to match(/pera/)
+    expect(rendered).to match(/supercreator/)
     expect(rendered).to match(/24 de noviembre de 2021 a las 18:09/)
     expect(rendered).to match(/24 de noviembre de 2021 a las 20:09/)
     expect(rendered).to match(/supercreator/)

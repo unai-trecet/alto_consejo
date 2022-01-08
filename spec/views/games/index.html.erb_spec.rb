@@ -23,12 +23,12 @@ RSpec.describe 'games/index', type: :view do
 
   it 'renders a list of games' do
     assign(:games, games)
+    assign(:q, Game.ransack(nil))
+
     render
 
     assert_select 'tr>td', text: 'Name', count: 1
     assert_select 'tr>td', text: 'Name 2', count: 1
-    assert_select 'tr>td', text: 'Description', count: 2
-    assert_select 'tr>td', text: '', count: 2
     assert_select 'tr>td', text: 'MyText', count: 2
     assert_select 'tr>td', text: 'MyText', count: 2
   end

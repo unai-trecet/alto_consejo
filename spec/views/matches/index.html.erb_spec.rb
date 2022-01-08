@@ -21,13 +21,12 @@ RSpec.describe 'matches/index', type: :view do
 
   it 'renders a list of matches' do
     assign(:matches, matches)
+    assign(:q, Match.ransack(nil))
+
     render
 
     assert_select 'tr>td', text: 'Gloomhaven game', count: 1
     assert_select 'tr>td', text: 'Terraforming Mars game', count: 1
-    assert_select 'tr>td', text: 'Amazing dungeon crawler', count: 1
-    assert_select 'tr>td', text: 'Terraform next humanity planet', count: 1
-    assert_select 'tr>td', text: 'MyText', count: 2
     assert_select 'tr>td', text: '9', count: 1
     assert_select 'tr>td', text: '10', count: 1
   end
