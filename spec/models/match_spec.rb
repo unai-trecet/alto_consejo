@@ -70,12 +70,23 @@ RSpec.describe Match, type: :model do
       let!(:participated_match_future) do
         create(:match, title: 'Participation Match Future', user: another_user, public: false, end_at: 1.hour.since)
       end
-      let!(:created_match) { create(:match, title: 'Created Match', user: user, public: false) }
+      let!(:created_match) { create(:match, title: 'Created Match', user: user, public: false, end_at: 1.hour.since) }
 
       before do
         create(:match_invitation, match: invitation_match, user: user)
+        create(:match_participant, match: created_match, user: user)
         create(:match_participant, match: participated_match_past, user: user)
         create(:match_participant, match: participated_match_future, user: user)
+
+        create(:match_invitation, match: invitation_match, user: another_user)
+        create(:match_participant, match: participated_match_past, user: another_user)
+        create(:match_participant, match: participated_match_future, user: another_user)
+
+        create(:match_invitation, match: created_match)
+        create(:match_invitation, match: created_match)
+
+        create(:match_participant, match: created_match)
+        create(:match_participant, match: created_match)
       end
 
       describe 'all_by_user' do
@@ -90,6 +101,19 @@ RSpec.describe Match, type: :model do
           expect(result.pluck(:id))
             .to match_array([public_match.id, invitation_match.id, participated_match_past.id,
                              participated_match_future.id, created_match.id])
+        end
+      end
+
+      describe 'participations_by_user' do
+        it 'returns matches participated to which the user was invited' do
+          result = Match.participations_by_user(user.id)
+
+          expect(Match.count).to eq(6)
+          expect(result.size).to eq(3)
+          expect(result.pluck(:title)).to match_array(['Participation Match Future', 'Created Match',
+                                                       'Participation Match Played'])
+          expect(result.pluck(:id)).to match_array([created_match.id, participated_match_past.id,
+                                                    participated_match_future.id])
         end
       end
 
@@ -109,9 +133,9 @@ RSpec.describe Match, type: :model do
           result = Match.not_played_by_user(user.id)
 
           expect(Match.count).to eq(6)
-          expect(result.size).to eq(1)
-          expect(result.pluck(:title)).to match_array(['Participation Match Future'])
-          expect(result.pluck(:id)).to match_array([participated_match_future.id])
+          expect(result.size).to eq(2)
+          expect(result.pluck(:title)).to match_array(['Participation Match Future', 'Created Match'])
+          expect(result.pluck(:id)).to match_array([participated_match_future.id, created_match.id])
         end
       end
 
@@ -122,7 +146,6 @@ RSpec.describe Match, type: :model do
           expect(Match.count).to eq(6)
           expect(result.size).to eq(1)
           expect(result.pluck(:title)).to match_array(['Invitation Match'])
-          expect(result.pluck(:id)).to match_array([invitation_match.id])
         end
       end
 
@@ -133,7 +156,19 @@ RSpec.describe Match, type: :model do
           expect(Match.count).to eq(6)
           expect(result.size).to eq(1)
           expect(result.pluck(:title)).to match_array(['Created Match'])
-          expect(result.pluck(:id)).to match_array([created_match.id])
+        end
+      end
+
+      describe 'related_to_user' do
+        it 'returns matches created, participated by the user or where was invited' do
+          result = Match.related_to_user(user.id)
+
+          expect(Match.count).to eq(6)
+          expect(result.size).to eq(4)
+          expect(result.pluck(:title)).to match_array(['Participation Match Future', 'Created Match',
+                                                       'Participation Match Played', 'Invitation Match'])
+          expect(result.pluck(:id)).to match_array([created_match.id, participated_match_past.id,
+                                                    participated_match_future.id, invitation_match.id])
         end
       end
     end

@@ -19,12 +19,14 @@ class Match < ApplicationRecord
   scope :played, -> { where('end_at < ?', DateTime.now) }
   scope :not_played, -> { where('end_at > ?', DateTime.now) }
   scope :open, -> { where(public: true) }
+
   filter_scope :all_by_user, lambda { |user_id|
     left_joins(:match_participants, :match_invitations)
       .where(user_id: user_id)
       .or(where(public: true))
       .or(where(match_participants: { user_id: user_id }))
       .or(where(match_invitations: { user_id: user_id }))
+      .distinct
   }
   filter_scope :participations_by_user, lambda { |user_id|
     joins(:match_participants)
@@ -50,5 +52,6 @@ class Match < ApplicationRecord
       .where(user_id: user_id)
       .or(where(match_participants: { user_id: user_id }))
       .or(where(match_invitations: { user_id: user_id }))
+      .distinct
   }
 end
