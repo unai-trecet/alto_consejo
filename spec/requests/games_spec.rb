@@ -34,111 +34,180 @@ RSpec.describe '/games', type: :request do
     }
   end
 
-  before { sign_in user }
-
   describe 'GET /index' do
-    it 'renders a successful response' do
-      Game.create! valid_attributes
+    def call_action
       get games_url
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    it 'renders a successful response' do
+      sign_in user
+      create(:game, valid_attributes)
+
+      call_action
+
       expect(response).to be_successful
     end
   end
 
   describe 'GET /show' do
-    it 'renders a successful response' do
-      game = Game.create! valid_attributes
+    def call_action(game = create(:game))
       get game_url(game)
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    it 'renders a successful response' do
+      sign_in user
+      game = create(:game, valid_attributes)
+
+      call_action(game)
+
       expect(response).to be_successful
     end
   end
 
   describe 'GET /new' do
-    it 'renders a successful response' do
+    def call_action
       get new_game_url
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    it 'renders a successful response' do
+      sign_in user
+
+      call_action
+
       expect(response).to be_successful
     end
   end
 
   describe 'GET /edit' do
-    it 'render a successful response' do
-      game = Game.create! valid_attributes
+    def call_action(game = create(:game))
       get edit_game_url(game)
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    it 'renders a successful response' do
+      sign_in user
+      game = create(:game, valid_attributes)
+
+      call_action(game)
+
       expect(response).to be_successful
     end
   end
 
   describe 'POST /create' do
-    context 'with valid parameters' do
-      it 'creates a new Game' do
-        expect do
-          post games_url, params: { game: valid_attributes }
-        end.to change(Game, :count).by(1)
-      end
-
-      it 'redirects to the created game' do
-        post games_url, params: { game: valid_attributes }
-        expect(response).to redirect_to(game_url(Game.last))
-      end
+    def call_action(params = { game: valid_attributes })
+      post games_url, params: params
     end
 
-    context 'with invalid parameters' do
-      it 'does not create a new Game' do
-        expect do
-          post games_url, params: { game: invalid_attributes }
-        end.to change(Game, :count).by(0)
+    it_behaves_like 'not_logged_in'
+
+    context 'when authenticated' do
+      before { sign_in user }
+      context 'with valid parameters' do
+        it 'creates a new Game' do
+          expect do
+            call_action
+          end.to change(Game, :count).by(1)
+        end
+
+        it 'redirects to the created game' do
+          call_action
+          expect(response).to redirect_to(game_url(Game.last))
+        end
       end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
-        post games_url, params: { game: invalid_attributes }
-        expect(response.status).to eq(422)
-        expect(response).to render_template(:new)
+      context 'with invalid parameters' do
+        it 'does not create a new Game' do
+          expect do
+            call_action({ game: invalid_attributes })
+          end.to change(Game, :count).by(0)
+        end
+
+        it "renders a successful response (i.e. to display the 'new' template)" do
+          call_action({ game: invalid_attributes })
+
+          expect(response.status).to eq(422)
+          expect(response).to render_template(:new)
+        end
       end
     end
   end
 
   describe 'PATCH /update' do
-    context 'with valid parameters' do
-      let(:new_attributes) do
-        { name: 'LOTR 2' }
-      end
-
-      it 'updates the requested game' do
-        game = Game.create! valid_attributes
-        patch game_url(game), params: { game: new_attributes }
-        game.reload
-        expect(game.name).to eq('LOTR 2')
-      end
-
-      it 'redirects to the game' do
-        game = Game.create! valid_attributes
-        patch game_url(game), params: { game: new_attributes }
-        game.reload
-        expect(response).to redirect_to(game_url(game))
-      end
+    def call_action(game = create(:game), params = { game: valid_attributes })
+      patch game_url(game), params: params
     end
 
-    context 'with invalid parameters' do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
-        game = Game.create! valid_attributes
-        patch game_url(game), params: { game: invalid_attributes }
-        expect(response.status).to eq(422)
-        expect(response).to render_template(:edit)
+    it_behaves_like 'not_logged_in'
+
+    context 'when authenticated' do
+      before { sign_in user }
+      context 'with valid parameters' do
+        let(:new_attributes) do
+          { name: 'LOTR 2' }
+        end
+
+        it 'updates the requested game' do
+          game = create(:game, valid_attributes)
+
+          call_action(game, { game: new_attributes })
+
+          game.reload
+          expect(game.name).to eq('LOTR 2')
+        end
+
+        it 'redirects to the game' do
+          game = create(:game, valid_attributes)
+
+          call_action(game, { game: new_attributes })
+
+          game.reload
+          expect(response).to redirect_to(game_url(game))
+        end
+
+        context 'with invalid parameters' do
+          it "renders a successful response (i.e. to display the 'edit' template)" do
+            game = create(:game, valid_attributes)
+
+            call_action(game, { game: invalid_attributes })
+
+            expect(response.status).to eq(422)
+            expect(response).to render_template(:edit)
+          end
+        end
       end
     end
   end
 
   describe 'DELETE /destroy' do
-    it 'destroys the requested game' do
-      game = Game.create! valid_attributes
-      expect do
-        delete game_url(game)
-      end.to change(Game, :count).by(-1)
+    def call_action(game = create(:game))
+      delete game_url(game)
     end
 
-    it 'redirects to the games list' do
-      game = Game.create! valid_attributes
-      delete game_url(game)
-      expect(response).to redirect_to(games_url)
+    it_behaves_like 'not_logged_in'
+
+    context 'when authenticated' do
+      before { sign_in user }
+
+      it 'destroys the requested game' do
+        game = create(:game, valid_attributes)
+        expect do
+          call_action(game)
+        end.to change(Game, :count).by(-1)
+      end
+
+      it 'redirects to the games list' do
+        game = create(:game, valid_attributes)
+        call_action(game)
+        expect(response).to redirect_to(games_url)
+      end
     end
   end
 end
