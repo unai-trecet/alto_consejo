@@ -23,6 +23,7 @@ gem 'ransack'
 gem 'sass-rails', '>= 6'
 gem 'simple_calendar', '~> 2.4'
 gem 'turbolinks', '~> 5.2.0'
+gem 'turbo-rails'
 gem 'webpacker'
 
 group :development, :test do
@@ -53,3 +54,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+
+# Use Redis for Action Cable
+gem 'redis', '~> 4.0'
