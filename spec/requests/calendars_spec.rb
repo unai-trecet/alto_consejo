@@ -12,9 +12,9 @@ RSpec.describe CalendarsController, type: :request do
     it_behaves_like 'not_logged_in'
 
     it 'renders a successful response calling expeccted MAtch scope.' do
+      sign_in(user)
       expect(Match).to receive(:related_to_user).with(user.id).and_call_original
 
-      sign_in(user)
       call_action
 
       expect(response).to be_successful
