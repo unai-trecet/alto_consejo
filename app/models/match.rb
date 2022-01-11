@@ -4,15 +4,16 @@ class Match < ApplicationRecord
   include Filterable
 
   belongs_to :user
+  alias_attribute :creator, :user
   belongs_to :game
-
+  
   has_many :match_participants
   has_many :participants, through: :match_participants, source: :user
 
   has_many :match_invitations
   has_many :invitees, through: :match_invitations, source: :user
 
-  alias_attribute :creator, :user
+  has_many :comments, as: :commentable
 
   validates :title, :start_at, :end_at, presence: true
 

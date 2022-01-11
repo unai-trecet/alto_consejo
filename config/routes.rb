@@ -45,7 +45,9 @@ Rails.application.routes.draw do
              }
 
   resources :games
-  resources :matches
+  resources :matches do
+    resources :comments, module: :matches
+  end
   resources :users, only: %i[index show edit update]
   resources :match_participants, only: %i[create destroy]
   resources :match_invitations, only: %i[create destroy]

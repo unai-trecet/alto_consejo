@@ -1,0 +1,14 @@
+<%= form_with model: [commentable, comment], id: dom_id_for_records(commentable, comment) do |f| %>
+  <% if f.object.errors.any? %>
+    <div>
+      <% f.object.full_messages.each do |message| %>
+        <div>
+          <%= messsage %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.rich_text_area :body %>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>
