@@ -4,12 +4,12 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.3'
-gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
+gem 'rails', '~> 7.0.0'
 
-gem 'active_model_serializers'
+# gem 'active_model_serializers'
 gem 'awesome_print'
-gem 'bcrypt', '~> 3.1.7'
-gem 'bootsnap', '>= 1.4.4', require: false
+gem 'bcrypt'
+# gem 'bootsnap', require: false
 gem 'devise'
 gem 'httparty'
 # gem 'image_processing', '~> 1.2'
@@ -21,8 +21,8 @@ gem 'pg'
 gem 'puma'
 gem 'ransack'
 gem 'sass-rails', '>= 6'
-gem 'simple_calendar', '~> 2.4'
-gem 'turbolinks', '~> 5.2.0'
+gem 'simple_calendar'
+# gem 'turbolinks'
 gem 'turbo-rails'
 gem 'webpacker'
 
@@ -36,7 +36,7 @@ end
 
 group :development do
   gem 'brakeman'
-  gem 'rack-mini-profiler', '~> 2.0'
+  gem 'rack-mini-profiler'
   gem 'rubocop'
   gem 'solargraph'
   gem 'web-console', '>= 4.1.0'
@@ -48,7 +48,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
-  gem 'shoulda-matchers', '~> 5.0'
+  gem 'shoulda-matchers'
   gem 'webdrivers'
 end
 

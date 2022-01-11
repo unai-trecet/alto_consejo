@@ -1,12 +1,15 @@
-class Matches::CommentsController < ApplicationController
-  include Commentable
+# frozen_string_literal: true
 
-  before_action :set_commentable
+module Matches
+  class CommentsController < ApplicationController
+    include Commentable
 
-  private
+    before_action :set_commentable
 
-  def set_commentable
-    @commentable = Match.find(params[:match_id])
+    private
+
+    def set_commentable
+      @commentable = Match.find(params[:match_id])
+    end
   end
-
 end

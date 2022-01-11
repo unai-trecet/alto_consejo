@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Commentable
   extend ActiveSupport::Concern
   include ActionView::RecordIdentifier
@@ -10,12 +12,12 @@ module Commentable
       if @comment.save
         format.html { redirect_to @commentable }
       else
-        format.turbo_stream {
+        format.turbo_stream do
           render turbo_stream: turbo_stream
-                               .replace(dom_id_for_records(@commentable, @comment), 
-                                        partial: 'comments/form', 
-                                        locals: { comment: @comment, commentable: @commentable })
-        }
+            .replace(dom_id_for_records(@commentable, @comment),
+                     partial: 'comments/form',
+                     locals: { comment: @comment, commentable: @commentable })
+        end
         format.html { redirect_to @commentable, notice: @comment.errors.full_messages }
       end
     end
