@@ -11,8 +11,9 @@ gem 'awesome_print'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise'
+gem 'hotwire-rails'
 gem 'httparty'
-# gem 'image_processing', '~> 1.2'
+gem 'image_processing'
 gem 'jbuilder', '~> 2.7'
 gem 'kaminari'
 gem 'mailcatcher'
@@ -53,3 +54,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+
+# Use Redis for Action Cable
+gem 'redis', '~> 4.0'

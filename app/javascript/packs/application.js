@@ -6,7 +6,7 @@
 require.context('./images', true);
 
 import Rails from "@rails/ujs";
-// import Turbolinks from "turbolinks";  
+import "@hotwired/turbo-rails"
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import "jquery";
@@ -32,5 +32,4 @@ $("#match_start_at, #match_end_at").flatpickr({
 
 
 Rails.start()
-// Turbolinks.start()
 ActiveStorage.start()
