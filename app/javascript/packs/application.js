@@ -34,5 +34,3 @@ $("#match_start_at, #match_end_at").flatpickr({
 Rails.start()
 // Turbolinks.start()
 ActiveStorage.start()
-
-import "controllers"
