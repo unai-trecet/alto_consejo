@@ -3,7 +3,6 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
-    "@hotwired/turbo-rails": "^7.1.0",
     "@popperjs/core": "^2.10.2",
     "@rails/actioncable": "^6.0.0",
     "@rails/actiontext": "6.1.4-4",

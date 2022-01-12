@@ -258,7 +258,6 @@ GEM
       activerecord (>= 5.2.4)
       activesupport (>= 5.2.4)
       i18n
-    redis (4.5.1)
     regexp_parser (2.2.0)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -359,9 +358,6 @@ GEM
     thor (1.2.1)
     tilt (2.0.10)
     timecop (0.9.4)
-    turbo-rails (1.0.0)
-      actionpack (>= 6.0.0)
-      railties (>= 6.0.0)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -428,7 +424,6 @@ DEPENDENCIES
   rails (~> 6.1.4, >= 6.1.4.1)
   rails-controller-testing
   ransack
-  redis (~> 4.0)
   rspec-rails
   rubocop
   sass-rails (>= 6)
@@ -437,7 +432,6 @@ DEPENDENCIES
   simple_calendar (~> 2.4)
   solargraph
   timecop
-  turbo-rails
   turbolinks (~> 5.2.0)
   tzinfo-data
   web-console (>= 4.1.0)

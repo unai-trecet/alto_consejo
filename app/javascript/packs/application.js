@@ -6,11 +6,11 @@
 require.context('./images', true);
 
 import Rails from "@rails/ujs";
+// import Turbolinks from "turbolinks";  
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import "jquery";
 import "jquery-ui";
-import '@hotwired/turbo-rails';
 
 window.bootstrap = require("bootstrap");
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -30,7 +30,9 @@ $("#match_start_at, #match_end_at").flatpickr({
   dateFormat: "F, d Y H:i"
 });
 
+
 Rails.start()
+// Turbolinks.start()
 ActiveStorage.start()
 
 import "controllers"
