@@ -86,4 +86,7 @@
 </div>
 
 <h4><%= t('.comments') %></h4>
-<%= render partial: 'comments/form', locals: { comment:Comment.new, commentable: @match } %>
+<%= render partial: 'comments/form', locals: { comment: Comment.new, commentable: @match } %>
+<ul>
+  <%= render partial: 'comments/comment', collection: @match.comments %>
+</ul>

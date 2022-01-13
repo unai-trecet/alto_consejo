@@ -1,0 +1,13 @@
+<li>
+  <%= comment.body %> -
+
+  <%= form_for [comment, Comment.new] do |f| %>
+      <%= f.rich_text_area :body %><br/>
+      <%= f.submit "Reply"  %>
+      <% end %>
+
+  <ul>
+      <%= render partial: 'comments/comment', collection: comment.comments %>
+  </ul>
+
+</li>

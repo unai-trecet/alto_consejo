@@ -6,7 +6,7 @@ class Match < ApplicationRecord
   belongs_to :user
   alias_attribute :creator, :user
   belongs_to :game
-  
+
   has_many :match_participants
   has_many :participants, through: :match_participants, source: :user
 

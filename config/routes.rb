@@ -48,6 +48,9 @@ Rails.application.routes.draw do
   resources :matches do
     resources :comments, module: :matches
   end
+  resources :comments do
+    resources :comments
+  end
   resources :users, only: %i[index show edit update]
   resources :match_participants, only: %i[create destroy]
   resources :match_invitations, only: %i[create destroy]

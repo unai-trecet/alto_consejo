@@ -3,10 +3,13 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+// 
 require.context('./images', true);
 
 import Rails from "@rails/ujs";
 import "@hotwired/turbo-rails"
+import "trix"
+import "@rails/actiontext"
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import "jquery";
@@ -33,3 +36,6 @@ $("#match_start_at, #match_end_at").flatpickr({
 
 Rails.start()
 ActiveStorage.start()
+
+require("trix")
+require("@rails/actiontext")
