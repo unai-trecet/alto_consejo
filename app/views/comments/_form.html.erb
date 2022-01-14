@@ -1,9 +1,9 @@
 <%= form_with model: [commentable, comment], id: dom_id_for_records(commentable, comment) do |f| %>
   <% if f.object.errors.any? %>
     <div>
-      <% f.object.full_messages.each do |message| %>
+      <% f.object.errors.full_messages.each do |message| %>
         <div>
-          <%= messsage %>
+          <%= message %>
         </div>
       <% end %>
     </div>

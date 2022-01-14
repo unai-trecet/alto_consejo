@@ -12,19 +12,17 @@ module Commentable
   def create
     @comment = @commentable.comments.new(comment_params)
     @comment.user = current_user
-    binding.pry
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to :back, notice: 'Your comment was successfully posted!' }
+        format.html { redirect_to @commentable }
       else
         format.turbo_stream do
-          render turbo_stream: turbo_stream
-            .replace(dom_id_for_records(@commentable, @comment),
-                     partial: 'comments/form',
-                     locals: { comment: @comment, commentable: @commentable })
+          render turbo_stream: turbo_stream.replace(dom_id_for_records(@commentable, @comment),
+                                                    partial: 'comments/form',
+                                                    locals: { comment: @comment, commentable: @commentable })
         end
-        format.html { redirect_to @commentable, notice: @comment.errors.full_messages }
+        # format.html { redirect_to @commentable, notice: @comment.errors.full_messages }
       end
     end
   end

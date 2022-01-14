@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Game < ApplicationRecord
+  has_rich_text :description
+
   belongs_to :user
   alias_attribute :added_by, :user
 
