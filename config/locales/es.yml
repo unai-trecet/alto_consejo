@@ -18,6 +18,8 @@ es:
       confirm: '¿Estás seguro/a?'
       delete: 'Borrar'
       edit: 'Modificar'
+    form:
+      cancel: 'Cancelar'
   games:
     index:
       author: 'Autor/a'

@@ -1,3 +1,4 @@
+<%= turbo_stream_from comment %>
 <%= turbo_frame_tag comment do %>
   <div class="d-flex justify-content-between">
     <div>
@@ -5,7 +6,7 @@
     </div>
     <div class="d-flex">
       <%= link_to t('.edit'), edit_comment_path(comment), class: 'mr-2' %>
-      <%= button_to t('.delete'), comment_path(comment), method: :delete, data: { confirm: t('.confirm') }, class: 'mr-2' %>
+      <%= button_to t('.delete'), comment_path(comment), method: :delete, data: { confirm: t('.confirm') }, class: 'btn-link' %>
     </div>
   </div>
     <%= comment.body %>

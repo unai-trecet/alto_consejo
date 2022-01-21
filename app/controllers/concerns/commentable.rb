@@ -15,8 +15,8 @@ module Commentable
 
     respond_to do |format|
       if @comment.save
-        comment = Comment.new
         format.turbo_stream do
+          comment = Comment.new
           render turbo_stream: turbo_stream
             .replace(dom_id_for_records(@commentable, comment),
                      partial: 'comments/form',
