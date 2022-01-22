@@ -13,6 +13,13 @@ es:
   calendars:
     matches_calendar:
       title: 'Calendario de partidas'
+  comments:
+    comment:
+      confirm: '¿Estás seguro/a?'
+      delete: 'Borrar'
+      edit: 'Modificar'
+    form:
+      cancel: 'Cancelar'
   games:
     index:
       author: 'Autor/a'
