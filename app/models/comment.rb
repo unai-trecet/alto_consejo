@@ -5,7 +5,9 @@ class Comment < ApplicationRecord
 
   belongs_to :user
   belongs_to :commentable, polymorphic: true
-  has_many :comments, as: :commentable
+  belongs_to :parent, optional: true, class_name: 'Comment'
+
+  has_many :comments, foreign_key: :parent_id
 
   has_rich_text :body
 
@@ -13,7 +15,8 @@ class Comment < ApplicationRecord
 
   after_create_commit do
     broadcast_append_later_to [commentable, :comments],
-                              target: "#{dom_id(commentable)}_comments"
+                              target: "#{dom_id(commentable)}_comments",
+                              partial: 'comments/comment_with_replies'
   end
 
   after_update_commit do
@@ -22,5 +25,6 @@ class Comment < ApplicationRecord
 
   after_destroy_commit do
     broadcast_remove_to self
+    broadcast_Action_later_to self, action: :remove, target: "#{dom_id(self)}_with_comments"
   end
 end

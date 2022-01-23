@@ -92,6 +92,7 @@
 <% end %>
 
 <%= turbo_stream_from @match, :comments %>
+
 <%= tag.div id: "#{dom_id(@match)}_comments" do %>
-  <%= render @match.comments %>
+  <%= render partial: 'comments/comment_with_replies', collection: @match.comments, as: :comment %>
 <% end %>

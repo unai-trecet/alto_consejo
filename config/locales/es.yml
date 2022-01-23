@@ -18,6 +18,8 @@ es:
       confirm: '¿Estás seguro/a?'
       delete: 'Borrar'
       edit: 'Modificar'
+    comment_with_replies:
+      reply: 'Responder'
     form:
       cancel: 'Cancelar'
   games:

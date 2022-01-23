@@ -12,13 +12,14 @@ module Commentable
   def create
     @comment = @commentable.comments.new(comment_params)
     @comment.user = current_user
+    @comment.parent_id = @parent&.id
 
     respond_to do |format|
       if @comment.save
         format.turbo_stream do
           comment = Comment.new
           render turbo_stream: turbo_stream
-            .replace(dom_id_for_records(@commentable, comment),
+            .replace(dom_id_for_records(@parent || @commentable, comment),
                      partial: 'comments/form',
                      locals: { comment: comment, commentable: @commentable })
         end
@@ -26,7 +27,7 @@ module Commentable
       else
         format.turbo_stream do
           render turbo_stream: turbo_stream
-            .replace(dom_id_for_records(@commentable, @comment),
+            .replace(dom_id_for_records(@patent || @commentable, @comment),
                      partial: 'comments/form',
                      locals: { comment: @comment, commentable: @commentable })
         end
@@ -38,6 +39,6 @@ module Commentable
   private
 
   def comment_params
-    params.require(:comment).permit(:body, :parent_id)
+    params.require(:comment).permit(:body)
   end
 end

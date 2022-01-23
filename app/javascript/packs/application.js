@@ -37,5 +37,4 @@ $("#match_start_at, #match_end_at").flatpickr({
 Rails.start()
 ActiveStorage.start()
 
-require("trix")
-require("@rails/actiontext")
+import "controllers"
