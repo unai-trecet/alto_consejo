@@ -38,3 +38,4 @@ Rails.start()
 ActiveStorage.start()
 
 import "controllers"
+

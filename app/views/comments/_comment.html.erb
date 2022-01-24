@@ -5,10 +5,10 @@
       <%= comment.user.username %>
     </div>
     <div class="d-flex">
-      <%= link_to t('.edit'), edit_comment_path(comment), class: 'mr-2' %>
-      <%= button_to t('.delete'), comment_path(comment), method: :delete, data: { confirm: t('.confirm') }, class: 'btn-link' %>
+      <%= link_to t('.edit'), edit_comment_path(comment), class: "mr-2" %>
+      <%= button_to t('.delete'), comment_path(comment), method: :delete, data: { confirm: t('.confirm') } %>
     </div>
   </div>
-    <%= comment.body %>
-  </div>
+
+  <%= comment.body %>
 <% end %>

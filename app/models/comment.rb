@@ -15,7 +15,7 @@ class Comment < ApplicationRecord
 
   after_create_commit do
     broadcast_append_later_to [commentable, :comments],
-                              target: "#{dom_id(commentable)}_comments",
+                              target: "#{dom_id(parent || commentable)}_comments",
                               partial: 'comments/comment_with_replies'
   end
 
@@ -25,6 +25,6 @@ class Comment < ApplicationRecord
 
   after_destroy_commit do
     broadcast_remove_to self
-    broadcast_Action_later_to self, action: :remove, target: "#{dom_id(self)}_with_comments"
+    broadcast_action_to self, action: :remove, target: "#{dom_id(self)}_with_comments"
   end
 end

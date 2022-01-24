@@ -23,6 +23,7 @@ gem 'puma'
 gem 'ransack'
 gem 'sass-rails', '>= 6'
 gem 'simple_calendar', '~> 2.4'
+gem 'stimulus-rails'
 gem 'webpacker'
 
 group :development, :test do
