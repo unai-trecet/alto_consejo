@@ -13,7 +13,7 @@
       <% end %>
     </div>
   <% end %>
-  <%= f.rich_text_area :body %>
+  <%= f.rich_text_area :body, id: "#{dom_id_for_records(*model)}_body" %>
   <%= f.submit class: 'btn btn-primary' %>
   <%= link_to t('.cancel'), comment, class: 'btn btn-link' if f.object.persisted? %>
 <% end %>

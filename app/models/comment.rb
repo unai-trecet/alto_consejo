@@ -7,7 +7,7 @@ class Comment < ApplicationRecord
   belongs_to :commentable, polymorphic: true
   belongs_to :parent, optional: true, class_name: 'Comment'
 
-  has_many :comments, foreign_key: :parent_id
+  has_many :comments, foreign_key: :parent_id, dependent: :destroy
 
   has_rich_text :body
 
@@ -20,7 +20,7 @@ class Comment < ApplicationRecord
   end
 
   after_update_commit do
-    broadcast_replace_later_to self
+    broadcast_replace_to self
   end
 
   after_destroy_commit do
