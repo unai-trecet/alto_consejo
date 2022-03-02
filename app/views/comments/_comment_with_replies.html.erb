@@ -3,11 +3,11 @@
 <div id="<%= dom_id(comment) %>_with_comments" data-controller="comment-reply">
   <%= render comment %>
 
-  <div class="text-sm">
-    <%= link_to t('.reply'), "#", data: { action: "click->comment-reply#toggle" } %>
-  </div>
-  
   <% if session.enabled? %>
+    <div class="text-sm">
+      <%= link_to t('.reply'), "#", data: { action: "click->comment-reply#toggle" } %>
+    </div>
+  
     <div id="<%= dom_id(comment) %>_comments">
       <%= render partial: "comments/form", locals: { commentable: comment,
                                                      comment: Comment.new,
