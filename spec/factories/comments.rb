@@ -2,9 +2,10 @@
 
 FactoryBot.define do
   factory :comment do
-    user { nil }
-    commentable { nil }
-    parent_id { 1 }
-    body { nil }
+    user { create(:user, :confirmed) }
+    # We need a commentable object to create the first comment.
+    commentable { create(:match) }
+    parent_id { nil }
+    body { Faker::Lorem.paragraph(sentence_count: 2) }
   end
 end
