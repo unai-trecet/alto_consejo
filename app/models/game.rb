@@ -10,6 +10,8 @@ class Game < ApplicationRecord
   has_many :played_matches, -> { played }, class_name: 'Match'
   has_many :planned_matches, -> { not_played }, class_name: 'Match'
 
+  has_many :comments, as: :commentable
+
   validates :user_id, :name, presence: true
   validates :name, uniqueness: true
 

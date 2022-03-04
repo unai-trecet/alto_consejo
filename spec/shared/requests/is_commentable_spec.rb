@@ -14,7 +14,7 @@ RSpec.shared_examples 'is_commentable' do
 
     it_behaves_like 'not_logged_in'
 
-    it 'creates a valid comment belonging comment' do
+    it 'creates a valid comment belonging commentable' do
       sign_in(user)
       call_action
 

@@ -85,7 +85,6 @@
   <%= link_to t('.back') , matches_path, class: "btn btn-light min-width-btn" %>
 </div>
 
-<!-- <%= turbo_stream_from :match %> -->
 <h4><%= t('.comments') %></h4>
 <%= turbo_frame_tag :comment_form do %>
   <%= render partial: 'comments/form', locals: { comment: Comment.new, commentable: @match } %>

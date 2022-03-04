@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe '/comments', type: :request do
   let(:user) { create(:user, :confirmed) }
   let(:another_user) { create(:user, :confirmed) }
-  
+
   def valid_attributes(input = {})
     {
       body: 'Testing comments controller.',

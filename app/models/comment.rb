@@ -11,7 +11,7 @@ class Comment < ApplicationRecord
 
   has_rich_text :body
 
-  validates :body, presence: true
+  validates :body, :user, presence: true
 
   after_create_commit do
     broadcast_append_later_to [commentable, :comments],
