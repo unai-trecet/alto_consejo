@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.3'
-gem 'rails', '~> 7.0.2.2'
+gem 'rails', '~> 7.0.2.3'
 
 gem 'active_model_serializers'
 gem 'awesome_print'
@@ -14,6 +14,7 @@ gem 'devise'
 gem 'hotwire-rails'
 gem 'httparty'
 gem 'image_processing'
+gem 'importmap-rails'
 gem 'jbuilder', '~> 2.7'
 gem 'kaminari'
 gem 'mailcatcher'
