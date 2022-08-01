@@ -82,4 +82,6 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   config.active_storage.service = :local
+
+  config.assets.check_precompiled_asset = false
 end

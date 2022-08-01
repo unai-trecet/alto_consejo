@@ -3,8 +3,8 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.3'
-gem 'rails', '~> 7.0.2.3'
+ruby '3.1.2'
+gem 'rails', '~> 7.0.3'
 
 gem 'active_model_serializers'
 gem 'awesome_print'
@@ -25,7 +25,6 @@ gem 'ransack'
 gem 'sass-rails', '>= 6'
 gem 'simple_calendar', '~> 2.4'
 gem 'stimulus-rails'
-gem 'webpacker'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -58,3 +57,5 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Use Redis for Action Cable
 gem 'redis', '~> 4.0'
+
+gem "cssbundling-rails", "~> 1.1"
