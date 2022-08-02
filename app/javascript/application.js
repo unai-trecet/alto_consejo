@@ -15,9 +15,9 @@ import "./channels";
 // import "jquery";
 // import "jquery-ui";
 
-window.bootstrap = require("bootstrap");
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import "@fortawesome/fontawesome-free/css/all";
+// window.bootstrap = require("bootstrap");
+// import 'bootstrap-icons/font/bootstrap-icons.css';
+// import "@fortawesome/fontawesome-free/css/all";
 
 import('./admin');
 

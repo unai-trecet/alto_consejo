@@ -10,6 +10,7 @@ gem 'active_model_serializers'
 gem 'awesome_print'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.4.4', require: false
+gem "cssbundling-rails", "~> 1.1"
 gem 'devise'
 gem 'hotwire-rails'
 gem 'httparty'
@@ -57,5 +58,3 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Use Redis for Action Cable
 gem 'redis', '~> 4.0'
-
-gem "cssbundling-rails", "~> 1.1"
