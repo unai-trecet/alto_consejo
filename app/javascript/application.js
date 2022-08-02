@@ -12,17 +12,13 @@ import "@rails/actiontext"
 import "trix"
 import * as ActiveStorage from "@rails/activestorage";
 import "./channels";
-// import "jquery";
-// import "jquery-ui";
 
-// window.bootstrap = require("bootstrap");
-// import 'bootstrap-icons/font/bootstrap-icons.css';
-// import "@fortawesome/fontawesome-free/css/all";
+console.log('BRASAS 2');
 
 import('./admin');
 
-import './autocompleteUsername';
-import './autocompleteGameName';
+// import './autocompleteUsername';
+// import './autocompleteGameName';
 
 require("flatpickr")
 
@@ -31,7 +27,7 @@ $("#match_start_at, #match_end_at").flatpickr({
   dateFormat: "F, d Y H:i"
 });
 
-console.log('BRASAS 2');
+console.log('BRASAS 3');
 
 Rails.start()
 ActiveStorage.start()

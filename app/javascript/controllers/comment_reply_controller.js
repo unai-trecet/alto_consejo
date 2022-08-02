@@ -6,5 +6,10 @@ export default class extends Controller {
   toggle(event) {
     event.preventDefault()
     this.formTarget.classList.toggle("d-none")
+    console.log("MAL FATAL")
+  }
+
+  greeet() {
+    console.log("MAL FATAL 3")
   }
 }

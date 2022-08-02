@@ -1,8 +1,16 @@
+// src/controllers/hello_controller.js
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="comment-reply"
 export default class extends Controller {
-  connect() {
-    this.element.textContent = "HEllo World"
+  static targets = [ 'form' ]
+
+  greet(event) {
+    event.preventDefault()
+    this.formTarget.classList.toggle("d-none")
+    console.log(`Hello!`)
+  }
+
+  get name() {
+    return this.nameTarget.value
   }
 }
