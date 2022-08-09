@@ -1,4 +1,4 @@
-FROM ruby:3.0.2
+FROM ruby:3.1.2
 RUN apt-get update -qq \
     && apt-get install -y curl \
     && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
