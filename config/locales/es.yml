@@ -69,6 +69,19 @@ es:
       edit: 'Cambiar partida'
       back: 'Todas las partidas'
       comments: 'Comentarios'
+    new:
+      page_title: 'Nueva partiva'
+      back: 'atrás'
+    form:
+      title: 'Título'
+      description: 'Descripción'
+      game: 'Juego'
+      location: 'Localización'
+      number_of_players: 'Número dde jugadores'
+      invited_users: 'Jugadores invitados'
+      inicio: 'Empieza'
+      fin: 'Acaba'
+      public_match: 'Partida pública'
   match_participants:
     create:
       created: 'Te has inscrito con éxito en la partida!'
@@ -123,6 +136,13 @@ es:
       played_matches: 'Partidas jugadas'
       added_games: 'Juegos añadidos'
   activerecord:
+    models:
+      match: 
+        one: 'partida'
+        other: 'partidas'
+      attributes:
+        match:
+          title: 'título'
     errors:
       models:
         match_participant:
