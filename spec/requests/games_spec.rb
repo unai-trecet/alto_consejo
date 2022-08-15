@@ -103,7 +103,7 @@ RSpec.describe '/games', type: :request do
 
   describe 'POST /create' do
     def call_action(params = { game: valid_attributes })
-      post games_url, params: params
+      post games_url, params:
     end
 
     it_behaves_like 'not_logged_in'
@@ -142,7 +142,7 @@ RSpec.describe '/games', type: :request do
 
   describe 'PATCH /update' do
     def call_action(game = create(:game), params = { game: valid_attributes })
-      patch game_url(game), params: params
+      patch game_url(game), params:
     end
 
     it_behaves_like 'not_logged_in'

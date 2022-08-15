@@ -23,7 +23,7 @@ module Commentable
             render turbo_stream: turbo_stream
               .replace(dom_id_for_records(@parent, comment),
                        partial: 'comments/form',
-                       locals: { comment: comment,
+                       locals: { comment:,
                                  commentable: @parent,
                                  data: { comment_reply_target: 'form' },
                                  class: 'd-none' })
@@ -31,7 +31,7 @@ module Commentable
             render turbo_stream: turbo_stream
               .replace(dom_id_for_records(@commentable, comment),
                        partial: 'comments/form',
-                       locals: { comment: comment, commentable: @commentable })
+                       locals: { comment:, commentable: @commentable })
           end
         end
         format.html { redirect_to @commentable }

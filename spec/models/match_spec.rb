@@ -72,13 +72,13 @@ RSpec.describe Match, type: :model do
       let!(:participated_match_future) do
         create(:match, title: 'Participation Match Future', user: another_user, public: false, end_at: 1.hour.since)
       end
-      let!(:created_match) { create(:match, title: 'Created Match', user: user, public: false, end_at: 1.hour.since) }
+      let!(:created_match) { create(:match, title: 'Created Match', user:, public: false, end_at: 1.hour.since) }
 
       before do
-        create(:match_invitation, match: invitation_match, user: user)
-        create(:match_participant, match: created_match, user: user)
-        create(:match_participant, match: participated_match_past, user: user)
-        create(:match_participant, match: participated_match_future, user: user)
+        create(:match_invitation, match: invitation_match, user:)
+        create(:match_participant, match: created_match, user:)
+        create(:match_participant, match: participated_match_past, user:)
+        create(:match_participant, match: participated_match_future, user:)
 
         create(:match_invitation, match: invitation_match, user: another_user)
         create(:match_participant, match: participated_match_past, user: another_user)

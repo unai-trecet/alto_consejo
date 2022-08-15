@@ -7,7 +7,7 @@ RSpec.describe MatchInvitationMailer, type: :mailer do
     it 'creates an email with the correct content' do
       user = create(:user, :confirmed, email: 'test@email.com')
       match = create(:match)
-      email = MatchInvitationMailer.with(match: match, recipient: user).match_invitation_email
+      email = MatchInvitationMailer.with(match:, recipient: user).match_invitation_email
       ActionMailer::Base.deliveries.clear
 
       expect do

@@ -9,7 +9,7 @@ RSpec.describe '/comments', type: :request do
   def valid_attributes(input = {})
     {
       body: 'Testing comments controller.',
-      user: user
+      user:
     }.merge(input)
   end
 
@@ -64,7 +64,7 @@ RSpec.describe '/comments', type: :request do
 
   describe 'PATCH /update' do
     def call_action(comment = create(:comment), params = { comment: valid_attributes })
-      patch comment_url(comment), params: params
+      patch comment_url(comment), params:
     end
 
     it_behaves_like 'not_logged_in'

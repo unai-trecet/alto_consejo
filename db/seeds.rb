@@ -37,7 +37,7 @@ puts 'Matches creation!'
   match = FactoryBot.create(:match, user: creator,
                                     game: pick_random_object(Game),
                                     number_of_players: invited_users.count + rand(1),
-                                    invited_users: invited_users)
+                                    invited_users:)
   print '.'
 end
 
@@ -45,7 +45,7 @@ puts ''
 puts 'MatchInvitations creation!'
 
 Match.all.each do |match|
-  MatchInvitationsManager.new(match: match).call
+  MatchInvitationsManager.new(match:).call
   MatchParticipationManager.new(match_id: match.id, user_id: match.creator.id).call unless (match.id % 5).zero?
   print '.'
 end

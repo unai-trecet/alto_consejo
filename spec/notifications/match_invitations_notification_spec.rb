@@ -6,7 +6,7 @@ RSpec.describe MatchInvitationNotification do
     let(:match) { create(:match, user: creator, game: create(:game, user: creator)) }
     let!(:recipients) { create_list(:user, 2) }
 
-    subject { described_class.with(match: match) }
+    subject { described_class.with(match:) }
 
     it 'sends proper email to recipients and create Notifications' do
       subject

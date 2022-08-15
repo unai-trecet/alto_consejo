@@ -9,7 +9,7 @@ RSpec.shared_examples 'is_commentable' do
 
   describe 'create' do
     def call_action(params: valid_params)
-      post url, params: params
+      post url, params:
     end
 
     it_behaves_like 'not_logged_in'

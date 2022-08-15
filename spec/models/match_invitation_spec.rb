@@ -16,7 +16,7 @@ RSpec.describe MatchInvitation, type: :model do
 
   describe 'match_creator' do
     let(:match) { create(:match) }
-    subject { create(:match_invitation, match: match) }
+    subject { create(:match_invitation, match:) }
 
     it 'return the creator of the match' do
       expect(subject.match_creator).to eq(match.user)

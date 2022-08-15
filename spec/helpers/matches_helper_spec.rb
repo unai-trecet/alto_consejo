@@ -14,7 +14,7 @@ RSpec.describe MatchesHelper, type: :helper do
     end
 
     it 'returns false if current_user is not among match invited_users' do
-      assign(:match, create(:match, user: user))
+      assign(:match, create(:match, user:))
 
       expect(helper.can_participate?).to eq(false)
     end
@@ -24,7 +24,7 @@ RSpec.describe MatchesHelper, type: :helper do
     it 'returns true if current_user isa match participant' do
       match = create(:match, invited_users: [user.username])
       assign(:match, match)
-      create(:match_participant, user: user, match: match)
+      create(:match_participant, user:, match:)
 
       expect(helper.already_participating?).to eq(true)
     end

@@ -11,7 +11,7 @@ RSpec.describe MatchInvitationsManager do
 
     context 'with creator participating in the match' do
       subject do
-        described_class.new(match: match)
+        described_class.new(match:)
       end
 
       it 'creates expected match_invitations' do
@@ -24,8 +24,8 @@ RSpec.describe MatchInvitationsManager do
       end
 
       it 'does not create new match_invitations if they already exists' do
-        create(:match_invitation, user: invited_users.first, match: match)
-        create(:match_invitation, user: invited_users.last, match: match)
+        create(:match_invitation, user: invited_users.first, match:)
+        create(:match_invitation, user: invited_users.last, match:)
 
         expect do
           subject.call
@@ -33,8 +33,8 @@ RSpec.describe MatchInvitationsManager do
       end
 
       it 'does not send notifications if the invitations already existed' do
-        create(:match_invitation, user: invited_users.first, match: match)
-        create(:match_invitation, user: invited_users.last, match: match)
+        create(:match_invitation, user: invited_users.first, match:)
+        create(:match_invitation, user: invited_users.last, match:)
 
         expect do
           subject.call
@@ -44,7 +44,7 @@ RSpec.describe MatchInvitationsManager do
       it 'does nothing if no users were invited' do
         match = create(:match, user: creator, invited_users: [])
 
-        subject = described_class.new(match: match)
+        subject = described_class.new(match:)
         expect do
           subject.call
         end.not_to have_enqueued_job(Noticed::DeliveryMethods::Email)
@@ -52,7 +52,7 @@ RSpec.describe MatchInvitationsManager do
 
       it 'triggers invited users notifications' do
         expect(MatchInvitationNotification)
-          .to receive(:with).with(match: match)
+          .to receive(:with).with(match:)
                             .and_call_original
 
         expect do

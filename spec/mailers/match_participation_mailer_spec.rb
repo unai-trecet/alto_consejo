@@ -6,9 +6,9 @@ RSpec.describe MatchParticipationMailer, type: :mailer do
   describe 'match_participation_email' do
     let(:creator) { create(:user, :confirmed) }
     let(:player) { create(:user, :confirmed, username: 'testing-email') }
-    let(:match) { create(:match, creator: creator) }
+    let(:match) { create(:match, creator:) }
 
-    subject { described_class.with(match: match, player: player, recipient: creator) }
+    subject { described_class.with(match:, player:, recipient: creator) }
     it 'creates an email with the correct content' do
       email = subject.match_participation_email
       ActionMailer::Base.deliveries.clear

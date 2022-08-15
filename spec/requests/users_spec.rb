@@ -24,7 +24,7 @@ RSpec.describe 'Users', type: :request do
     let!(:users) { create_list(:user, 4, :confirmed) }
 
     def call_action(params: {}, headers: {})
-      get users_path, params: params, headers: headers
+      get users_path, params:, headers:
     end
 
     it_behaves_like 'not_logged_in'
@@ -36,7 +36,7 @@ RSpec.describe 'Users', type: :request do
         let(:headers) { { 'ACCEPT' => 'application/json' } }
 
         it 'returns all the users in json format when no query param is passed' do
-          call_action(headers: headers)
+          call_action(headers:)
 
           users_info = JSON.parse(response.body)
           expect(users_info.count).to eq(5)
@@ -45,7 +45,7 @@ RSpec.describe 'Users', type: :request do
         end
 
         it 'returns all the users in json format when no query param is passed' do
-          call_action(params: { q: 'rodol' }, headers: headers)
+          call_action(params: { q: 'rodol' }, headers:)
 
           users_info = JSON.parse(response.body)
 

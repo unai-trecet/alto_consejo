@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe '/matches', type: :request do
   let(:user) { create(:user, :confirmed) }
-  let(:game) { create(:game, user: user) }
+  let(:game) { create(:game, user:) }
   let(:invited_users) { create_list(:user, 2) }
 
   let(:valid_params) do
@@ -34,7 +34,7 @@ RSpec.describe '/matches', type: :request do
 
   describe 'GET /index' do
     def call_action(params: {}, format: 'html')
-      get matches_url(params: params, format: format)
+      get matches_url(params:, format:)
     end
 
     it_behaves_like 'not_logged_in'
@@ -69,8 +69,8 @@ RSpec.describe '/matches', type: :request do
         end
 
         before do
-          create(:match_invitation, match: invitation_match, user: user)
-          create(:match_participant, match: participation_match, user: user)
+          create(:match_invitation, match: invitation_match, user:)
+          create(:match_participant, match: participation_match, user:)
         end
 
         it 'returns basic filtered matches when no filter is passed' do
@@ -266,8 +266,8 @@ RSpec.describe '/matches', type: :request do
 
         it 'updates the requested match' do
           # We create the existing invitations before the update was done.
-          create(:match_invitation, match: match, user: invited_users.first)
-          create(:match_invitation, match: match, user: invited_users.last)
+          create(:match_invitation, match:, user: invited_users.first)
+          create(:match_invitation, match:, user: invited_users.last)
 
           expect(match.title).to eq('Old title')
           expect_any_instance_of(MatchInvitationsManager)

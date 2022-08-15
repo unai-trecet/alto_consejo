@@ -17,11 +17,11 @@ RSpec.describe MatchParticipationManager do
 
       expect(participation.user).to eq(player)
       expect(participation.match).to eq(match)
-      expect(result).to eq({ participation: participation, errors: [] })
+      expect(result).to eq({ participation:, errors: [] })
     end
 
     it 'does not create another match_participant if it exists' do
-      create(:match_participant, user: player, match: match)
+      create(:match_participant, user: player, match:)
       expect(MatchParticipant.count).to eq(1)
       result = {}
       expect do
@@ -29,11 +29,11 @@ RSpec.describe MatchParticipationManager do
       end.not_to change(MatchParticipant, :count)
       participation = MatchParticipant.last
 
-      expect(result).to eq({ participation: participation, errors: [] })
+      expect(result).to eq({ participation:, errors: [] })
     end
 
     it 'deletes a match_invitation if exists' do
-      create(:match_invitation, user: player, match: match)
+      create(:match_invitation, user: player, match:)
       expect do
         subject.call
       end.to change(MatchInvitation, :count).from(1).to(0)
@@ -41,14 +41,14 @@ RSpec.describe MatchParticipationManager do
 
     it 'sends notidifications to participants except the one joining' do
       participants = create_list(:user, 2, :confirmed)
-      create(:match_participant, match: match, user: participants.first)
-      create(:match_participant, match: match, user: participants.last)
-      create(:match_participant, match: match, user: creator)
+      create(:match_participant, match:, user: participants.first)
+      create(:match_participant, match:, user: participants.last)
+      create(:match_participant, match:, user: creator)
 
       recipients = participants.push(creator)
 
       expect(MatchParticipationNotification)
-        .to receive(:with).with(match: match, player: player)
+        .to receive(:with).with(match:, player:)
                           .and_call_original
       expect_any_instance_of(MatchParticipationNotification).to receive(:deliver_later)
         .with(recipients).and_call_original
@@ -61,7 +61,7 @@ RSpec.describe MatchParticipationManager do
     it 'does nothing if notification fails' do
       # We create an reviously existing invitation for the player
       # that should not be deleted.
-      create(:match_invitation, user: player, match: match)
+      create(:match_invitation, user: player, match:)
       # We make MatchParticipationNotification fail to raise a
       # Noticed::ValidationError exception.
       allow(MatchParticipationNotification)

@@ -13,7 +13,7 @@ RSpec.describe 'MatchParticipants', type: :request do
     end
 
     def call_action(params = valid_params)
-      post '/match_participants', params: params
+      post '/match_participants', params:
     end
 
     it_behaves_like 'not_logged_in'
@@ -77,7 +77,7 @@ RSpec.describe 'MatchParticipants', type: :request do
       before { sign_in(user) }
 
       it 'deletes the participant when the participant is the current_user' do
-        user_participant = create(:match_participant, user: user)
+        user_participant = create(:match_participant, user:)
 
         expect do
           call_action(user_participant)
@@ -87,8 +87,8 @@ RSpec.describe 'MatchParticipants', type: :request do
       end
 
       it 'deletes the participant when the user was the creator of the match' do
-        match = create(:match, user: user)
-        a_participant = create(:match_participant, match: match)
+        match = create(:match, user:)
+        a_participant = create(:match_participant, match:)
 
         expect do
           call_action(a_participant)

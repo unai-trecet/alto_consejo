@@ -16,7 +16,7 @@ RSpec.describe 'matches/show', type: :view do
                                    invited_users: %w[supercreator pera],
                                    start_at: '2021-11-24 18:09:43',
                                    end_at: '2021-11-24 20:09:43',
-                                   creator: creator,
+                                   creator:,
                                    game: create(:game, name: 'Gloomhaven')))
   end
 
