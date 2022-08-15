@@ -54,6 +54,7 @@
               <li class="submenu-item"><%= link_to(t('.my_future_matches'), matches_path(not_played_by_user: current_user.id), class: "submenu-link") %></li>
               <li class="submenu-item"><%= link_to(t('.my_invitations'), matches_path(invitations_by_user: current_user.id), class: "submenu-link") %></li>
               <li class="submenu-item"><%= link_to(t('.created_by_user'), matches_path(created_by_user: current_user.id), class: "submenu-link") %></li>
+              <li class="submenu-item"><%= link_to(t('.new_match'), new_match_path, class: "submenu-link") %></li>
             </ul>
           </div>    
           <!--//nav-link-->

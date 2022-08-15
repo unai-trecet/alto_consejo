@@ -94,6 +94,7 @@ es:
       my_future_matches: 'Partidas jugadas'
       my_invitations: 'Invitado/a a'
       created_by_user: 'Creadas'
+      new_match: 'Crear partida'
       games: 'Juegos'
       players: 'Jugadores'
       notifications: 'Notificaciones'
