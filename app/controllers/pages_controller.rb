@@ -15,7 +15,7 @@ class PagesController < ApplicationController
   end
 
   def autocomplete
-    names = AutocompleteGameName.new(params[:q]).call
-    render json: names
+    @search_results = AutocompleteGameName.new(params['q']).call
+    render layout: false
   end
 end

@@ -3,9 +3,10 @@
 // ./bin/rails generate stimulus controllerName
 
 import { application } from "./application"
+import { Autocomplete } from "stimulus-autocomplete"
 
 import CommentReplyController from "./comment_reply_controller"
 application.register("comment-reply", CommentReplyController)
 
-import SearchFormController from "./search_form_controller"
-application.register("search-form", SearchFormController)
+application.register("autocomplete", Autocomplete)
+

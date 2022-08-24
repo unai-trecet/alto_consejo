@@ -12,10 +12,11 @@
   <% end %>
 
   <%= form.hidden_field :user_id, value: current_user.id %>
-
-  <div id="search-name" class="form-group search-data mb-3" data-names="<%= @names.to_json %>">
+  
+  <div class="form-group search-data mb-3" data-controller="autocomplete" data-autocomplete-url-value="/autocomplete" data-autocomplete-min-length-value="3">
     <%= form.label :name, class: "form-label" %>
-    <%= form.text_field :name, autocomplete: :off, class: "form-control search-input", placeholder: "" %>
+    <%= form.search_field :name, autocomplete: :off, data: { autocomplete_target: 'input' }, placeholder: 'translate to spanish, please', class: 'form-control search-input' %>
+    <ul data-autocomplete-target="results"></ul>
   </div>
 
   <div class="form-group mb-3">
@@ -42,3 +43,5 @@
     <%= form.submit class: 'btn btn-primary' %>
   </div>
 <% end %>
+
+
