@@ -73,6 +73,11 @@ class MatchesController < ApplicationController
     end
   end
 
+  def search_game_name
+    @search_results = AutocompleteGameName.new(params['q']).call
+    render partial: 'shared/autocomplete', layout: false
+  end
+
   private
 
   def set_match

@@ -1,230 +1,234 @@
 es:
   hello: "Hola mundo"
   custom_errors:
-    unauthorized: 'No estás autorizado a realizar esa acción.'
+    unauthorized: "No estás autorizado a realizar esa acción."
   services:
     errors:
       match_participation_manager_sufix: " argumentos pasados: user_id: %{user_id}, match_id: %{match_id}"
   error_pages:
-    403: 
-      title: 'No autorizado' 
-      message: 'Lo siento, no tienes permiso para acceder ahí.'
-      button: 'Ir a inicio'
+    403:
+      title: "No autorizado"
+      message: "Lo siento, no tienes permiso para acceder ahí."
+      button: "Ir a inicio"
   calendars:
     matches_calendar:
-      title: 'Calendario de partidas'
+      title: "Calendario de partidas"
   comments:
     comment:
-      confirm: '¿Estás seguro/a?'
-      delete: 'Borrar'
-      edit: 'Modificar'
+      confirm: "¿Estás seguro/a?"
+      delete: "Borrar"
+      edit: "Modificar"
     comment_with_replies:
-      reply: 'Responder'
+      reply: "Responder"
     form:
-      cancel: 'Cancelar'
+      cancel: "Cancelar"
   games:
     index:
-      author: 'Autor/a'
-      name: 'Nombre'
-      added_by: 'Añadido por'
-      page_title: 'Juegos'
-      played_matches: 'Partidas'
-      bgg_link: 'BGG link'
+      author: "Autor/a"
+      name: "Nombre"
+      added_by: "Añadido por"
+      page_title: "Juegos"
+      played_matches: "Partidas"
+      bgg_link: "BGG link"
     show:
-      added_by: 'Añadido por'
-      author: 'Autor/a'
-      bgg_link: 'BGG link'
-      description: 'Descripción'
-      name: 'Nombre'
-      picture: 'Imagen'
-      planned_matches: 'Partidas planeadas'
-      played_matches: 'Partidas jugadas'
-      num_players: 'Número de jugadores que lo han jugado'
+      added_by: "Añadido por"
+      author: "Autor/a"
+      bgg_link: "BGG link"
+      description: "Descripción"
+      name: "Nombre"
+      picture: "Imagen"
+      planned_matches: "Partidas planeadas"
+      played_matches: "Partidas jugadas"
+      num_players: "Número de jugadores que lo han jugado"
+    form:
+      bgg_name_search: "Burcar nombre del juego en BGG"
   matches:
     create:
-      created: 'La partida ha sido creada con éxito.'
+      created: "La partida ha sido creada con éxito."
     index:
-      page_title: 'Partidas'
-      title: 'Título'
-      description: 'Descripción'
-      creator: 'Creador/a'
-      game: 'Juego'
-      number_of_players: 'Número de jugadores'
-      current_participants: 'Jugadores inscritos'
-      location: 'Lugar'
-      start_at: 'Empieza'
-      end_at: 'Termina' 
+      page_title: "Partidas"
+      title: "Título"
+      description: "Descripción"
+      creator: "Creador/a"
+      game: "Juego"
+      number_of_players: "Número de jugadores"
+      current_participants: "Jugadores inscritos"
+      location: "Lugar"
+      start_at: "Empieza"
+      end_at: "Termina"
     show:
-      title: 'Título'
-      description: 'Descripción'
-      creator: 'Creador'
-      game: 'Juego'
-      location: 'Localización'
-      number_of_players: 'Número dde jugadores'
-      invited_users: 'Jugadores invitados'
-      start_at: 'Empieza'
-      end_at: 'Acaba'
-      joined_players: 'Jugadores inscritos' 
-      join: 'Unirme a partida'
-      edit: 'Cambiar partida'
-      back: 'Todas las partidas'
-      comments: 'Comentarios'
+      title: "Título"
+      description: "Descripción"
+      creator: "Creador"
+      game: "Juego"
+      location: "Localización"
+      number_of_players: "Número de jugadores"
+      invited_users: "Jugadores invitados"
+      start_at: "Empieza"
+      end_at: "Acaba"
+      joined_players: "Jugadores inscritos"
+      join: "Unirme a partida"
+      edit: "Cambiar partida"
+      back: "Todas las partidas"
+      comments: "Comentarios"
     new:
-      page_title: 'Nueva partiva'
-      back: 'atrás'
+      page_title: "Nueva partiva"
+      back: "atrás"
     form:
-      title: 'Título'
-      description: 'Descripción'
-      game: 'Juego'
-      location: 'Localización'
-      number_of_players: 'Número dde jugadores'
-      invited_users: 'Jugadores invitados'
-      inicio: 'Empieza'
-      fin: 'Acaba'
-      public_match: 'Partida pública'
+      title: "Título"
+      description: "Descripción"
+      game: "Juego"
+      location: "Localización"
+      number_of_players: "Número de jugadores"
+      invited_users: "Jugadores invitados"
+      search_for_users: "Buscar jugadores"
+      invited_users_list: "Lista de jugadores invitados"
+      inicio: "Empieza"
+      fin: "Acaba"
+      public_match: "Partida pública"
   match_participants:
     create:
-      created: 'Te has inscrito con éxito en la partida!'
+      created: "Te has inscrito con éxito en la partida!"
   navigation:
     sidebar:
-      overview: 'Resumen'
-      matches: 'Partidas'
-      all_matches: 'Todas'
-      my_played_matches: 'Mis pórximas partidas'
-      my_future_matches: 'Partidas jugadas'
-      my_invitations: 'Invitado/a a'
-      created_by_user: 'Creadas'
-      new_match: 'Crear partida'
-      games: 'Juegos'
-      players: 'Jugadores'
-      notifications: 'Notificaciones'
-      calendar: 'Calendario'
+      overview: "Resumen"
+      matches: "Partidas"
+      all_matches: "Todas"
+      my_played_matches: "Mis pórximas partidas"
+      my_future_matches: "Partidas jugadas"
+      my_invitations: "Invitado/a a"
+      created_by_user: "Creadas"
+      new_match: "Crear partida"
+      games: "Juegos"
+      players: "Jugadores"
+      notifications: "Notificaciones"
+      calendar: "Calendario"
   notifications:
     index:
-      title: 'Notificaciones'
-      message: 'Mensaje'
-      type: 'Tipo'
-      url: 'Enlace'
-      created: 'Creada el'
-      read: 'Leída el'
-      delete_confirmation: 'Estás seguro/a?'
+      title: "Notificaciones"
+      message: "Mensaje"
+      type: "Tipo"
+      url: "Enlace"
+      created: "Creada el"
+      read: "Leída el"
+      delete_confirmation: "Estás seguro/a?"
     show:
-      notification: 'Notificación'
-      details: 'Ver detalles'
-      photo: 'Foto'
-      username: 'Nombre de usuario'
-      email: 'Correo electrónico'
-      manage_profile: 'Gestionar perfil'
+      notification: "Notificación"
+      details: "Ver detalles"
+      photo: "Foto"
+      username: "Nombre de usuario"
+      email: "Correo electrónico"
+      manage_profile: "Gestionar perfil"
     edit:
-      profile_edit: 'Editar perfil'
+      profile_edit: "Editar perfil"
     update:
-      user_changed: 'Datos de usuario cambiados con éxito'
+      user_changed: "Datos de usuario cambiados con éxito"
     match_participation_notification:
-      message: '@%{player} se ha inscrito en una partida en la que participas.'
+      message: "@%{player} se ha inscrito en una partida en la que participas."
     match_invitation_notification:
-      message: 'Has sido invitado/a a una partida organizada por @%{organizer}'
+      message: "Has sido invitado/a a una partida organizada por @%{organizer}"
   pages:
-    portal: 'Alto Consejo' 
+    portal: "Alto Consejo"
     dashboard:
-      overview: 'Resumen'
-      played_games: 'Partidas jugadas'
+      overview: "Resumen"
+      played_games: "Partidas jugadas"
   users:
     index:
-      players: 'Jugadores'
-      username: 'Nombre de ususario'
-      email: 'Correo electrónico'
-      created_matches: 'Partidas organizadas'
-      played_matches: 'Partidas jugadas'
-      added_games: 'Juegos añadidos'
+      players: "Jugadores"
+      username: "Nombre de ususario"
+      email: "Correo electrónico"
+      created_matches: "Partidas organizadas"
+      played_matches: "Partidas jugadas"
+      added_games: "Juegos añadidos"
   activerecord:
     models:
-      match: 
-        one: 'partida'
-        other: 'partidas'
+      match:
+        one: "partida"
+        other: "partidas"
       attributes:
         match:
-          title: 'título'
+          title: "título"
     errors:
       models:
         match_participant:
           user:
-            unique_user_and_match: 'Esta participación ya existe'
+            unique_user_and_match: "Esta participación ya existe"
         match_invitation:
           user:
-            unique_user_and_match: 'Esta invitación ya existe'
+            unique_user_and_match: "Esta invitación ya existe"
       messages:
-        record_invalid: 'La validación falló: %{errors}'
+        record_invalid: "La validación falló: %{errors}"
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
   # MAILERS
   match_participation_mailer:
     match_participation_email:
-      subject: '%{player} se ha unido a la partida!'
+      subject: "%{player} se ha unido a la partida!"
 
   ## Spanish datetime stuff
   #
   date:
     abbr_day_names:
-    - dom
-    - lun
-    - mar
-    - mié
-    - jue
-    - vie
-    - sáb
+      - dom
+      - lun
+      - mar
+      - mié
+      - jue
+      - vie
+      - sáb
     abbr_month_names:
-    - 
-    - ene
-    - feb
-    - mar
-    - abr
-    - may
-    - jun
-    - jul
-    - ago
-    - sep
-    - oct
-    - nov
-    - dic
+      -
+      - ene
+      - feb
+      - mar
+      - abr
+      - may
+      - jun
+      - jul
+      - ago
+      - sep
+      - oct
+      - nov
+      - dic
     day_names:
-    - domingo
-    - lunes
-    - martes
-    - miércoles
-    - jueves
-    - viernes
-    - sábado
+      - domingo
+      - lunes
+      - martes
+      - miércoles
+      - jueves
+      - viernes
+      - sábado
     abbr_day_name:
-    - Do
-    - Lu
-    - Ma
-    - Mi
-    - Ju
-    - Vi
-    - Sa
+      - Do
+      - Lu
+      - Ma
+      - Mi
+      - Ju
+      - Vi
+      - Sa
     formats:
       default: "%d/%m/%Y"
       long: "%d de %B de %Y"
       short: "%d de %b"
     month_names:
-    - 
-    - enero
-    - febrero
-    - marzo
-    - abril
-    - mayo
-    - junio
-    - julio
-    - agosto
-    - septiembre
-    - octubre
-    - noviembre
-    - diciembre
+      -
+      - enero
+      - febrero
+      - marzo
+      - abril
+      - mayo
+      - junio
+      - julio
+      - agosto
+      - septiembre
+      - octubre
+      - noviembre
+      - diciembre
     order:
-    - :day
-    - :month
-    - :year
+      - :day
+      - :month
+      - :year
   datetime:
     distance_in_words:
       about_x_hours:
@@ -287,7 +291,7 @@ es:
       invalid: no es válido
       less_than: debe ser menor que %{count}
       less_than_or_equal_to: debe ser menor que o igual a %{count}
-      model_invalid: 'La validación falló: %{errors}'
+      model_invalid: "La validación falló: %{errors}"
       not_a_number: no es un número
       not_an_integer: debe ser un entero
       odd: debe ser impar
@@ -305,7 +309,7 @@ es:
         one: no tiene la longitud correcta (1 carácter exactos)
         other: no tiene la longitud correcta (%{count} caracteres exactos)
     template:
-      body: 'Se encontraron problemas con los siguientes campos:'
+      body: "Se encontraron problemas con los siguientes campos:"
       header:
         one: No se pudo guardar este/a %{model} porque se encontró 1 error
         other: No se pudo guardar este/a %{model} porque se encontraron %{count} errores
@@ -345,9 +349,9 @@ es:
           trillion:
             one: billón
             other: billones
-          unit: ''
+          unit: ""
       format:
-        delimiter: ''
+        delimiter: ""
         precision: 1
         significant: true
         strip_insignificant_zeros: true
@@ -365,11 +369,11 @@ es:
           tb: TB
     percentage:
       format:
-        delimiter: ''
+        delimiter: ""
         format: "%n %"
     precision:
       format:
-        delimiter: ''
+        delimiter: ""
   support:
     array:
       last_word_connector: " y "

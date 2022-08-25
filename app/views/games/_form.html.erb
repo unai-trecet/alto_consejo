@@ -13,9 +13,9 @@
 
   <%= form.hidden_field :user_id, value: current_user.id %>
   
-  <div class="form-group search-data mb-3" data-controller="autocomplete" data-autocomplete-url-value="/autocomplete" data-autocomplete-min-length-value="3">
+  <div class="form-group search-data mb-3" data-controller="autocomplete" data-autocomplete-url-value="/search_game_name" data-autocomplete-min-length-value="3" data-autocomplete-selected-class="selected-result">
     <%= form.label :name, class: "form-label" %>
-    <%= form.search_field :name, autocomplete: :off, data: { autocomplete_target: 'input' }, placeholder: 'translate to spanish, please', class: 'form-control search-input' %>
+    <%= form.search_field :name, autocomplete: :off, data: { autocomplete_target: 'input' }, placeholder: t('.bgg_name_search'), class: 'form-control search-input' %>
     <ul data-autocomplete-target="results"></ul>
   </div>
 

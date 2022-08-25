@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update]
-  before_action :require_permission, except: %i[show index]
+  before_action :require_permission, except: %i[show index username_search]
 
   def index
     @q = User.includes(:games, :matches, :played_matches).ransack(username_or_email_cont: params[:q])
@@ -28,6 +28,13 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def username_search
+    @q = User.ransack(username_cont: params[:q])
+    @search_results = @q.result.map(&:username).take(10)
+
+    render partial: 'shared/autocomplete', layout: false
   end
 
   private

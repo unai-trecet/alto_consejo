@@ -6,8 +6,6 @@ Rails.application.routes.draw do
 
   get 'welcome', to: 'pages#welcome'
 
-  get 'autocomplete', to: 'pages#autocomplete'
-
   get '403', to: 'error_pages#unauthorized', as: :unauthorized
 
   devise_for :admins,
@@ -61,4 +59,6 @@ Rails.application.routes.draw do
   resources :notifications, only: %i[index show new create destroy]
 
   get 'matches_calendar', to: 'calendars#matches_calendar', as: :matches_calendar
+  get 'username_search', to: 'users#username_search', as: :username_search
+  get 'search_game_name', to: 'matches#search_game_name', as: :search_game_name
 end

@@ -13,9 +13,4 @@ class PagesController < ApplicationController
     @not_played_participations = current_user.participations.not_played
     @notification = current_user.notifications
   end
-
-  def autocomplete
-    @search_results = AutocompleteGameName.new(params['q']).call
-    render layout: false
-  end
 end

@@ -9,4 +9,3 @@ import CommentReplyController from "./comment_reply_controller"
 application.register("comment-reply", CommentReplyController)
 
 application.register("autocomplete", Autocomplete)
-
