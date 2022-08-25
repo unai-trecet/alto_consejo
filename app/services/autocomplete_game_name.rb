@@ -18,7 +18,7 @@ class AutocompleteGameName
     path = '/xmlapi/search'
     response = self.class.get(path, query: { search: @term })
     res = parse_names(response.parsed_response)
-    res ? res.compact.take(5) : ''
+    res ? res.compact.take(10) : []
   end
 
   def parse_names(games_info)

@@ -13,9 +13,6 @@ import "./channels";
 
 import('./admin');
 
-// import './autocompleteUsername';
-// import './autocompleteGameName';
-
 require("flatpickr")
 
 $("#match_start_at, #match_end_at").flatpickr({

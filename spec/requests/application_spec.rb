@@ -9,7 +9,6 @@ class TestController < ApplicationController
 end
 
 RSpec.describe 'Application', type: :request do
-  
   let(:user) { create(:user, :confirmed) }
 
   after(:all) do
