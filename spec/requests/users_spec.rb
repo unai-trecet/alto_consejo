@@ -185,4 +185,26 @@ RSpec.describe 'Users', type: :request do
       end
     end
   end
+
+  describe 'GET /search_game_name' do
+    def call_action(search_input = '')
+      get username_search_url, params: { q: search_input }
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    it 'renders a successful response' do
+      sign_in rodolfo
+      create(:user, username: 'testing_success1')
+      create(:user, username: 'testing_success2')
+      call_action('test')
+
+      expect(response).to be_successful
+      expect(response).to render_template('shared/_autocomplete')
+      # The returned html chunk highlight the matching names inlcuding some mark up.
+      expect(response.body).to include('test').twice
+      expect(response.body).to include('_success1')
+      expect(response.body).to include('_success2')
+    end
+  end
 end

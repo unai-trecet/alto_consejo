@@ -210,4 +210,25 @@ RSpec.describe '/games', type: :request do
       end
     end
   end
+
+  describe 'GET /search_game_name' do
+    def call_action(search_input = '')
+      get search_game_name_url, params: { q: search_input }
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    it 'renders a successful response' do
+      sign_in user
+      expect_any_instance_of(AutocompleteGameName).to receive(:call).and_return(%w[test_success1 test_success2])
+      call_action('test')
+
+      expect(response).to be_successful
+      expect(response).to render_template('shared/_autocomplete')
+      # The returned html chunk highlight the matching names inlcuding some mark up.
+      expect(response.body).to include('test').twice
+      expect(response.body).to include('_success1')
+      expect(response.body).to include('_success2')
+    end
+  end
 end

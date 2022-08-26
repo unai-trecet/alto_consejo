@@ -60,5 +60,5 @@ Rails.application.routes.draw do
 
   get 'matches_calendar', to: 'calendars#matches_calendar', as: :matches_calendar
   get 'username_search', to: 'users#username_search', as: :username_search
-  get 'search_game_name', to: 'matches#search_game_name', as: :search_game_name
+  get 'search_game_name', to: 'games#search_game_name', as: :search_game_name
 end
