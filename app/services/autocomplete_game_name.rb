@@ -15,6 +15,7 @@ class AutocompleteGameName
   private
 
   def suggestions
+    # TODO: move this into a constant variable frozen string.
     path = '/xmlapi/search'
     response = self.class.get(path, query: { search: @term })
     res = parse_names(response.parsed_response)
