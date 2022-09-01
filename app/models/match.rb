@@ -55,4 +55,10 @@ class Match < ApplicationRecord
       .or(where(match_invitations: { user_id: }))
       .distinct
   }
+
+  def self.ransackable_scopes
+    %i[played not_played open all_by_user participations_by_user
+       played_by_user not_played_by_user invitations_by_user
+       created_by_user related_to_user]
+  end
 end

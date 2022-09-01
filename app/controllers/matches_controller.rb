@@ -10,7 +10,7 @@ class MatchesController < ApplicationController
     @q = Match.filter(filtering_params)
               .eager_load(:user, :game, :participants)
               .ransack(params[:q])
-    @matches = @q.result.page(params[:page])
+    @matches = @q.result.select('matches.*, users.username, games.name').page(params[:page])
   end
 
   # GET /matches/1 or /matches/1.json

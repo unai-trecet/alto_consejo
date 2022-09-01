@@ -6,30 +6,42 @@
 
   <table class="table">
     <thead>
-      <tr>    
-          <th><%= sort_link(@q, :title, t('.title')) %></th>
-          <th><%= sort_link(@q, :user_username, t('.creator')) %></th>
-          <th><%= sort_link(@q, :game_name, t('.game')) %></th>
-          <th><%= sort_link(@q, :number_of_players, t('.number_of_players')) %></th>
-          <th><%= sort_link(@q, :start_at, t('.start_at')) %></th>
-          <th><%= sort_link(@q, :end_at, t('.end_at')) %></th>
-          <th colspan="3"></th>
-      </tr>
+      <ul class="nav nav-tabs">
+        <li class="nav-item active">
+          <%= sort_link(@q, :start_at, t('.start_at'), class: 'nav-link') %>
+        </li>
+        <li class="nav-item">
+          <%= sort_link(@q, :end_at, t('.end_at'), class: 'nav-link') %>
+        </li>
+        <li class="nav-item">
+          <%= sort_link(@q, :title, t('.title'), class: 'nav-link') %>
+        </li>
+        <li class="nav-item">
+          <%= sort_link(@q, :user_username, t('.creator'), class: 'nav-link') %>
+        </li>
+        <li class="nav-item">
+          <%= sort_link(@q, :game_name, t('.game'), class: 'nav-link') %>
+        </li>
+        <li class="nav-item">
+          <%= sort_link(@q, :number_of_players, t('.number_of_players'), class: 'nav-link') %>
+        </li>
+      </ul>
     </thead>
 
     <tbody>
-      <% @matches.each do |match| %>
-        <tr>
-            <td><%= link_to(match.title, match) %></td>
-            <td><%= link_to(match.creator.username, match.creator) %></td>
-            <td><%= link_to(match.game.name, match.game) %></td>
-            <td><%= match.number_of_players %></td>
-            <td><%= l(match.start_at, format: :long) %></td>
-            <td><%= l(match.end_at, format: :long) %></td>
-            <td><%= link_to('Edit', edit_match_path(match)) if current_user == match.user %></td>
-            <td><%= link_to('Destroy', match, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == match.user  %></td>
-        </tr>
-      <% end %>
+      <div class="row row-cols-1 row-cols-md-3 g-4">  
+        <% @matches.each do |match| %>
+          <div class="col">
+            <div class="card">
+              <img src="..." class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"><%= link_to(match.title, match) %></h5>
+                <p class="card-text"><%= match.description %></p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </tbody>
   </table>
   <%= paginate @matches %>
