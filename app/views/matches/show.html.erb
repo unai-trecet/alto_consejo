@@ -11,6 +11,15 @@
   </div>
 
   <div class="form-group mb-3">
+    <p><strong><%= t('.image') %>:</strong></p>
+    <% if allowed_pic?(@match.image) %>
+      <div>
+        <%= link_to(image_tag(@match.image_as_thumbnail), @match.image) %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-group mb-3">
     <p><strong><%= t('.description') %>:</strong></p>
     <div>
       <%= @match.description %>
@@ -81,9 +90,20 @@
     <%= button_to t('.join') , match_participants_path(match_id: @match, user_id: current_user.id), class: "btn app-btn-primary theme-btn mx-auto" %>
   <% end %>
 
+  <div class="form-group mb-3">
+    <p><strong><%= t('.pictures') %>:</strong></p>
+    <div>
+      <% @match.pictures.each do |pic| %>
+        <%= link_to(image_tag(picture_as_thumbnail(pic)), pic) %>
+      <% end %>
+    </div>
+  </div>
+
   <%= link_to t('.edit') , edit_match_path(@match), class: "btn btn-primary min-width-btn" %>
   <%= link_to t('.back') , matches_path, class: "btn btn-light min-width-btn" %>
-</div>
+</div>f
+
+
 
 <h4><%= t('.comments') %></h4>
 <%= turbo_frame_tag :comment_form do %>

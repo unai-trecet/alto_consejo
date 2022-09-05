@@ -175,4 +175,22 @@ RSpec.describe Match, type: :model do
       end
     end
   end
+
+  describe '#creator_name' do
+    it 'returns match creator username' do
+      alicia = create(:user, :confirmed, username: 'alicia')
+      match = create(:match, creator: alicia)
+
+      expect(match.creator_name).to eq('alicia')
+    end
+  end
+
+  describe '#game_name' do
+    it 'returns match creator username' do
+      terraforming = create(:game, name: 'Terraforming Mars')
+      match = create(:match, game: terraforming)
+
+      expect(match.game_name).to eq('Terraforming Mars')
+    end
+  end
 end

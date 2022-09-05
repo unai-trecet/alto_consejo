@@ -25,9 +25,9 @@ RSpec.describe 'matches/index', type: :view do
 
     render
 
-    assert_select 'tr>td', text: 'Gloomhaven game', count: 1
-    assert_select 'tr>td', text: 'Terraforming Mars game', count: 1
-    assert_select 'tr>td', text: '9', count: 1
-    assert_select 'tr>td', text: '10', count: 1
+    assert_select 'card-body', text: 'Gloomhaven game', count: 1
+    assert_select 'card', text: 'Terraforming Mars game', count: 1
+    # assert_select 'tr>td', text: '9', count: 1
+    # assert_select 'tr>td', text: '10', count: 1
   end
 end

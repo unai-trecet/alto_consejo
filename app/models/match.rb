@@ -15,6 +15,10 @@ class Match < ApplicationRecord
 
   has_many :comments, as: :commentable
 
+  has_one_attached :image
+  has_many_attached :pictures
+  has_rich_text :description
+
   validates :title, :start_at, :end_at, presence: true
 
   scope :played, -> { where('end_at < ?', DateTime.now) }
@@ -56,9 +60,25 @@ class Match < ApplicationRecord
       .distinct
   }
 
-  def self.ransackable_scopes
-    %i[played not_played open all_by_user participations_by_user
-       played_by_user not_played_by_user invitations_by_user
-       created_by_user related_to_user]
+  def game_name
+    game.name
+  end
+
+  def creator_name
+    creator.username
+  end
+
+  def image_as_thumbnail
+    image.variant(resize_to_limit: [300, 300])&.processed
+  end
+
+  def pictures_as_thumbnails
+    pictures.map do |picture|
+      picture.variant(resize_to_limit: [150, 150]).processed
+    end
+  end
+
+  def image_as_card_img
+    image.variant(resize_to_limit: [150, 150]).processed
   end
 end

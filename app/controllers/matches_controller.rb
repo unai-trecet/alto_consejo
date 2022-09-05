@@ -98,7 +98,7 @@ class MatchesController < ApplicationController
   def match_params
     permited_params = params.require(:match).permit(:title, :description, :user_id, :game_id,
                                                     :location, :number_of_players, :start_at,
-                                                    :end_at, :public, :invited_users)
+                                                    :end_at, :public, :invited_users, :image, pictures: [])
     permited_params[:invited_users] = usernames
     permited_params
   end

@@ -81,11 +81,15 @@ es:
       location: "Localización"
       number_of_players: "Número de jugadores"
       invited_users: "Jugadores invitados"
+      image: "Imagen"
       search_for_users: "Buscar jugadores"
       invited_users_list: "Lista de jugadores invitados"
       inicio: "Empieza"
       fin: "Acaba"
+      pictures: "Fotos"
       public_match: "Partida pública"
+    card_grid:
+      go_to_match: 'Ir a partida'
   match_participants:
     create:
       created: "Te has inscrito con éxito en la partida!"

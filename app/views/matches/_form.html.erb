@@ -15,67 +15,75 @@
     </div>
     <% end %>
 
-      <%= form.hidden_field :user_id, value: current_user.id %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
 
-        <div class="form-group mb-3">
-          <%= form.label :title, t('.title') , class: "form-label" %>
-            <%= form.text_area :title, class:"form-control" %>
-        </div>
+    <div class="form-group mb-3">
+      <%= form.label :title, t('.title') , class: "form-label" %>
+        <%= form.text_area :title, class:"form-control" %>
+    </div>
 
-        <div class="form-group mb-3">
-          <%= form.label :game_id, t('.game')  %>
+    <div class="form-group mb-3">
+      <%= form.label :game_id, t('.game')  %>
+      <%= form.collection_select :game_id, Game.all, :id, :name, { prompt: true }, { class: "form-select" } %>
+    </div>
 
-            <%= form.collection_select :game_id, Game.all, :id, :name, { prompt: true }, { class: "form-select" } %>
-        </div>
+    <div class="form-group mb-3">
+      <%= form.label :description, t('.description') , class: "form-label" %>
+        <%= form.rich_text_area :description, class:"form-control" %>
+    </div>
+    
+    <div class="form-group mb-3">
+      <%= form.label :image, t('.image') , class: "form-label" %>
+      <%= form.file_field :image, class:"form-control" %>
+    </div>
 
-        <div class="form-group mb-3">
-          <%= form.label :number_of_players, t('.number_of_players') , class: "form-label" %>
-            <%= form.number_field :number_of_players, class:"form-control" %>
-        </div>
+    <div class="form-group mb-3">
+      <%= form.label :number_of_players, t('.number_of_players') , class: "form-label" %>
+      <%= form.number_field :number_of_players, class:"form-control" %>
+    </div>
 
-        <div class="form-group search-data mb-3" data-controller="autocomplete" data-autocomplete-url-value="/username_search" data-autocomplete-min-length-value="3" data-autocomplete-selected-class="selected-result">
-          <%= form.label :invited_users, class: "form-label" %>
-          <%= form.search_field :selected_user, id: 'selected-user', data: { autocomplete_target: 'input' }, placeholder: t('.search_for_users'), class: 'form-control search-input' %>
-          <ul data-autocomplete-target="results"></ul>
-        </div>
+    <div class="form-group search-data mb-3" data-controller="autocomplete" data-autocomplete-url-value="/username_search" data-autocomplete-min-length-value="3" data-autocomplete-selected-class="selected-result">
+      <%= form.label :invited_users, class: "form-label" %>
+      <%= form.search_field :selected_user, id: 'selected-user', data: { autocomplete_target: 'input' }, placeholder: t('.search_for_users'), class: 'form-control search-input' %>
+      <ul data-autocomplete-target="results"></ul>
+    </div>
 
-        <div class="form-group search-data mb-3">
-          <%= form.text_field :invited_users, id: 'invited-users', class: 'form-control search-input', placeholder: t('.invited_users_list'), readonly: true %>
-        </div>
+    <div class="form-group search-data mb-3">
+      <%= form.text_field :invited_users, id: 'invited-users', class: 'form-control search-input', placeholder: t('.invited_users_list'), readonly: true %>
+    </div>
 
-        <div class="form-group mb-3">
-          <%= form.check_box :creator_participates, { checked: true }, true, false %>
-          <%= form.label :creator_participates, t('.creator_participates') , class: "form-check-label", for: "match_creator_participation" %>
-        </div>
+    <div class="form-group mb-3">
+      <%= form.check_box :creator_participates, { checked: true }, true, false %>
+      <%= form.label :creator_participates, t('.creator_participates') , class: "form-check-label", for: "match_creator_participation" %>
+    </div>
 
-        <div class="form-group mb-3">
-          <%= form.label :description, t('.description') , class: "form-label" %>
-            <%= form.text_area :description, class:"form-control" %>
-        </div>
+    <div class="form-group mb-3">
+      <%= form.label :location, t('.location') , class: "form-label" %>
+        <%= form.text_area :location, class:"form-control" %>
+    </div>
 
-        <div class="form-group mb-3">
-          <%= form.label :location, t('.location') , class: "form-label" %>
-            <%= form.text_area :location, class:"form-control" %>
-        </div>
+    <div class="form-group mb-3">
+      <%= form.label :inicio, t('.inicio') , class: "form-label" %>
+        <%= form.text_field :start_at, class: 'flatpickr form-control' %>
+    </div>
 
-        <div class="form-group mb-3">
-          <%= form.label :inicio, t('.inicio') , class: "form-label" %>
-            <%= form.text_field :start_at, class: 'flatpickr form-control' %>
-        </div>
+    <div class="form-group mb-3">
+      <%= form.label :fin, t('.fin') , class: "form-label" %>
+        <%= form.text_field :end_at, class: 'flatpickr form-control' %>
+    </div>
 
-        <div class="form-group mb-3">
-          <%= form.label :fin, t('.fin') , class: "form-label" %>
-            <%= form.text_field :end_at, class: 'flatpickr form-control' %>
-        </div>
+    <div class="form-group mb-3">
+      <%= form.check_box :public, { checked: false }, true, false %>
+      <%= form.label :public_match, t('.public_match') , class: "form-check-label", for: "match_creator_participation" %>
+    </div>
 
-        <div class="form-group mb-3">
-          <%= form.check_box :public, { checked: false }, true, false %>
-          <%= form.label :public_match, t('.public_match') , class: "form-check-label", for: "match_creator_participation" %>
-        </div>
+    <div class="form-group mb-3">
+      <%= form.label :pictures, t('.pictures') , class: "form-label" %>
+      <%= form.file_field :pictures, multiple: true, class:"form-control" %>
+    </div>
 
-
-        <div class="form-group mb-3">
-          <%= form.submit class: 'btn btn-primary' %>
-        </div>
-        <div class="col-md-auto"> </div>
+    <div class="form-group mb-3">
+      <%= form.submit class: 'btn btn-primary' %>
+    </div>
+    <div class="col-md-auto"> </div>
 <% end %>

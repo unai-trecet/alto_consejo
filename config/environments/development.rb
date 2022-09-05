@@ -84,4 +84,6 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   config.assets.check_precompiled_asset = false
+
+  config.active_storage.variant_processor = :mini_magick
 end
