@@ -23,8 +23,8 @@ RSpec.describe MatchInvitationMailer, type: :mailer do
       expect(html_body).to include(match.title)
       expect(text_body).to include(match.title)
 
-      expect(html_body).to include(match.description)
-      expect(text_body).to include(match.description)
+      expect(html_body).to include(match.description.to_plain_text)
+      expect(text_body).to include(match.description.to_plain_text)
 
       expect(html_body).to include(match.game.name)
       expect(text_body).to include(match.game.name)

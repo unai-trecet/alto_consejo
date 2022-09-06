@@ -187,7 +187,7 @@ RSpec.describe '/matches', type: :request do
 
           created_match = Match.last
           expect(created_match.title).to eq('Testing matches')
-          expect(created_match.description).to eq('I hope they pass.')
+          expect(created_match.description.to_plain_text).to eq('I hope they pass.')
           expect(created_match.creator).to eq(user)
           expect(created_match.game).to eq(game)
           expect(created_match.location).to eq('my place')

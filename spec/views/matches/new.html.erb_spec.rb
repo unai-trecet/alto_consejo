@@ -16,7 +16,7 @@ RSpec.describe 'matches/new', type: :view do
     assert_select 'form[action=?][method=?]', matches_path, 'post' do
       assert_select 'textarea[name=?]', 'match[title]'
 
-      assert_select 'textarea[name=?]', 'match[description]'
+      assert_select 'input[name=?]', 'match[description]'
 
       assert_select 'input[name=?]', 'match[user_id]'
 
