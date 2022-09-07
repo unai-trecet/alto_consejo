@@ -99,9 +99,9 @@
     </div>
   </div>
 
-  <%= link_to t('.edit') , edit_match_path(@match), class: "btn btn-primary min-width-btn" %>
+  <%= link_to t('.edit') , edit_match_path(@match), class: "btn btn-primary min-width-btn" if can_edit? %>
   <%= link_to t('.back') , matches_path, class: "btn btn-light min-width-btn" %>
-</div>f
+</div>
 
 
 

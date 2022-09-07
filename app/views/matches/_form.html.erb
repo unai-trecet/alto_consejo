@@ -44,12 +44,12 @@
 
     <div class="form-group search-data mb-3" data-controller="autocomplete" data-autocomplete-url-value="/username_search" data-autocomplete-min-length-value="3" data-autocomplete-selected-class="selected-result">
       <%= form.label :invited_users, class: "form-label" %>
-      <%= form.search_field :selected_user, id: 'selected-user', data: { autocomplete_target: 'input' }, placeholder: t('.search_for_users'), class: 'form-control search-input' %>
+      <%= form.search_field :selected_user, id: 'selected_user', data: { autocomplete_target: 'input' }, placeholder: t('.search_for_users'), class: 'form-control search-input' %>
       <ul data-autocomplete-target="results"></ul>
     </div>
 
     <div class="form-group search-data mb-3">
-      <%= form.text_field :invited_users, id: 'invited-users', class: 'form-control search-input', placeholder: t('.invited_users_list'), readonly: true %>
+      <%= form.text_field :invited_users, id: 'invited_users', class: 'form-control search-input', placeholder: t('.invited_users_list'), readonly: true %>
     </div>
 
     <div class="form-group mb-3">
