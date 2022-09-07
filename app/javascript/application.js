@@ -9,8 +9,8 @@ import * as ActiveStorage from "@rails/activestorage";
 
 import "./channels";
 import "./admin";
-import "./autocompleteUsername"
 import "./customFlatpickr"
+import "./autocompleteUsername"
 
 Rails.start()
 ActiveStorage.start()

@@ -8,4 +8,8 @@ module MatchesHelper
   def already_participating?
     @match.participants.include?(current_user)
   end
+
+  def can_edit?
+    @match.creator == current_user
+  end
 end

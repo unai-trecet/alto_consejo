@@ -51,7 +51,7 @@ class MatchesController < ApplicationController
       if @match.update(match_params)
         if params['match']['creator_participates']
           MatchParticipationManager.new(match_id: @match.id,
-                                        user_id: @match_id.creator.id).call
+                                        user_id: @match.creator.id).call
         end
         MatchInvitationsManager.new(match: @match).call
 
