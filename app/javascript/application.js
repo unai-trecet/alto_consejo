@@ -6,13 +6,13 @@ import "@hotwired/turbo-rails"
 import "@rails/actiontext"
 import "trix"
 import * as ActiveStorage from "@rails/activestorage";
+import * as bootstrap from "bootstrap"
 
-import "./channels";
-import "./admin";
 import "./customFlatpickr"
 import "./autocompleteUsername"
+import "./channels";
+import "./admin";
 
 Rails.start()
 ActiveStorage.start()
 import "./controllers"
-import * as bootstrap from "bootstrap"

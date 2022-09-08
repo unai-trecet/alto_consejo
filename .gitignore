@@ -44,3 +44,6 @@ yarn-debug.log*
 
 # Ignore vscode files
 .vscode/*
+
+# Ignore DS_Store
+.DS_Store

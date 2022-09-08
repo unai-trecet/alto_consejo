@@ -14,7 +14,7 @@
     <p><strong><%= t('.image') %>:</strong></p>
     <% if allowed_pic?(@match.image) %>
       <div>
-        <%= link_to(image_tag(@match.image_as_thumbnail), @match.image) %>
+        <%= link_to(image_tag(@match.image_as_thumbnail, class: 'img-fluid img-thumbnail'), @match.image) %>
       </div>
     <% end %>
   </div>
@@ -91,12 +91,20 @@
   <% end %>
 
   <div class="form-group mb-3">
-    <p><strong><%= t('.pictures') %>:</strong></p>
-    <div>
+
+    <strong><%= t('.pictures') %></strong>
+  
+    <hr class="mt-2 mb-5">
+  
+    <div class="row text-center text-lg-start">
+  
       <% @match.pictures.each do |pic| %>
-        <%= link_to(image_tag(picture_as_thumbnail(pic)), pic) %>
+        <div class="col-lg-3 col-md-4 col-6">
+          <%= link_to(image_tag(picture_as_thumbnail(pic), class: 'img-fluid img-thumbnail'), pic, class: 'd-block mb-4 h-100') %>
+        </div>
       <% end %>
-    </div>
+
+    <div>
   </div>
 
   <%= link_to t('.edit') , edit_match_path(@match), class: "btn btn-primary min-width-btn" if can_edit? %>

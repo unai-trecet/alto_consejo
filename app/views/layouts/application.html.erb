@@ -9,7 +9,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="description" content="El lugar donde planificar tus eventos de juego.">
     <meta name="author" content="Unai Trecet">
-
+    <meta name="turbo-visit-control" content="reload">
+    
     <link rel="shortcut icon" href="favicon.ico">
 
     <%= favicon_link_tag asset_path('favicon') %>
@@ -17,8 +18,8 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
 
   <body class="app">
