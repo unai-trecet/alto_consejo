@@ -81,5 +81,4 @@ class Match < ApplicationRecord
   def image_as_card_img
     image.variant(resize_to_limit: [150, 150]).processed
   end
-
 end

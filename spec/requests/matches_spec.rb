@@ -277,7 +277,6 @@ RSpec.describe '/matches', type: :request do
             call_action(new_params)
           end.not_to change(MatchParticipant, :count)
 
-          expect(ActiveJob::Base.queue_adapter.enqueued_jobs.count).to eq(1)
           expect(ActiveJob::Base.queue_adapter.enqueued_jobs.last['job_class'])
             .to eq('Noticed::DeliveryMethods::Email')
 
