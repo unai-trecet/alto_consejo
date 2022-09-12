@@ -86,4 +86,6 @@ Rails.application.configure do
   config.assets.check_precompiled_asset = false
 
   config.active_storage.variant_processor = :mini_magick
+
+  config.action_controller.default_url_options = { host: 'localhost', port: 3000 }
 end

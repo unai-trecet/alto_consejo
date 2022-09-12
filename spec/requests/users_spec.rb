@@ -3,18 +3,25 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
+  let(:password) { '12345678' }
   let(:valid_params) do
     {
       email: 'rodolfo@test.com',
       username: 'rodolfo',
-      password: '12345678',
-      password_confirmation: '12345678'
+      password:,
+      password_confirmation: password,
+      avatar: fixture_file_upload('default_avatar.png', '/spec/fixtures/')
     }
   end
 
   let(:invalid_params) { valid_params.merge({ username: nil }) }
 
   let!(:rodolfo) { create(:user, :confirmed, valid_params) }
+
+  def after_teardown
+    super
+    FileUtils.rm_rf(ActiveStorage::Blob.service.root)
+  end
 
   def set_params(input = {})
     valid_params.merge(input)
@@ -142,15 +149,16 @@ RSpec.describe 'Users', type: :request do
           expect(response).to redirect_to(user_url(user))
         end
 
-        it 'does not update any other attribute but username' do
+        it 'does not update any other attribute but username and avatar' do
           expect(user.username).to eq('old_username')
-          expect(user.valid_password?('12345678')).to eq(true)
+          expect(user.valid_password?(password)).to eq(true)
 
           new_pass = '87654321'
           new_params = { username: 'new_username',
                          email: 'another@email.com',
                          password: new_pass,
-                         password_confirmation: new_pass }
+                         password_confirmation: new_pass,
+                         avatar: fixture_file_upload('avatar2.jpg', '/spec/fixtures/') }
 
           call_action(new_params)
 
@@ -158,6 +166,7 @@ RSpec.describe 'Users', type: :request do
           expect(user.valid_password?(new_pass)).to eq(false)
           expect(user.username).to eq('new_username')
           expect(user.email).to eq('other@email.com')
+          expect(user.avatar.filename.as_json).to eq('avatar2.jpg')
         end
 
         it 'does not update user if user is not the logged in user' do
