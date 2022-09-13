@@ -42,23 +42,27 @@ Rails.application.routes.draw do
                sessions: 'users/sessions'
              }
 
+  resources :comments do
+    resources :comments, module: :comments
+  end
+  resources :matches do
+    member do
+      delete 'purge_image'
+    end
+    resources :comments, module: :matches
+  end
+
   resources :games
   resources :games do
     resources :comments, module: :games
   end
-  resources :matches do
-    resources :comments, module: :matches
-  end
-  resources :comments do
-    resources :comments, module: :comments
-  end
-
-  resources :users, only: %i[index show edit update]
   resources :match_participants, only: %i[create destroy]
   resources :match_invitations, only: %i[create destroy]
   resources :notifications, only: %i[index show new create destroy]
+  resources :users, only: %i[index show edit update]
 
-  get 'matches_calendar', to: 'calendars#matches_calendar', as: :matches_calendar
-  get 'username_search', to: 'users#username_search', as: :username_search
-  get 'search_game_name', to: 'games#search_game_name', as: :search_game_name
+  get 'matches_calendar', to: 'calendars#matches_calendar'
+  get 'username_search', to: 'users#username_search'
+  get 'search_game_name', to: 'games#search_game_name'
+  delete 'attachments/:id/purge', to: 'attachments#purge', as: :purge_attachment
 end

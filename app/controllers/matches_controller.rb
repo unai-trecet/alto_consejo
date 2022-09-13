@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MatchesController < ApplicationController
-  before_action :set_match, only: %i[show edit update destroy]
+  before_action :set_match, only: %i[show edit update destroy purge_image]
   before_action :require_permission, only: %i[edit update destroy]
   before_action :inspect_filters, only: %i[index]
 
@@ -64,6 +64,17 @@ class MatchesController < ApplicationController
     end
   end
 
+  def purge_image
+    unless is_current_user_creator?
+      redirect_back_or_to(root_path,
+                          notice: I18n.t('attachments.forbidden')) and return
+    end
+
+    @match.image.purge
+
+    redirect_back_or_to root_path, notice: I18n.t('attachments.success')
+  end
+
   # DELETE /matches/1 or /matches/1.json
   def destroy
     @match.destroy
@@ -73,6 +84,8 @@ class MatchesController < ApplicationController
     end
   end
 
+  def purge_attachment; end
+
   private
 
   def set_match
@@ -80,9 +93,13 @@ class MatchesController < ApplicationController
   end
 
   def require_permission
-    return if current_user == @match.creator
+    return if is_current_user_creator?
 
     redirect_to unauthorized_path
+  end
+
+  def is_current_user_creator?
+    current_user == @match.creator
   end
 
   def inspect_filters

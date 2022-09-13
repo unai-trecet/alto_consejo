@@ -18,7 +18,8 @@ RSpec.describe '/matches', type: :request do
       invited_users: "#{invited_users.first.username} #{invited_users.last.username}",
       start_at: '2021-11-24 18:09:43',
       end_at: '2021-11-24 18:09:43',
-      public: false
+      public: false,
+      image: fixture_file_upload('default_avatar.png', '/spec/fixtures/')
     }
   end
 
@@ -196,6 +197,7 @@ RSpec.describe '/matches', type: :request do
           expect(created_match.start_at).to eq('2021-11-24 18:09:43')
           expect(created_match.end_at).to eq('2021-11-24 18:09:43')
           expect(created_match.public).to eq(false)
+          expect(created_match.image.filename.as_json).to eq('default_avatar.png')
         end
       end
 
@@ -261,7 +263,8 @@ RSpec.describe '/matches', type: :request do
         let(:new_params) do
           set_params({ title: 'New title',
                        invited_users: "#{valid_params[:invited_users]} another_user",
-                       public: true })
+                       public: true,
+                       image: fixture_file_upload('avatar2.jpg', '/spec/fixtures/') })
         end
 
         it 'updates the requested match' do
@@ -284,6 +287,7 @@ RSpec.describe '/matches', type: :request do
           expect(match.title).to eq('New title')
           expect(match.invited_users)
             .to match_array(invited_users.pluck(:username) + ['another_user'])
+          expect(match.image.filename.as_json).to eq('avatar2.jpg')
           expect(match.public).to eq(true)
           expect(response).to redirect_to(match_url(match))
         end
@@ -336,6 +340,51 @@ RSpec.describe '/matches', type: :request do
         call_action
 
         expect(response).to redirect_to(matches_url)
+      end
+    end
+  end
+
+  describe 'GET /purge_image' do
+    let!(:match_with_image) { create(:match, set_params(user:)) }
+
+    def call_action(match = match_with_image)
+      delete purge_image_match_url(match)
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    describe 'authenticated user' do
+      before { sign_in user }
+
+      it 'deletes match image' do
+        match_with_image.image.attach(
+          io: File.open(Rails.root.join('app', 'assets', 'images', 'default_avatar.png')),
+          filename: 'default_avatar.png',
+          content_type: 'image/png'
+        )
+        call_action(match_with_image)
+
+        match_with_image.reload
+
+        expect(match_with_image.image.attached?).to eq(false)
+        expect(response).to have_http_status(302)
+      end
+
+      it 'does not delete it if logged in user is not match creator' do
+        another_user = create(:user, :confirmed)
+        match_with_image.update(user: another_user)
+        match_with_image.image.attach(
+          io: File.open(Rails.root.join('app', 'assets', 'images', 'default_avatar.png')),
+          filename: 'default_avatar.png',
+          content_type: 'image/png'
+        )
+
+        call_action(match_with_image)
+
+        match_with_image.reload
+
+        expect(match_with_image.image.attached?).to eq(true)
+        expect(response).to have_http_status(302)
       end
     end
   end

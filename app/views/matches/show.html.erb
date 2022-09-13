@@ -15,6 +15,7 @@
     <% if allowed_pic?(@match.image) %>
       <div>
         <%= link_to(image_tag(@match.image_as_thumbnail, class: 'img-fluid img-thumbnail'), @match.image) %>
+        <%= link_to(t('attachments.delete_image'), purge_image_match_path(@match), method: :delete) if can_edit? %>
       </div>
     <% end %>
   </div>
@@ -102,6 +103,7 @@
         <div class="col-lg-3 col-md-4 col-6">
           <%= link_to(image_tag(picture_as_thumbnail(pic), class: 'img-fluid img-thumbnail'), pic, class: 'd-block mb-4 h-100') %>
         </div>
+        <%= link_to(t('attachments.delete_image'), purge_attachment_path(pic), method: :delete) if can_edit? %>
       <% end %>
 
     <div>

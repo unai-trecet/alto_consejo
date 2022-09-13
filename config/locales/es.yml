@@ -1,5 +1,6 @@
 es:
   hello: "Hola mundo"
+  success: "Acción realizada con éxito."
   custom_errors:
     unauthorized: "No estás autorizado a realizar esa acción."
   services:
@@ -10,6 +11,10 @@ es:
       title: "No autorizado"
       message: "Lo siento, no tienes permiso para acceder ahí."
       button: "Ir a inicio"
+  attachments:
+    delete_image: "Borrar imagen"
+    success: "Imagen borrada con éxito."
+    forbidden: "No puedes borrar esta imagen."
   calendars:
     matches_calendar:
       title: "Calendario de partidas"
@@ -89,7 +94,7 @@ es:
       pictures: "Fotos"
       public_match: "Partida pública"
     card_grid:
-      go_to_match: 'Ir a partida'
+      go_to_match: "Ir a partida"
   match_participants:
     create:
       created: "Te has inscrito con éxito en la partida!"
