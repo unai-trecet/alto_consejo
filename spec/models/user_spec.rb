@@ -35,6 +35,8 @@ RSpec.describe User, type: :model do
       .source(:match)
   }
 
+  it { should have_one_attached(:avatar) }
+
   describe 'scopes' do
     describe '#played_matches' do
       subject { create(:user, :confirmed) }

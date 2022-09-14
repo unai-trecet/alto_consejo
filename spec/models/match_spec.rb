@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Match, type: :model do
+  # Associations
   it { should belong_to(:user) }
   it { should belong_to(:game) }
 
@@ -22,6 +23,11 @@ RSpec.describe Match, type: :model do
 
   it { should have_many(:comments) }
 
+  it { should have_many_attached(:pictures) }
+  it { should have_one_attached(:image) }
+  it { should have_rich_text(:description) }
+
+  # Validations
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:start_at) }
   it { should validate_presence_of(:end_at) }
