@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update]
+  before_action :set_user, only: %i[show edit update purge_avatar]
   before_action :require_permission, except: %i[show index username_search]
 
   def index
@@ -37,6 +37,17 @@ class UsersController < ApplicationController
     render partial: 'shared/autocomplete', layout: false
   end
 
+  def purge_avatar
+    unless is_user_curren_user?
+      redirect_back_or_to(root_path,
+                          notice: I18n.t('attachments.forbidden')) and return
+    end
+
+    @user.avatar.purge
+
+    redirect_back_or_to root_path, notice: I18n.t('attachments.success')
+  end
+
   private
 
   def user_params
@@ -48,8 +59,12 @@ class UsersController < ApplicationController
   end
 
   def require_permission
-    return if current_user == @user
+    return if is_user_curren_user?
 
     redirect_to root_path, flash: { error: t('custom_errors.unauthorized') }
+  end
+
+  def is_user_curren_user?
+    current_user == @user
   end
 end

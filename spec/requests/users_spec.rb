@@ -216,4 +216,45 @@ RSpec.describe 'Users', type: :request do
       expect(response.body).to include('_success2')
     end
   end
+
+  describe 'GET /purge_avatar' do
+    let!(:user_with_avatar) do
+      create(:user, :confirmed, avatar: fixture_file_upload('avatar2.jpg', '/spec/fixtures/'))
+    end
+
+    def call_action(user = user_with_avatar)
+      delete purge_avatar_user_url(user)
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    describe 'authenticated user' do
+      before { sign_in user_with_avatar }
+
+      it 'deletes user avatar' do
+        call_action(user_with_avatar)
+
+        user_with_avatar.reload
+
+        expect(user_with_avatar.avatar.attached?).to eq(false)
+        expect(response).to have_http_status(302)
+      end
+
+      it 'does not delete it if logged-in user is not the user' do
+        another_user = create(:user, :confirmed)
+        another_user.avatar.attach(
+          io: File.open(Rails.root.join('app', 'assets', 'images', 'default_avatar.png')),
+          filename: 'default_avatar.png',
+          content_type: 'image/png'
+        )
+
+        call_action(another_user)
+
+        another_user.reload
+
+        expect(another_user.avatar.attached?).to eq(true)
+        expect(response).to have_http_status(302)
+      end
+    end
+  end
 end

@@ -59,7 +59,11 @@ Rails.application.routes.draw do
   resources :match_participants, only: %i[create destroy]
   resources :match_invitations, only: %i[create destroy]
   resources :notifications, only: %i[index show new create destroy]
-  resources :users, only: %i[index show edit update]
+  resources :users, only: %i[index show edit update] do
+    member do
+      delete 'purge_avatar'
+    end
+  end
 
   get 'matches_calendar', to: 'calendars#matches_calendar'
   get 'username_search', to: 'users#username_search'
