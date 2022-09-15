@@ -64,17 +64,6 @@ class MatchesController < ApplicationController
     end
   end
 
-  def purge_image
-    unless is_current_user_creator?
-      redirect_back_or_to(root_path,
-                          notice: I18n.t('attachments.forbidden')) and return
-    end
-
-    @match.image.purge
-
-    redirect_back_or_to root_path, notice: I18n.t('attachments.success')
-  end
-
   # DELETE /matches/1 or /matches/1.json
   def destroy
     @match.destroy
@@ -84,7 +73,17 @@ class MatchesController < ApplicationController
     end
   end
 
-  def purge_attachment; end
+  # DELETE /matches/:id/purge_image
+  def purge_image
+    unless current_user_creator?
+      redirect_back_or_to(root_path,
+                          notice: I18n.t('attachments.forbidden')) and return
+    end
+
+    @match.image.purge
+
+    redirect_back_or_to root_path, notice: I18n.t('attachments.success')
+  end
 
   private
 
@@ -93,12 +92,12 @@ class MatchesController < ApplicationController
   end
 
   def require_permission
-    return if is_current_user_creator?
+    return if current_user_creator?
 
     redirect_to unauthorized_path
   end
 
-  def is_current_user_creator?
+  def current_user_creator?
     current_user == @match.creator
   end
 

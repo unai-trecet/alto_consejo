@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class GamesController < ApplicationController
-  before_action :set_game, only: %i[show edit update destroy]
+  before_action :set_game, only: %i[show edit update destroy purge_main_image]
+  before_action :require_permission, only: %i[edit update destroy purge_main_image]
 
   # GET /games or /games.json
   def index
@@ -63,6 +64,18 @@ class GamesController < ApplicationController
     render partial: 'shared/autocomplete', layout: false
   end
 
+  # DELETE /games/:id/purge_main_image
+  def purge_main_image
+    unless current_user_creator?
+      redirect_back_or_to(root_path,
+                          notice: I18n.t('attachments.forbidden')) and return
+    end
+
+    @game.main_image.purge
+
+    redirect_back_or_to root_path, notice: I18n.t('attachments.success')
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -70,8 +83,18 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
   end
 
+  def require_permission
+    return if current_user_creator?
+
+    redirect_to unauthorized_path
+  end
+
+  def current_user_creator?
+    current_user == @game.added_by
+  end
+
   # Only allow a list of trusted parameters through.
   def game_params
-    params.require(:game).permit(:name, :description, :author, :user_id, :bbg_link, :image)
+    params.require(:game).permit(:name, :description, :author, :user_id, :bbg_link, :main_image, :game_pictures)
   end
 end

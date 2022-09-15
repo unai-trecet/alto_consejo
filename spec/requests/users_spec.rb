@@ -217,7 +217,7 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'GET /purge_avatar' do
+  describe 'DELETE /purge_avatar' do
     let!(:user_with_avatar) do
       create(:user, :confirmed, avatar: fixture_file_upload('avatar2.jpg', '/spec/fixtures/'))
     end
@@ -240,7 +240,7 @@ RSpec.describe 'Users', type: :request do
         expect(response).to have_http_status(302)
       end
 
-      it 'does not delete it if logged-in user is not the user' do
+      it 'does not delete the avatar if logged in user is not the user' do
         another_user = create(:user, :confirmed)
         another_user.avatar.attach(
           io: File.open(Rails.root.join('app', 'assets', 'images', 'default_avatar.png')),

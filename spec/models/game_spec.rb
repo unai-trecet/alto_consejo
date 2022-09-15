@@ -21,8 +21,10 @@ RSpec.describe Game, type: :model do
       .conditions("end_at > #{DateTime.now}")
       .class_name('Match')
   }
-
   it { should have_many(:comments) }
+  it { should have_one_attached(:main_image) }
+  it { should have_many_attached(:game_pictures) }
+  it { should have_rich_text(:description) }
 
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }

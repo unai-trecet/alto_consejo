@@ -344,7 +344,7 @@ RSpec.describe '/matches', type: :request do
     end
   end
 
-  describe 'GET /purge_image' do
+  describe 'DELETE /purge_image' do
     let!(:match_with_image) { create(:match, set_params(user:)) }
 
     def call_action(match = match_with_image)

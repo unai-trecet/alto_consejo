@@ -52,9 +52,11 @@ Rails.application.routes.draw do
     resources :comments, module: :matches
   end
 
-  resources :games
   resources :games do
     resources :comments, module: :games
+    member do
+      delete 'purge_main_image'
+    end
   end
   resources :match_participants, only: %i[create destroy]
   resources :match_invitations, only: %i[create destroy]

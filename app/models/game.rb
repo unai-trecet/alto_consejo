@@ -12,6 +12,10 @@ class Game < ApplicationRecord
 
   has_many :comments, as: :commentable
 
+  has_one_attached :main_image
+  has_many_attached :game_pictures
+  has_rich_text :description
+
   validates :user_id, :name, presence: true
   validates :name, uniqueness: true
 

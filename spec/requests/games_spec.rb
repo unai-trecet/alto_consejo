@@ -34,6 +34,10 @@ RSpec.describe '/games', type: :request do
     }
   end
 
+  def set_params(new_fields = {})
+    valid_attributes.merge(new_fields)
+  end
+
   describe 'GET /index' do
     def call_action
       get games_url
@@ -229,6 +233,43 @@ RSpec.describe '/games', type: :request do
       expect(response.body).to include('test').twice
       expect(response.body).to include('_success1')
       expect(response.body).to include('_success2')
+    end
+  end
+
+  describe 'DELETE /purge_main_image' do
+    let!(:game_with_image) do
+      create(:game, set_params(user:, main_image: fixture_file_upload('avatar2.jpg', '/spec/fixtures/')))
+    end
+
+    def call_action(match = game_with_image)
+      delete purge_main_image_game_url(match)
+    end
+
+    it_behaves_like 'not_logged_in'
+
+    describe 'authenticated user' do
+      before { sign_in user }
+
+      it 'deletes game main_image' do
+        call_action(game_with_image)
+
+        game_with_image.reload
+
+        expect(game_with_image.main_image.attached?).to eq(false)
+        expect(response).to have_http_status(302)
+      end
+
+      it 'does not delete it if logged in user is the one who added it' do
+        another_user = create(:user, :confirmed)
+        game_with_image.update(user: another_user)
+
+        call_action(game_with_image)
+
+        game_with_image.reload
+
+        expect(game_with_image.main_image.attached?).to eq(true)
+        expect(response).to have_http_status(302)
+      end
     end
   end
 end
