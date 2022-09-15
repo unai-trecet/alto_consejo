@@ -40,6 +40,7 @@ class GamesController < ApplicationController
   def update
     respond_to do |format|
       if @game.update(game_params)
+        binding.pry
         format.html { redirect_to @game, notice: 'Game was successfully updated.' }
         format.json { render :show, status: :ok, location: @game }
       else
@@ -78,7 +79,6 @@ class GamesController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_game
     @game = Game.find(params[:id])
   end
@@ -93,8 +93,7 @@ class GamesController < ApplicationController
     current_user == @game.added_by
   end
 
-  # Only allow a list of trusted parameters through.
   def game_params
-    params.require(:game).permit(:name, :description, :author, :user_id, :bbg_link, :main_image, :game_pictures)
+    params.require(:game).permit(:name, :description, :author, :user_id, :bbg_link, :main_image, game_pictures: [])
   end
 end

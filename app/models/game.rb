@@ -27,4 +27,22 @@ class Game < ApplicationRecord
     query = '(SELECT COUNT(matches.game_id) FROM matches WHERE matches.game_id = games.id GROUP BY matches.game_id)'
     Arel.sql(query)
   end
+
+  def creator_name
+    creator.added_by
+  end
+
+  def image_as_thumbnail
+    main_image.variant(resize_to_limit: [300, 300]).processed
+  end
+
+  def pictures_as_thumbnails
+    game_pictures.map do |picture|
+      picture.variant(resize_to_limit: [150, 150]).processed
+    end
+  end
+
+  def image_as_card_img
+    main_image.variant(resize_to_limit: [150, 150]).processed
+  end
 end

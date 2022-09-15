@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe '/games', type: :request do
-  # Game. As you add validations to Game, be sure to
-  # adjust the attributes here as well.
   let(:user) { create(:user, :confirmed) }
   let(:valid_attributes) do
     {
@@ -16,7 +14,8 @@ RSpec.describe '/games', type: :request do
       bbg_link: 'MyText',
       image: 'MyImage',
       created_at: 'Wed, 17 Nov 2021 11:32:30.977859000 UTC +00:00',
-      updated_at: 'Wed, 17 Nov 2021 11:32:30.977859000 UTC +00:00'
+      updated_at: 'Wed, 17 Nov 2021 11:32:30.977859000 UTC +00:00',
+      main_image: fixture_file_upload('default_avatar.png', '/spec/fixtures/')
     }
   end
 
@@ -119,6 +118,10 @@ RSpec.describe '/games', type: :request do
           expect do
             call_action
           end.to change(Game, :count).by(1)
+          game = Game.last
+
+          expect(game.name).to eq('LOTR')
+          expect(game.main_image.filename.to_json).to eq('default_avatar.png')
         end
 
         it 'redirects to the created game' do
@@ -155,7 +158,8 @@ RSpec.describe '/games', type: :request do
       before { sign_in user }
       context 'with valid parameters' do
         let(:new_attributes) do
-          { name: 'LOTR 2' }
+          { name: 'LOTR 2',
+            main_image: fixture_file_upload('avatar2.jpg', '/spec/fixtures/') }
         end
 
         it 'updates the requested game' do
@@ -165,6 +169,7 @@ RSpec.describe '/games', type: :request do
 
           game.reload
           expect(game.name).to eq('LOTR 2')
+          expect(game.main_image.filename.to_json).to eq('avatar2.jpg')
         end
 
         it 'redirects to the game' do

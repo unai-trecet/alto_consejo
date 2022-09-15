@@ -45,8 +45,12 @@ es:
       planned_matches: "Partidas planeadas"
       played_matches: "Partidas jugadas"
       num_players: "Número de jugadores que lo han jugado"
+      main_image: "Imagen"
+      game_pictures: "Fotos"
     form:
       bgg_name_search: "Burcar nombre del juego en BGG"
+      game_pictures: "Fotos del juego"
+      main_image: "Imagen principal"
   matches:
     create:
       created: "La partida ha sido creada con éxito."

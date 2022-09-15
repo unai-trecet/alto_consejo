@@ -9,7 +9,7 @@ module MatchesHelper
     @match.participants.include?(current_user)
   end
 
-  def can_edit?
+  def can_edit_match?
     @match.creator == current_user
   end
 end

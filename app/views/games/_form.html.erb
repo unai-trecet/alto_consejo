@@ -12,6 +12,11 @@
   <% end %>
 
   <%= form.hidden_field :user_id, value: current_user.id %>
+
+  <div class="form-group mb-3">
+    <%= form.label :main_image, t('.main_image') , class: "form-label" %>
+    <%= form.file_field :main_image, class:"form-control" %>
+  </div>
   
   <div class="form-group search-data mb-3" data-controller="autocomplete" data-autocomplete-url-value="/search_game_name" data-autocomplete-min-length-value="3" data-autocomplete-selected-class="selected-result">
     <%= form.label :name, class: "form-label" %>
@@ -35,8 +40,8 @@
   </div>
 
   <div class="form-group mb-3">
-    <%= form.label :image, class: "form-label" %>
-    <%= form.text_area :image, class:"form-control" %>
+    <%= form.label :game_pictures, t('.game_pictures') , class: "form-label" %>
+    <%= form.file_field :game_pictures, multiple: true, class:"form-control" %>
   </div>
 
   <div class="form-group mb-3">

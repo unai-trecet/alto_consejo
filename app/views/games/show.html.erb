@@ -1,70 +1,90 @@
 <div class="container-fluid">
   <p id="notice"><%= notice %></p>
 
-      <div class="form-group mb-3">
+  <div class="form-group mb-3">
+    <p><strong><%= t('.main_image') %>:</strong></p>
+    <% if allowed_pic?(@game.main_image) %>
+      <div>
+        <%= link_to(image_tag(@game.image_as_thumbnail, class: 'img-fluid img-thumbnail'), @game.main_image) %>
+        <%= link_to(t('attachments.delete_image'), purge_image_match_path(@game), method: :delete) if can_edit_game? %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-group mb-3">
     <p><strong><%= t('.name') %>:</strong></p>
     <div>
       <%= @game.name %>
     </div>
   </div>
   
-      <div class="form-group mb-3">
+  <div class="form-group mb-3">
     <p><strong><%= t('.description') %>:</strong></p>
     <div>
       <%= @game.description %>
     </div>
   </div>
   
-      <div class="form-group mb-3">
+  <div class="form-group mb-3">
     <p><strong><%= t('.author') %>:</strong></p>
     <div>
       <%= @game.author %>
     </div>
   </div>
   
-      <div class="form-group mb-3">
+  <div class="form-group mb-3">
     <p><strong><%= t('.added_by') %>:</strong></p>
     <div>
       <%= link_to(@game.added_by.username, @game.added_by) %>
     </div>
   </div>
   
-      <div class="form-group mb-3">
+  <div class="form-group mb-3">
     <p><strong><%= t('.played_matches') %>:</strong></p>
     <div>
       <%= @game.played_matches.count %>
     </div>
   </div>
 
-      <div class="form-group mb-3">
+  <div class="form-group mb-3">
     <p><strong><%= t('.planned_matches') %>:</strong></p>
     <div>
       <%= @game.planned_matches.count %>
     </div>
   </div>
 
-      <div class="form-group mb-3">
+  <div class="form-group mb-3">
     <p><strong><%= t('.num_players') %>:</strong></p>
     <div>
       <%= @game.players.count %>
     </div>
   </div>
 
-      <div class="form-group mb-3">
+  <div class="form-group mb-3">
     <p><strong><%= t('.bgg_link') %>:</strong></p>
     <div>
       <%= link_to(@game.bbg_link, @game.bbg_link) %>
     </div>
   </div>
   
-      <div class="form-group mb-3">
-    <p><strong><%= t('.picture') %>:</strong></p>
+  <div class="form-group mb-3">
+
+    <strong><%= t('.game_pictures') %></strong>
+  
+    <hr class="mt-2 mb-5">
+  
+    <div class="row text-center text-lg-start">
+  
+      <% @game.game_pictures.each do |pic| %>
+        <div class="col-lg-3 col-md-4 col-6">
+          <%= link_to(image_tag(picture_as_thumbnail(pic), class: 'img-fluid img-thumbnail'), pic, class: 'd-block mb-4 h-100') %>
+        </div>
+        <%= link_to(t('attachments.delete_image'), purge_attachment_path(pic), method: :delete) if can_edit_game? %>
+      <% end %>
+
     <div>
-      <%= @game.image %>
-    </div>
   </div>
-  
-  
+
   <%= link_to 'Edit', edit_game_path(@game), class: "btn btn-primary min-width-btn" %>
   <%= link_to 'Back', games_path, class: "btn btn-light min-width-btn" %>
 </div>
