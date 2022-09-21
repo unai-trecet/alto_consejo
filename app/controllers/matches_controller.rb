@@ -34,7 +34,7 @@ class MatchesController < ApplicationController
           MatchParticipationManager.new(match_id: @match.id,
                                         user_id: @match.creator.id).call
         end
-        MatchInvitationsManager.new(match: @match).call
+        MatchInvitationsManager.new(match: @match, sender: @match.creator).call
 
         format.html { redirect_to @match, notice: t('.created') }
         format.json { render :show, status: :created, location: @match }
@@ -53,7 +53,7 @@ class MatchesController < ApplicationController
           MatchParticipationManager.new(match_id: @match.id,
                                         user_id: @match.creator.id).call
         end
-        MatchInvitationsManager.new(match: @match).call
+        MatchInvitationsManager.new(match: @match, sender: @match.creator).call
 
         format.html { redirect_to @match, notice: 'Match was successfully updated.' }
         format.json { render :show, status: :ok, location: @match }

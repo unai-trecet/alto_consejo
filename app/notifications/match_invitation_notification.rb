@@ -14,7 +14,7 @@ class MatchInvitationNotification < Noticed::Base
 
   # Add required params
   #
-  param :match
+  param :match, :sender
 
   # Define helper methods to make rendering easier.
   #
@@ -27,6 +27,14 @@ class MatchInvitationNotification < Noticed::Base
   end
 
   def self.human_name
-    I18n.t('notifications.match_invitation_notification')
+    I18n.t('notifications.match_invitation_notification.name')
+  end
+
+  def sender
+    params[:sender]
+  end
+
+  def sender_username
+    sender.username
   end
 end

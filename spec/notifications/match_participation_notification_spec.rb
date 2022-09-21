@@ -7,7 +7,7 @@ RSpec.describe MatchParticipationNotification do
     let(:match) { create(:match, user: creator, game: create(:game, user: creator)) }
     let!(:recipients) { create_list(:user, 2) }
 
-    subject { described_class.with(match:, player:) }
+    subject { described_class.with(match:, player:, sender: player) }
 
     it 'sends proper email to recipients and create Notifications' do
       subject
@@ -32,12 +32,13 @@ RSpec.describe MatchParticipationNotification do
         .to match_array(recipients.pluck(:email))
 
       expect(Notification.pluck(:recipient_id)).to match_array(recipients.pluck(:id))
+      expect(Notification.count).to eq(2)
 
-      expect(Notification.first.params[:match]).to eq(match)
-      expect(Notification.last.params[:match]).to eq(match)
-
-      expect(Notification.first.params[:player]).to eq(player)
-      expect(Notification.last.params[:player]).to eq(player)
+      Notification.all.each do |notification|
+        expect(notification.params[:match]).to eq(match)
+        expect(notification.params[:sender]).to eq(player)
+        expect(notification.params[:player]).to eq(player)
+      end
     end
   end
 end

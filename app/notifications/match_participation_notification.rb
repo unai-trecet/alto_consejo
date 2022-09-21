@@ -13,7 +13,7 @@ class MatchParticipationNotification < Noticed::Base
 
   # Add required params
   #
-  param :match, :player
+  param :match, :player, :sender
 
   # Define helper methods to make rendering easier.
   #

@@ -169,6 +169,8 @@ es:
         match_invitation:
           user:
             unique_user_and_match: "Esta invitación ya existe"
+        notification:
+          sender_not_present: "El usuario iniciador de la notificación debe estar presente."
       messages:
         record_invalid: "La validación falló: %{errors}"
         restrict_dependent_destroy:

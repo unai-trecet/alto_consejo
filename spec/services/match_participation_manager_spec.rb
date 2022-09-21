@@ -39,7 +39,7 @@ RSpec.describe MatchParticipationManager do
       end.to change(MatchInvitation, :count).from(1).to(0)
     end
 
-    it 'sends notidifications to participants except the one joining' do
+    it 'sends notidifications to the rest of participants except the joining player with her/him as sender' do
       participants = create_list(:user, 2, :confirmed)
       create(:match_participant, match:, user: participants.first)
       create(:match_participant, match:, user: participants.last)
@@ -48,8 +48,9 @@ RSpec.describe MatchParticipationManager do
       recipients = participants.push(creator)
 
       expect(MatchParticipationNotification)
-        .to receive(:with).with(match:, player:)
-                          .and_call_original
+        .to receive(:with)
+        .with(match:, player:, sender: player)
+        .and_call_original
       expect_any_instance_of(MatchParticipationNotification).to receive(:deliver_later)
         .with(recipients).and_call_original
 

@@ -11,7 +11,7 @@ RSpec.describe MatchInvitationsManager do
 
     context 'with creator participating in the match' do
       subject do
-        described_class.new(match:)
+        described_class.new(match:, sender: creator)
       end
 
       it 'creates expected match_invitations' do
@@ -44,7 +44,7 @@ RSpec.describe MatchInvitationsManager do
       it 'does nothing if no users were invited' do
         match = create(:match, user: creator, invited_users: [])
 
-        subject = described_class.new(match:)
+        subject = described_class.new(match:, sender: creator)
         expect do
           subject.call
         end.not_to have_enqueued_job(Noticed::DeliveryMethods::Email)
@@ -52,7 +52,7 @@ RSpec.describe MatchInvitationsManager do
 
       it 'triggers invited users notifications' do
         expect(MatchInvitationNotification)
-          .to receive(:with).with(match:)
+          .to receive(:with).with(match:, sender: creator)
                             .and_call_original
 
         expect do

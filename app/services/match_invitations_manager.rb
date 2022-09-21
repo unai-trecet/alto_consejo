@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class MatchInvitationsManager
-  def initialize(match:)
+  def initialize(match:, sender:)
     @match = match
+    @sender = sender
     @invited_users = User.where(username: @match.invited_users)
   end
 
@@ -31,7 +32,7 @@ class MatchInvitationsManager
   def send_invitations
     new_recipients = @invited_users.select { |user| @created_invitations_user_ids.include?(user.id) }
     MatchInvitationNotification
-      .with(match: @match)
+      .with(match: @match, sender: @sender)
       .deliver_later(new_recipients)
   end
 end
