@@ -60,6 +60,7 @@ class Match < ApplicationRecord
       .distinct
   }
 
+  # TODO: Add tests for the following methods
   def game_name
     game.name
   end

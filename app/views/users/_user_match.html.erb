@@ -1,0 +1,18 @@
+<%= link_to(match, class: 'my-1') do %>
+  <div class="d-flex align-items-start" id="tooltips-container">
+    <div class="">
+        <i class="mdi mdi-circle h3 text-primary"></i>
+    </div>
+    <div class="w-100 ms-2">
+      <h5 class="mb-1 mt-0"><%= match.title %></h5>
+      <ul class="list-inline text-muted font-12">
+        <li class="list-inline-item"><i
+                class="mdi mdi-calendar-blank-outline me-1"></i><%= l(match.start_at, format: :date) %></li>
+        <li class="list-inline-item"> - </li>
+        <li class="list-inline-item"><i
+                class="mdi mdi-clock-time-eight-outline me-1"></i><%= t('from') %> <%= l(match.start_at, format: :time) %><span
+                class="px-1"> <%= t('to') %>  </span> <%= l(match.end_at, format: :time) %></li>
+      </ul>
+    </div>
+  </div>
+<% end %>

@@ -1,6 +1,8 @@
 es:
   hello: "Hola mundo"
   success: "Acción realizada con éxito."
+  from: "de"
+  to: "a"
   custom_errors:
     unauthorized: "No estás autorizado a realizar esa acción."
   services:
@@ -139,6 +141,7 @@ es:
     match_participation_notification:
       message: "@%{player} se ha inscrito en una partida en la que participas."
     match_invitation_notification:
+      name: "Invitación a partida"
       message: "Has sido invitado/a a una partida organizada por @%{organizer}"
   pages:
     portal: "Alto Consejo"
@@ -153,6 +156,23 @@ es:
       created_matches: "Partidas organizadas"
       played_matches: "Partidas jugadas"
       added_games: "Juegos añadidos"
+      edit: "editar"
+      delete: "borrar"
+      block: "bloquear"
+    show:
+      about_me: "sobre mí:"
+      added_games: "Juegos añadidos"
+      email: "email"
+      follow: "seguir"
+      fullname: "Nombre"
+      games_played: "Juegos probados"
+      inbox: "Buzón"
+      location: "Localización"
+      message: "mensaje"
+      mobile: "Teléfono"
+      organised: "Organizadas"
+      played: "Partidas jugadas"
+      upcoming_matches: "Próximas partidas"
   activerecord:
     models:
       match:
@@ -226,6 +246,7 @@ es:
       default: "%d/%m/%Y"
       long: "%d de %B de %Y"
       short: "%d de %b"
+      time: "%H:%M"
     month_names:
       -
       - enero
@@ -400,4 +421,6 @@ es:
       default: "%A, %d de %B de %Y %H:%M:%S %z"
       long: "%d de %B de %Y a las %H:%M"
       short: "%d de %b %H:%M"
+      date: "%d de %B de %Y"
+      time: "%H:%M"
     pm: pm

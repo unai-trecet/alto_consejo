@@ -34,6 +34,16 @@ RSpec.describe User, type: :model do
       .through(:match_participants)
       .source(:match)
   }
+  it {
+    should have_many(:not_played_matches)
+      .through(:match_participants)
+      .source(:match)
+  }
+  it {
+    should have_many(:played_games)
+      .through(:played_matches)
+      .source(:game)
+  }
 
   it { should have_one_attached(:avatar) }
 

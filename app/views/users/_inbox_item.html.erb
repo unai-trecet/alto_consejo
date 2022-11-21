@@ -1,0 +1,11 @@
+<div class="d-flex align-items-center pb-1" id="tooltips-container">
+  <%= image_tag(notification.sender.avatar, class: 'rounded-circle img-fluid avatar-md img-thumbnail bg-transparent', alt: '') %>
+  <div class="w-100 ms-3">
+    <h5 class="mb-1"><%= notification.sender_username %></h5>
+    <p class="mb-0 font-13"><%= notification.to_notification.message %></p>
+  </div>
+  <%= link_to(notification, class: 'btn btn-sm btn-soft-info font-13', 
+      data: { 'bs-container'=> "#tooltips-container", 'bs-toggle'=> "tooltip", 'bs-placement'=> "left", 'bs-original-title'=> "Reply" }, title: "") do %>
+    <i class="mdi mdi-reply"></i>
+  <% end %>
+</div>
