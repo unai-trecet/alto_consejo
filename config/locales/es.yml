@@ -171,7 +171,7 @@ es:
       message: "mensaje"
       mobile: "Teléfono"
       organised: "Organizadas"
-      played: "Partidas jugadas"
+      played: "Jugadas"
       upcoming_matches: "Próximas partidas"
   activerecord:
     models:

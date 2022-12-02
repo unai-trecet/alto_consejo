@@ -134,7 +134,7 @@ RSpec.describe '/games', type: :request do
         it 'does not create a new Game' do
           expect do
             call_action({ game: invalid_attributes })
-          end.to change(Game, :count).by(0)
+          end.not_to change(Game, :count)
         end
 
         it "renders a successful response (i.e. to display the 'new' template)" do
