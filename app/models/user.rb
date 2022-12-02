@@ -13,6 +13,7 @@ class User < ApplicationRecord
 
   has_many :games
 
+  # MATCHES ASSOCIATIONS
   has_many :matches
   alias_attribute :created_matches, :matches
 
@@ -26,6 +27,13 @@ class User < ApplicationRecord
 
   has_many :match_invitations
   has_many :invitations, through: :match_invitations, source: :match
+
+  # FRIENDSHIPS
+  has_many :followers, foreign_key: :follower_id, class_name: 'Friendship'
+  has_many :followed, through: :followers
+
+  has_many :followed, foreign_key: :followed_id, class_name: 'Friendship'
+  has_many :followers, through: :followed
 
   has_many :comments
   has_one_attached :avatar

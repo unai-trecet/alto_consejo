@@ -47,6 +47,16 @@ RSpec.describe User, type: :model do
 
   it { should have_one_attached(:avatar) }
 
+  # Friendships
+  it {
+    should have_many(:followers)
+      .through(:followed)
+  }
+  it {
+    should have_many(:followed)
+      .through(:followers)
+  }
+
   describe 'scopes' do
     describe '#played_matches' do
       subject { create(:user, :confirmed) }
