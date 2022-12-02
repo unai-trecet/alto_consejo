@@ -139,6 +139,7 @@ GEM
       rails (>= 6.0.0)
       stimulus-rails
       turbo-rails
+    htmlbeautifier (1.4.2)
     http (5.1.0)
       addressable (~> 2.8)
       http-cookie (~> 1.0)
@@ -437,6 +438,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   hotwire-rails
+  htmlbeautifier
   httparty
   image_processing
   jbuilder (~> 2.7)

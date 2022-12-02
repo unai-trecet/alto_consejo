@@ -37,6 +37,7 @@ end
 
 group :development do
   gem 'brakeman'
+  gem 'htmlbeautifier'
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'rubocop'
   gem 'solargraph'
