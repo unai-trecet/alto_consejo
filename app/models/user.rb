@@ -29,19 +29,21 @@ class User < ApplicationRecord
   has_many :invitations, through: :match_invitations, source: :match
 
   # FRIENDSHIPS
-  has_many :followers, foreign_key: :follower_id, class_name: 'Friendship'
-  has_many :followed, through: :followers
+  has_many :friendships, ->(user) { unscope(:where).where('user_id = ? OR friend_id = ?', user.id, user.id) }
+  has_many :accepted_friendships, -> { accepted }, class_name: 'Friendship', foreign_key: :friend_id
+  has_many :pending_friendships, -> { pending }, class_name: 'Friendship', foreign_key: :friend_id
 
-  has_many :followed, foreign_key: :followed_id, class_name: 'Friendship'
-  has_many :followers, through: :followed
+  after_commit :add_default_avatar, on: %i[create update]
 
   has_many :comments
   has_one_attached :avatar
 
-  after_commit :add_default_avatar, on: %i[create update]
-
   def avatar_as_thumbnail
     avatar.variant(resize_to_limit: [150, 150]).processed
+  end
+
+  def friends
+    friendships.accepted.includes(:user, :friend).map { |fr| [fr.user, fr.friend] - [self] }.flatten
   end
 
   private

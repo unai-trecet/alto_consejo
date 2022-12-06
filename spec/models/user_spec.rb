@@ -48,14 +48,39 @@ RSpec.describe User, type: :model do
   it { should have_one_attached(:avatar) }
 
   # Friendships
+  it { should have_many(:friendships) }
   it {
-    should have_many(:followers)
-      .through(:followed)
+    should have_many(:accepted_friendships)
+      .class_name('Friendship')
+      .conditions('accepted_at IS NOT NULL')
+      .with_foreign_key(:friend_id)
   }
+
   it {
-    should have_many(:followed)
-      .through(:followers)
+    should have_many(:pending_friendships)
+      .class_name('Friendship')
+      .conditions('accepted_at IS NULL')
+      .with_foreign_key(:friend_id)
   }
+
+  describe '#friends' do
+    let(:user) { create(:user, :confirmed) }
+    let(:friend1) { create(:user, :confirmed) }
+    let(:friend2) { create(:user, :confirmed) }
+    let(:friend3) { create(:user, :confirmed) }
+
+    let!(:friendship1) { create(:friendship, user:, friend: friend1, accepted_at: Time.now) }
+    let!(:friendship2) { create(:friendship, user:, friend: friend2, accepted_at: Time.now) }
+    let!(:friendship3) { create(:friendship, user:, friend: friend3, accepted_at: nil) }
+
+    it 'returns all the user\'s friends that has accepted' do
+      expect(user.friends).to match_array([friend1, friend2])
+    end
+
+    it 'returns friends where the user is the friend' do
+      expect(friend1.friends).to match_array([user])
+    end
+  end
 
   describe 'scopes' do
     describe '#played_matches' do
