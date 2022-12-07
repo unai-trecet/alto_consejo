@@ -30,8 +30,12 @@ class User < ApplicationRecord
 
   # FRIENDSHIPS
   has_many :friendships, ->(user) { unscope(:where).where('user_id = ? OR friend_id = ?', user.id, user.id) }
-  has_many :accepted_friendships, -> { accepted }, class_name: 'Friendship', foreign_key: :friend_id
-  has_many :pending_friendships, -> { pending }, class_name: 'Friendship', foreign_key: :friend_id
+  has_many :accepted_friendships, lambda { |user|
+                                    unscope(:where).accepted.where('user_id = ? OR friend_id = ?', user.id, user.id)
+                                  }, class_name: 'Friendship'
+  has_many :pending_friendships, lambda { |user|
+                                   unscope(:where).pending.where('user_id = ? OR friend_id = ?', user.id, user.id)
+                                 }, class_name: 'Friendship'
 
   after_commit :add_default_avatar, on: %i[create update]
 
@@ -43,7 +47,7 @@ class User < ApplicationRecord
   end
 
   def friends
-    friendships.accepted.includes(:user, :friend).map { |fr| [fr.user, fr.friend] - [self] }.flatten
+    accepted_friendships.includes(:user, :friend).map { |fr| [fr.user, fr.friend] - [self] }.flatten
   end
 
   private

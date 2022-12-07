@@ -48,19 +48,20 @@ RSpec.describe User, type: :model do
   it { should have_one_attached(:avatar) }
 
   # Friendships
-  it { should have_many(:friendships) }
+  it {
+    should have_many(:friendships)
+      .conditions("user_id = #{subject.id} OR friend_id = #{subject.id}")
+  }
   it {
     should have_many(:accepted_friendships)
       .class_name('Friendship')
-      .conditions('accepted_at IS NOT NULL')
-      .with_foreign_key(:friend_id)
+      .conditions("friendships.accepted_at IS NOT NULL AND user_id = #{subject.id} OR friend_id = #{subject.id}")
   }
 
   it {
     should have_many(:pending_friendships)
       .class_name('Friendship')
-      .conditions('accepted_at IS NULL')
-      .with_foreign_key(:friend_id)
+      .conditions("friendships.accepted_at IS  NULL AND user_id = #{subject.id} OR friend_id = #{subject.id}")
   }
 
   describe '#friends' do
@@ -77,8 +78,13 @@ RSpec.describe User, type: :model do
       expect(user.friends).to match_array([friend1, friend2])
     end
 
-    it 'returns friends where the user is the friend' do
+    it 'returns friends where the user is the friend (it works reversely)' do
       expect(friend1.friends).to match_array([user])
+      expect(friend2.friends).to match_array([user])
+    end
+
+    it 'returns no user\'s friendships when they are not yet accepted' do
+      expect(friend3.friends).to be_empty
     end
   end
 
