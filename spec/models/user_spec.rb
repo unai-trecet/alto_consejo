@@ -126,4 +126,42 @@ RSpec.describe User, type: :model do
       expect(subject.avatar.blob.filename).to eq('default_avatar.png')
     end
   end
+
+  describe '#add_default_avatar' do
+    it 'sets default avatar after creation when is not provided' do
+      user = build(:user)
+
+      expect(user.avatar.attached?).to be_falsey
+
+      user.save
+
+      expect(user.avatar.attached?).to eq(true)
+      expect(user.avatar.filename).to eq('default_avatar.png')
+    end
+
+    it 'sets default avatar after update when is not provided' do
+      user = build(:user)
+
+      expect(user.avatar.attached?).to be_falsey
+
+      user.update(username: 'new_username')
+
+      expect(user.avatar.attached?).to eq(true)
+      expect(user.avatar.filename).to eq('default_avatar.png')
+    end
+
+    it 'does not set default when it is already set' do
+      user = create(:user)
+      user.avatar.attach(
+        io: File.open(Rails.root.join('app', 'assets', 'images', 'avatar2.jpg')),
+        filename: 'avatar2.jpg',
+        content_type: 'image/png'
+      )
+
+      user.update(username: 'new_username')
+
+      expect(user.avatar.attached?).to eq(true)
+      expect(user.avatar.filename).to eq('avatar2.jpg')
+    end
+  end
 end

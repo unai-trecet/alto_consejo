@@ -52,7 +52,6 @@ class User < ApplicationRecord
 
   private
 
-  # TODO: Add test for add_default_avatar
   def add_default_avatar
     return if avatar.attached?
 
