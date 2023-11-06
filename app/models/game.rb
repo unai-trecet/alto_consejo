@@ -28,6 +28,16 @@ class Game < ApplicationRecord
     Arel.sql(query)
   end
 
+  def self.ransackable_associations(_auth_object = nil)
+    %w[added_by admin_id author bbg_link created_at description id id_value image
+       matches_count name updated_at user_id]
+  end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[added_by admin_id author bbg_link created_at description id id_value image
+       matches_count name updated_at user_id]
+  end
+
   def creator_name
     creator.added_by
   end

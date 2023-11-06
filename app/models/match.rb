@@ -82,4 +82,8 @@ class Match < ApplicationRecord
   def image_as_card_img
     image.variant(resize_to_limit: [150, 150]).processed
   end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[created_at creator description end_at game_id id id_value invited_users location number_of_players public start_at title updated_at user_id]
+  end
 end

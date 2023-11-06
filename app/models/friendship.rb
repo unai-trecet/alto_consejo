@@ -4,4 +4,6 @@ class Friendship < ApplicationRecord
 
   scope :accepted, -> { where('accepted_at IS NOT NULL') }
   scope :pending, -> { where('accepted_at IS NULL') }
+
+  validates :user, :friend, presence: true
 end

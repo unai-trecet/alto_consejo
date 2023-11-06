@@ -6,6 +6,9 @@ RSpec.describe Friendship, type: :model do
   it { should belong_to(:user) }
   it { should belong_to(:friend).class_name('User') }
 
+  it { should validate_presence_of(:friend) }
+  it { should validate_presence_of(:user) }
+
   describe 'scopes' do
     let(:friendship1) { create(:friendship, accepted_at: Time.now) }
     let(:friendship2) { create(:friendship, accepted_at: Time.now) }
