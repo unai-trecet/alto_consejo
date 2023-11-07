@@ -50,6 +50,15 @@ class User < ApplicationRecord
     accepted_friendships.includes(:user, :friend).map { |fr| [fr.user, fr.friend] - [self] }.flatten
   end
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[confirmation_sent_at confirmation_token confirmed_at created_at created_matches
+       current_sign_in_at current_sign_in_ip email encrypted_password id id_value last_sign_in_at last_sign_in_ip remember_created_at reset_password_sent_at reset_password_token sign_in_count unconfirmed_email updated_at username]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[games]
+  end
+
   private
 
   def add_default_avatar

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-
-RSpec.describe '/matches', type: :request do
+# rubocop:disable Metrics/BlockLength
+RSpec.describe '/matches', type: :request do 
   let(:user) { create(:user, :confirmed) }
   let(:game) { create(:game, user:) }
   let(:invited_users) { create_list(:user, 2) }

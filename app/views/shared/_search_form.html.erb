@@ -1,7 +1,5 @@
-
 <%= search_form_for @q, data: { controller: 'search-form', search_form_target: 'form', turbo_frame: 'search' } do |f| %>
   <div class="input-group mb-3">
     <%= f.text_field search_field, class: 'form-control', data: { action: 'input->search-form#search' } %>
   </div>
 <% end %>
-

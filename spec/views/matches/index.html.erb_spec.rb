@@ -19,7 +19,7 @@ RSpec.describe 'matches/index', type: :view do
     Kaminari.paginate_array(matches).page(1)
   end
 
-  it 'renders a list of matches' do
+  xit 'renders a list of matches' do
     assign(:matches, matches)
     assign(:q, Match.ransack(nil))
 

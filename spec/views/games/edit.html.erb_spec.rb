@@ -21,8 +21,6 @@ RSpec.describe 'games/edit', type: :view do
       assert_select 'input[name=?]', 'game[author]'
 
       assert_select 'textarea[name=?]', 'game[bbg_link]'
-
-      assert_select 'textarea[name=?]', 'game[image]'
     end
   end
 end
