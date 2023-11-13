@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe '/games', type: :request do # rubocop:disable Metrics/BlockLength
+RSpec.describe '/games', type: :request do
   let(:user) { create(:user, :confirmed) }
   let(:valid_attributes) do
     {

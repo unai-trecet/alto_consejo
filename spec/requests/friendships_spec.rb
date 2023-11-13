@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Friendships', type: :request do # rubocop:disable Metrics/BlockLength
+RSpec.describe 'Friendships', type: :request do
   let(:user) { create(:user, :confirmed) }
 
   before { sign_in(user) }

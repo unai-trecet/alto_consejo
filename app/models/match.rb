@@ -4,7 +4,7 @@ class Match < ApplicationRecord
   include Filterable
 
   belongs_to :user
-  alias_method :creator, :user
+  alias creator user
 
   belongs_to :game
 

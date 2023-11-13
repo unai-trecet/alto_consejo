@@ -21,8 +21,8 @@ class Notification < ApplicationRecord
   private
 
   def sender_present?
-    unless params[:sender].present? && params[:sender].is_a?(User)
-      errors.add('params[:sender]', I18n.t('activerecord.errors.models.notification.sender_not_present'))
-    end
+    return if params[:sender].present? && params[:sender].is_a?(User)
+
+    errors.add('params[:sender]', I18n.t('activerecord.errors.models.notification.sender_not_present'))
   end
 end

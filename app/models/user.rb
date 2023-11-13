@@ -15,7 +15,7 @@ class User < ApplicationRecord
 
   # MATCHES ASSOCIATIONS
   has_many :matches
-  alias_method :created_matches, :matches
+  alias created_matches matches
 
   has_many :match_participants
   has_many :participations, through: :match_participants, source: :match

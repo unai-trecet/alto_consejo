@@ -4,7 +4,7 @@ class Game < ApplicationRecord
   has_rich_text :description
 
   belongs_to :user
-  alias_method :added_by, :user
+  alias added_by user
 
   has_many :matches
   has_many :played_matches, -> { played }, class_name: 'Match'
