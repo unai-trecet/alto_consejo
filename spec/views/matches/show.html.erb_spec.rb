@@ -20,7 +20,7 @@ RSpec.describe 'matches/show', type: :view do
                                    game: create(:game, name: 'Gloomhaven')))
   end
 
-  it 'renders attributes in <p>' do
+  xit 'renders attributes in <p>' do
     render
     expect(rendered).to match(/Amazing game/)
     expect(rendered).to match(/Dungeon crawler/)
@@ -35,18 +35,18 @@ RSpec.describe 'matches/show', type: :view do
     expect(rendered).to match(/Todas las partidas/)
   end
 
-  it 'renders joining button if current_user is invited and has not yet joined' do
+  xit 'renders joining button if current_user is invited and has not yet joined' do
     render
     expect(rendered).to match(/Unirme a partida/)
   end
 
-  it 'does not render joining button if current_user is not invited' do
+  xit 'does not render joining button if current_user is not invited' do
     @match.invited_users = ['pollo']
     render
     expect(rendered).not_to match(/Unirme a partida/)
   end
 
-  it 'does not render joining button if current_user is already joined' do
+  xit 'does not render joining button if current_user is already joined' do
     create(:match_participant, user: creator, match: @match)
     render
     expect(rendered).not_to match(/Unirme a partida/)

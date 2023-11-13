@@ -4,7 +4,7 @@ class Game < ApplicationRecord
   has_rich_text :description
 
   belongs_to :user
-  alias_attribute :added_by, :user
+  alias added_by user
 
   has_many :matches
   has_many :played_matches, -> { played }, class_name: 'Match'
@@ -26,6 +26,15 @@ class Game < ApplicationRecord
   ransacker :matches_count do
     query = '(SELECT COUNT(matches.game_id) FROM matches WHERE matches.game_id = games.id GROUP BY matches.game_id)'
     Arel.sql(query)
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[user matches]
+  end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[added_by admin_id author bbg_link created_at description id id_value image
+       matches_count name updated_at user_id]
   end
 
   def creator_name

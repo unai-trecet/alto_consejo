@@ -13,8 +13,9 @@ class User < ApplicationRecord
 
   has_many :games
 
+  # MATCHES ASSOCIATIONS
   has_many :matches
-  alias_attribute :created_matches, :matches
+  alias created_matches matches
 
   has_many :match_participants
   has_many :participations, through: :match_participants, source: :match
@@ -27,18 +28,39 @@ class User < ApplicationRecord
   has_many :match_invitations
   has_many :invitations, through: :match_invitations, source: :match
 
-  has_many :comments
-  has_one_attached :avatar
+  # FRIENDSHIPS
+  has_many :friendships, ->(user) { unscope(:where).where('user_id = ? OR friend_id = ?', user.id, user.id) }
+  has_many :accepted_friendships, lambda { |user|
+                                    unscope(:where).accepted.where('user_id = ? OR friend_id = ?', user.id, user.id)
+                                  }, class_name: 'Friendship'
+  has_many :pending_friendships, lambda { |user|
+                                   unscope(:where).pending.where('user_id = ? OR friend_id = ?', user.id, user.id)
+                                 }, class_name: 'Friendship'
 
   after_commit :add_default_avatar, on: %i[create update]
+
+  has_many :comments
+  has_one_attached :avatar
 
   def avatar_as_thumbnail
     avatar.variant(resize_to_limit: [150, 150]).processed
   end
 
+  def friends
+    accepted_friendships.includes(:user, :friend).map { |fr| [fr.user, fr.friend] - [self] }.flatten
+  end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[confirmation_sent_at confirmation_token confirmed_at created_at created_matches
+       current_sign_in_at current_sign_in_ip email encrypted_password id id_value last_sign_in_at last_sign_in_ip remember_created_at reset_password_sent_at reset_password_token sign_in_count unconfirmed_email updated_at username]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[games]
+  end
+
   private
 
-  # TODO: Add test for add_default_avatar
   def add_default_avatar
     return if avatar.attached?
 

@@ -45,6 +45,9 @@ Rails.application.routes.draw do
   resources :comments do
     resources :comments, module: :comments
   end
+
+  resources :friendships
+
   resources :matches do
     member do
       delete 'purge_image'

@@ -34,10 +34,10 @@ puts 'Matches creation!'
   creator = pick_random_object(User)
   # TODO: seguro que esto se ppuede mejorar.
   invited_users = (0..rand(8)).to_a.map { |_el| pick_random_object(User).username } - [creator.username]
-  match = FactoryBot.create(:match, user: creator,
-                                    game: pick_random_object(Game),
-                                    number_of_players: invited_users.count + rand(1),
-                                    invited_users:)
+  FactoryBot.create(:match, user: creator,
+                            game: pick_random_object(Game),
+                            number_of_players: invited_users.count + rand(1),
+                            invited_users:)
   print '.'
 end
 

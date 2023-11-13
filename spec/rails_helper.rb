@@ -2,6 +2,10 @@
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+require 'database_cleaner/active_record'
+require 'devise'
+require 'factory_bot'
+
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
@@ -71,4 +75,28 @@ RSpec.configure do |config|
       with.library :rails
     end
   end
+
+  config.include FactoryBot::Syntax::Methods
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
+  config.include Devise::Test::ControllerHelpers, type: :helper
+  config.include Devise::Test::IntegrationHelpers, type: :feature
+  config.include Devise::Test::IntegrationHelpers, type: :request
 end

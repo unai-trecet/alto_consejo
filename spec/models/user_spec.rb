@@ -47,6 +47,47 @@ RSpec.describe User, type: :model do
 
   it { should have_one_attached(:avatar) }
 
+  # Friendships
+  it {
+    should have_many(:friendships)
+      .conditions("user_id = #{subject.id} OR friend_id = #{subject.id}")
+  }
+  it {
+    should have_many(:accepted_friendships)
+      .class_name('Friendship')
+      .conditions("friendships.accepted_at IS NOT NULL AND user_id = #{subject.id} OR friend_id = #{subject.id}")
+  }
+
+  it {
+    should have_many(:pending_friendships)
+      .class_name('Friendship')
+      .conditions("friendships.accepted_at IS  NULL AND user_id = #{subject.id} OR friend_id = #{subject.id}")
+  }
+
+  describe '#friends' do
+    let(:user) { create(:user, :confirmed) }
+    let(:friend1) { create(:user, :confirmed) }
+    let(:friend2) { create(:user, :confirmed) }
+    let(:friend3) { create(:user, :confirmed) }
+
+    let!(:friendship1) { create(:friendship, user:, friend: friend1, accepted_at: Time.now) }
+    let!(:friendship2) { create(:friendship, user:, friend: friend2, accepted_at: Time.now) }
+    let!(:friendship3) { create(:friendship, user:, friend: friend3, accepted_at: nil) }
+
+    it 'returns all the user\'s friends that has accepted' do
+      expect(user.friends).to match_array([friend1, friend2])
+    end
+
+    it 'returns friends where the user is the friend (it works reversely)' do
+      expect(friend1.friends).to match_array([user])
+      expect(friend2.friends).to match_array([user])
+    end
+
+    it 'returns no user\'s friendships when they are not yet accepted' do
+      expect(friend3.friends).to be_empty
+    end
+  end
+
   describe 'scopes' do
     describe '#played_matches' do
       subject { create(:user, :confirmed) }
@@ -83,6 +124,44 @@ RSpec.describe User, type: :model do
 
     it 'attaches the default avatar to the user' do
       expect(subject.avatar.blob.filename).to eq('default_avatar.png')
+    end
+  end
+
+  describe '#add_default_avatar' do
+    it 'sets default avatar after creation when is not provided' do
+      user = build(:user)
+
+      expect(user.avatar.attached?).to be_falsey
+
+      user.save
+
+      expect(user.avatar.attached?).to eq(true)
+      expect(user.avatar.filename).to eq('default_avatar.png')
+    end
+
+    it 'sets default avatar after update when is not provided' do
+      user = build(:user)
+
+      expect(user.avatar.attached?).to be_falsey
+
+      user.update(username: 'new_username')
+
+      expect(user.avatar.attached?).to eq(true)
+      expect(user.avatar.filename).to eq('default_avatar.png')
+    end
+
+    it 'does not set default when it is already set' do
+      user = create(:user)
+      user.avatar.attach(
+        io: File.open(Rails.root.join('app', 'assets', 'images', 'avatar2.jpg')),
+        filename: 'avatar2.jpg',
+        content_type: 'image/png'
+      )
+
+      user.update(username: 'new_username')
+
+      expect(user.avatar.attached?).to eq(true)
+      expect(user.avatar.filename).to eq('avatar2.jpg')
     end
   end
 end
