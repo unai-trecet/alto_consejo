@@ -185,7 +185,7 @@ RSpec.describe Match, type: :model do
   describe '#creator_name' do
     it 'returns match creator username' do
       alicia = create(:user, :confirmed, username: 'alicia')
-      match = create(:match, creator: alicia)
+      match = create(:match, user: alicia)
 
       expect(match.creator_name).to eq('alicia')
     end

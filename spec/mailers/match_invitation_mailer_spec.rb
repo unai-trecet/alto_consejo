@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe MatchInvitationMailer, type: :mailer do
   describe '.match_invitation_email' do
     it 'creates an email with the correct content' do
