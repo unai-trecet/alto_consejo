@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FriendshipsController < ApplicationController
   before_action :set_friendship, only: %i[show update delete]
 

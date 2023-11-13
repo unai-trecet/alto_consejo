@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FriendshipRequestMailer < ApplicationMailer
   default from: 'altoconsejo@gmail.com'
 
