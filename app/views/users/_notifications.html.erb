@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="header-title mb-3"><%= t('.inbox') %></h4>
+    <div class="inbox-widget" data-simplebar="init">
+      <div class="simplebar-wrapper" style="margin: 0px;">
+        <div class="simplebar-height-auto-observer-wrapper">
+          <div class="simplebar-height-auto-observer"></div>
+        </div>
+        <div class="simplebar-mask">
+          <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+            <div class="simplebar-content-wrapper"
+                            style="height: auto; overflow: hidden scroll;">
+              <div class="simplebar-content" style="padding: 0px;">
+                <% if user.notifications.select(&:unread?).any? %>
+                  <% user.notifications.select(&:unread?).each do |notification|%>
+                    <%= render partial: 'inbox_item', locals: { notification: notification }%>
+                  <% end %>
+                <% else %>
+                  <p style="padding: 20px;"><%= t('.no_notifications')%></p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="simplebar-placeholder" style="width: auto;"></div>
+      </div>
+      <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+        <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+      </div>
+    </div>
+    <!-- end inbox-widget -->
+  </div>
+</div>

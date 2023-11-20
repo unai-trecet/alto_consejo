@@ -1,0 +1,10 @@
+<%= link_to(friend, class: "list-group-item list-group-item-action") do %>
+  <div class="d-flex align-items-center pb-1" id="tooltips-container">
+    <%= image_tag(@user.avatar, class: "rounded-circle img-fluid avatar-md img-thumbnail bg-transparent", alt: "") %>
+    <div class="w-100 ms-2">
+      <h5 class="mb-1"><%= friend.username %><i
+                          class="mdi mdi-check-decagram text-info ms-1"></i></h5>
+    </div>
+    <i class="mdi mdi-chevron-right h2"></i>
+  </div>
+<% end %>

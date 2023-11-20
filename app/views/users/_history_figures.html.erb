@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-body text-center">
+    <div class="row">
+      <div class="col-3 border-end border-light">
+        <h5 class="text-muted mt-1 mb-2 fw-normal"><%= t('.played') %></h5>
+        <h2 class="mb-0 fw-bold"><%= user.played_matches.size %></h2>
+      </div>
+      <div class="col-3 border-end border-light">
+        <h5 class="text-muted mt-1 mb-2 fw-normal"><%= t('.organised') %></h5>
+        <h2 class="mb-0 fw-bold"><%= user.created_matches.size %></h2>
+      </div>
+      <div class="col-3">
+        <h5 class="text-muted mt-1 mb-2 fw-normal"><%= t('.games_played') %></h5>
+        <h2 class="mb-0 fw-bold"><%= user.played_games.size %></h2>
+      </div>
+      <div class="col-3">
+        <h5 class="text-muted mt-1 mb-2 fw-normal"><%= t('.added_games') %></h5>
+        <h2 class="mb-0 fw-bold"><%= user.games.size %></h2>
+      </div>
+    </div>
+  </div>
+</div>

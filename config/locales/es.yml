@@ -161,6 +161,7 @@ es:
       block: "bloquear"
     show:
       about_me: "sobre mí:"
+      active_friends: "Amigos activos"
       added_games: "Juegos añadidos"
       email: "email"
       follow: "seguir"
@@ -170,9 +171,14 @@ es:
       location: "Localización"
       message: "mensaje"
       mobile: "Teléfono"
+      no_upcoming_matches: "No hay partidas pendientes"
       organised: "Organizadas"
       played: "Jugadas"
       upcoming_matches: "Próximas partidas"
+      reply: "Contestar"
+    notifications:
+      no_notifications: "No hay notificaciones pendientes"
+
   activerecord:
     models:
       match:
