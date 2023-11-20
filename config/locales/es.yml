@@ -22,6 +22,7 @@ es:
       title: "Calendario de partidas"
   comments:
     comment:
+      commented_item_site: "Sitio del comentario"
       confirm: "¿Estás seguro/a?"
       delete: "Borrar"
       edit: "Modificar"
