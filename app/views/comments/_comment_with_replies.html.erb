@@ -2,7 +2,7 @@
 <div id="<%= dom_id(comment) %>_with_comments" data-controller="comment-reply">
   <%= render comment %>
   <div class="text-sm">
-    <%= link_to t('.reply'), "#", data: { action: "click->comment-reply#toggle" } %>
+    <i class="mdi mdi-reply"></i><%= link_to(t('.reply'), "#", class: "text-muted font-13 d-inline-block mt-2", data: { action: "click->comment-reply#toggle" }) %>
   </div>
   <div id="<%= dom_id(comment) %>_comments" class="ms-4">
     <%= render partial: "comments/form", locals: { commentable: comment,

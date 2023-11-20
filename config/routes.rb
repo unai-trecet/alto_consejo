@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     member do
       delete 'purge_avatar'
     end
+    resources :comments, module: :users
   end
 
   get 'matches_calendar', to: 'calendars#matches_calendar'

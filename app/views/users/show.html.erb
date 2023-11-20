@@ -130,37 +130,18 @@
     <div class="col-xl-7">
       <div class="card">
         <div class="card-body">
-          <!-- comment box -->
-          <h4><%= t('.comments') %></h4>
-            <%= turbo_frame_tag :comment_form do %>
-              <%= render partial: 'comments/form', locals: { comment: Comment.new, commentable: @unai } %>
-            <% end %>
-          <%# <form action="#" class="comment-area-box mb-3">
-            <span class="input-icon">
-              <textarea rows="3" class="form-control" placeholder="Write something..."></textarea>
-            </span>
-            <div class="comment-area-btn">
-              <div class="float-end">
-                <button type="submit"
-                                class="btn btn-sm btn-dark waves-effect waves-light">Post</button>
-              </div>
-              <div>
-                <a href="#" class="btn btn-sm btn-light text-black-50"><i
-                                    class="far fa-user"></i></a>
-                <a href="#" class="btn btn-sm btn-light text-black-50"><i
-                                    class="fa fa-map-marker-alt"></i></a>
-                <a href="#" class="btn btn-sm btn-light text-black-50"><i
-                                    class="fa fa-camera"></i></a>
-                <a href="#" class="btn btn-sm btn-light text-black-50"><i
-                                    class="far fa-smile"></i></a>
-              </div>
-            </div>
-          </form> %>
-          <!-- end comment box -->
+          <% if current_user? %>
+            <!-- comment box -->
+            <h4><%= t('.comments') %></h4>
+              <%= turbo_frame_tag :comment_form do %>
+                <%= render partial: 'comments/form', locals: { comment: Comment.new, commentable: @user } %>
+              <% end %>
+            <!-- end comment box -->
+          <% end %>
           <br>
           <%= turbo_stream_from @user, :comments %>
           <%= tag.div id: "#{dom_id(@user)}_comments" do %>
-            <%= render partial: "comments/comment_with_replies", collection: @user.comments.where(parent_id: nil), as: :comment %>
+            <%= render partial: "comments/comment_with_replies", collection: @user.authored_comments.where(parent_id: nil), as: :comment %>
           <% end %>
         </div>
       </div>

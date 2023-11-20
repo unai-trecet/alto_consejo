@@ -36,10 +36,13 @@ class User < ApplicationRecord
   has_many :pending_friendships, lambda { |user|
                                    unscope(:where).pending.where('user_id = ? OR friend_id = ?', user.id, user.id)
                                  }, class_name: 'Friendship'
+  has_many :friends, through: :accepted_friendships, source: :user
 
   after_commit :add_default_avatar, on: %i[create update]
 
-  has_many :comments
+  has_many :authored_comments, class_name: 'Comment'
+  has_many :comments, as: :commentable
+
   has_one_attached :avatar
 
   def avatar_as_thumbnail
@@ -52,7 +55,9 @@ class User < ApplicationRecord
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[confirmation_sent_at confirmation_token confirmed_at created_at created_matches
-       current_sign_in_at current_sign_in_ip email encrypted_password id id_value last_sign_in_at last_sign_in_ip remember_created_at reset_password_sent_at reset_password_token sign_in_count unconfirmed_email updated_at username]
+       current_sign_in_at current_sign_in_ip email encrypted_password id id_value last_sign_in_at last_sign_in_ip
+       remember_created_at reset_password_sent_at reset_password_token sign_in_count unconfirmed_email updated_at
+       username]
   end
 
   def self.ransackable_associations(_auth_object = nil)
