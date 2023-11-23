@@ -8,4 +8,11 @@ class Friendship < ApplicationRecord
   scope :pending, -> { where('accepted_at IS NULL') }
 
   validates :user, :friend, presence: true
+
+  def self.already_exists?(user_id:, friend_id:)
+    exists?([
+              '(user_id = :a AND friend_id = :b) OR (user_id = :b AND friend_id = :a)',
+              { a: user_id, b: friend_id }
+            ])
+  end
 end

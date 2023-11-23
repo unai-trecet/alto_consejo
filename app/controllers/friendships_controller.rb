@@ -1,23 +1,27 @@
 # frozen_string_literal: true
 
 class FriendshipsController < ApplicationController
-  before_action :set_friendship, only: %i[show update delete]
+  before_action :set_friendship, only: %i[update destroy]
 
   def show
-    @friendship = Friendship.find(params[])
+    @friendship = Friendship.find(params[:id])
   end
 
-  def new; end
-
   def create
-    result = FriendshipCreationManager.new(user_id: current_user.id, friend_id: params[:friend_id]).call
-
-    nil unless result.success?
+    result = FriendshipsCreationManager.new(user_id: params[:user_id], friend_id: params[:friend_id]).call
+    if result.success?
+      head :ok
+    else
+      render json: { errors: result.errors }, status: :unprocessable_entity
+    end
   end
 
   def update; end
 
-  def destroy; end
+  def destroy
+    @friendship.destroy
+    head :ok
+  end
 
   private
 

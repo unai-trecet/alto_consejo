@@ -26,4 +26,29 @@ RSpec.describe Friendship, type: :model do
       end
     end
   end
+
+  describe '.already_exists?' do
+    let(:user) { create(:user) }
+    let(:friend) { create(:user) }
+
+    context 'when a friendship already exists' do
+      before do
+        Friendship.create(user:, friend:)
+      end
+
+      it 'returns true if the user_id and friend_id are the same' do
+        expect(Friendship.already_exists?(user_id: user.id, friend_id: friend.id)).to be true
+      end
+
+      it 'returns true if the user_id and friend_id are swapped' do
+        expect(Friendship.already_exists?(user_id: friend.id, friend_id: user.id)).to be true
+      end
+    end
+
+    context 'when a friendship does not exist' do
+      it 'returns false' do
+        expect(Friendship.already_exists?(user_id: user.id, friend_id: friend.id)).to be false
+      end
+    end
+  end
 end

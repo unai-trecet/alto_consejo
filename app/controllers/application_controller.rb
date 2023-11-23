@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, notice: :not_found
   end
 
-  def set_resource # rubocop:disable Metrics/MethodLength
+  def set_resource
     return unless params[:id]
 
     @resource = case controller_name

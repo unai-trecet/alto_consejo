@@ -46,7 +46,7 @@ Rails.application.routes.draw do
     resources :comments, module: :comments
   end
 
-  resources :friendships
+  resources :friendships, only: %i[create update destroy]
 
   resources :matches do
     member do
