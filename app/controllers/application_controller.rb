@@ -5,11 +5,18 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  rescue_from ActionController::RoutingError, with: :render_not_found
 
   private
 
-  def record_not_found
-    redirect_to root_path, notice: :not_found
+  def record_not_found(exception)
+    @exception = exception
+    render template: '/error_pages/not_found', status: 404
+  end
+
+  def render_internal_server_error(exception)
+    @exception = exception
+    render template: '/errors/404', status: 500
   end
 
   def set_resource
