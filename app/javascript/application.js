@@ -13,6 +13,9 @@ import "./autocompleteUsername"
 import "./channels";
 import "./admin";
 
+import { initializeFriendships } from "./friendships";
+initializeFriendships();
+
 Rails.start()
 ActiveStorage.start()
 import "./controllers"

@@ -25,10 +25,10 @@
             <div class="w-100 ms-3">
               <h4 class="my-0"><%= @user.username %></h4>
               <br>
-              <button type="button" class="btn btn-soft-primary btn-xs waves-effect mb-2 waves-light" data-bs-toggle="modal" data-bs-target="#confirmationModal"><%= t('.connect') %></button>
-              <%= render 'shared/confirmation_modal' %>
-              <%# <button type="button"
-                    class="btn btn-soft-primary btn-xs waves-effect mb-2 waves-light"><%= t('.connect') %></button> %>
+              <% unless Friendship.already_exists?(user_id: current_user.id, friend_id: @user.id) %>
+                <button type="button" class="btn btn-soft-primary btn-xs waves-effect mb-2 waves-light" data-bs-toggle="modal" data-bs-target="#confirmationModal"><%= t('.connect') %></button>
+                <%= render 'shared/confirmation_modal' %>
+              <% end %>
               <button type="button"
                     class="btn btn-soft-success btn-xs waves-effect mb-2 waves-light"><%= t('.message') %></button>
             </div>

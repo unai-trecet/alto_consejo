@@ -30,9 +30,13 @@
       <div class="app-wrapper">
         <div class="app-content pt-3 p-md-3 p-lg-4">
           <div class="container-xl">
-            <!-- <p class="notice"><%= notice %></p>
-             <p class="alert"><%= alert %></p> %> -->
-            
+            <div id="alert-container"></div>
+            <% flash.each do |message_type, message| %>
+              <div class="alert alert-<%= message_type %> alert-dismissible fade show" role="alert">
+                <%= message %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <% end %>
             <%= yield %>
           </div>
         </div>

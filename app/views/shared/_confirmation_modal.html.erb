@@ -11,7 +11,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <%= button_to(t('.connect'), friendships_path, params: { user_id: current_user.id, friend_id: @user.id }, class: "btn btn-primary", form: { id: "confirmationForm" }) %>
+        <%= button_to(t('.connect'), friendships_path, params: { user_id: current_user.id, friend_id: @user.id }, class: "btn btn-primary", form: { id: "confirmationForm" }, remote: true) %>
       </div>
     </div>
   </div>
