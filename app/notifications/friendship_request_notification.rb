@@ -13,15 +13,15 @@ class FriendshipRequestNotification < Noticed::Base
 
   # Add required params
   #
-  param :friendship
+  param :friendship, :sender
 
   # Define helper methods to make rendering easier.
   #
   def message
-    t('.message')
+    t('.message', sender: params[:sender][:username])
   end
 
   def url
-    post_path(params[:post])
+    friendship_url(params[:friendship])
   end
 end

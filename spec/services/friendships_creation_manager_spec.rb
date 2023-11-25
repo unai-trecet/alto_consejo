@@ -15,7 +15,7 @@ RSpec.describe FriendshipsCreationManager do
       it 'returns a result with success: false' do
         result = subject.call
         expect(result.success).to be false
-        expect(result.error).to include 'already exists'
+        expect(result.errors).to include 'already exists'
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe FriendshipsCreationManager do
 
       it 'creates a new friendship and sends a notification' do
         expect { subject.call }.to change { Friendship.count }.by(1)
-        expect(FriendshipRequestNotification).to have_received(:with).with(friendship: kind_of(Friendship))
+        expect(FriendshipRequestNotification).to have_received(:with).with(friendship: kind_of(Friendship), sender: user)
         expect(notification).to have_received(:deliver_later)
       end
 

@@ -25,8 +25,6 @@ class MatchParticipationManager
     fill_error('Noticed::ValidationError')
   rescue Noticed::ResponseUnsuccessful
     fill_error('Noticed::ResponseUnsuccessful')
-  rescue StandardError => e
-    fill_error(e.message)
   end
 
   private

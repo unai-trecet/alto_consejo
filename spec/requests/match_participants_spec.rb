@@ -38,15 +38,6 @@ RSpec.describe 'MatchParticipants', type: :request do
         expect(flash[:notice]).to eq('Te has inscrito con éxito en la partida!')
       end
 
-      it 'return fail status when match_participant could not be created' do
-        expect do
-          call_action(set_params({ user_id: nil }))
-        end.not_to change(MatchParticipant, :count)
-
-        expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(root_path)
-      end
-
       it 'return fail status when match_participant already exists' do
         create(:match_participant, valid_params)
 

@@ -12,7 +12,7 @@ class FriendshipsCreationManager
       send_notification
     end
 
-    Result.new(success: true, data: @friendship.to_json)
+    Result.new(success: true, message: 'A Friendship was created', data: { friendship: @friendship.to_json })
   rescue StandardError => e
     handle_error(e)
   end
@@ -25,7 +25,7 @@ class FriendshipsCreationManager
 
   def existing_friendship_result
     Result.new(success: false,
-               error: "A Frienship for user_id: #{@user.id}}, friend_id: #{@friend.id}}, already exists")
+               errors: "A Frienship between #{@user.username} and #{@friend.username} already exists")
   end
 
   def create_friendship
@@ -34,13 +34,13 @@ class FriendshipsCreationManager
 
   def send_notification
     FriendshipRequestNotification
-      .with(friendship: @friendship)
+      .with(friendship: @friendship, sender: @user)
       .deliver_later(@friend)
   end
 
   def handle_error(e)
     msg = "Something went wrong creating a Friendship: #{e.message}"
     Rails.logger.error(msg)
-    Result.new(success: false, error: msg)
+    Result.new(success: false, errors: msg)
   end
 end

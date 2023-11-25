@@ -144,6 +144,9 @@ es:
     match_invitation_notification:
       name: "Invitación a partida"
       message: "Has sido invitado/a a una partida organizada por @%{organizer}"
+    friendship_request_notification:
+      name: "Solicitud de amistad"
+      message: "Has recibido una solicitud de amistad de @%{sender}"
   pages:
     portal: "Alto Consejo"
     dashboard:
