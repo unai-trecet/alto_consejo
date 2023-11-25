@@ -11,12 +11,12 @@ class ApplicationController < ActionController::Base
 
   def record_not_found(exception)
     @exception = exception
-    render template: '/error_pages/not_found', status: 404
+    render template: '/error_pages/404', status: 404
   end
 
   def render_internal_server_error(exception)
     @exception = exception
-    render template: '/errors/404', status: 500
+    render template: '/errors/500', status: 500
   end
 
   def set_resource
