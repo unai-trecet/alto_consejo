@@ -78,7 +78,7 @@ RSpec.describe MatchParticipationManager do
 
       expect(MatchParticipant.count).to eq(0)
       expect(MatchInvitation.count).to eq(1)
-      expect(result).to eq({ participation: nil, errors: ['Noticed::ValidationError'] })
+      expect(result).to eq({ participation: nil, errors: ['Noticed::ValidationError match is missing.'] })
     end
 
     it 'does nothing if recording fails' do

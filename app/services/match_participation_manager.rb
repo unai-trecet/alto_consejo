@@ -10,7 +10,7 @@ class MatchParticipationManager
     @result = { participation: nil, errors: [] }
   end
 
-  def call
+  def call # rubocop:disable Metrics/AbcSize
     ActiveRecord::Base.transaction do
       delete_invitation
       create_match_participation
@@ -21,10 +21,13 @@ class MatchParticipationManager
     @result
   rescue ActiveRecord::ActiveRecordError => e
     fill_error(e.message)
-  rescue Noticed::ValidationError
-    fill_error('Noticed::ValidationError')
-  rescue Noticed::ResponseUnsuccessful
-    fill_error('Noticed::ResponseUnsuccessful')
+  rescue Noticed::ValidationError => e
+    fill_error("Noticed::ValidationError #{e.message}")
+  rescue Noticed::ResponseUnsuccessful => e
+    fill_error("Noticed::ResponseUnsuccessful #{e.message}")
+  rescue StandardError => e
+    fill_error(e.message)
+    raise e if Rails.env.development?
   end
 
   private
