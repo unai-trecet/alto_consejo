@@ -2,6 +2,7 @@
 
 class Comment < ApplicationRecord
   include ActionView::RecordIdentifier
+  acts_as_votable
 
   belongs_to :user
   belongs_to :commentable, polymorphic: true

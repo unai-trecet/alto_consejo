@@ -7,6 +7,7 @@ ruby '3.2.2'
 gem 'rails', '~> 7.1.1'
 
 gem 'active_model_serializers'
+gem 'acts_as_votable'
 gem 'awesome_print'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.4.4', require: false

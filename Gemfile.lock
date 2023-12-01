@@ -79,6 +79,7 @@ GEM
       minitest (>= 5.1)
       mutex_m
       tzinfo (~> 2.0)
+    acts_as_votable (0.14.0)
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
@@ -460,6 +461,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  acts_as_votable
   awesome_print
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.4)

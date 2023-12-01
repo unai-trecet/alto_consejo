@@ -9,6 +9,8 @@ class User < ApplicationRecord
 
   validates :email, :username, presence: true, uniqueness: true
 
+  acts_as_voter
+
   has_many :notifications, as: :recipient
 
   has_many :games
