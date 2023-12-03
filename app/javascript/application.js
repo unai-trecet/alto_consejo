@@ -12,6 +12,7 @@ import "./customFlatpickr"
 import "./autocompleteUsername"
 import "./channels";
 import "./admin";
+import "./comments";
 
 import { initializeFriendships } from "./friendships";
 initializeFriendships();

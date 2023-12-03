@@ -20,12 +20,31 @@ class Comment < ApplicationRecord
                               partial: 'comments/comment_with_replies'
   end
 
-  after_update_commit do
-    broadcast_replace_to self
+  after_update_commit :broadcast_comment_update, if: :body_changed?
+
+  def body_changed?
+    body.previous_changes.key?('body')
+  end
+
+  def broadcast_comment_update
+    broadcast_replace_to self,
+                         target: dom_id(self),
+                         partial: 'comments/comment'
   end
 
   after_destroy_commit do
     broadcast_remove_to self
     broadcast_action_to self, action: :remove, target: "#{dom_id(self)}_with_comments"
+  end
+
+  after_update_commit :broadcast_votes, if: -> { saved_change_to_cached_votes_up? }
+
+  private
+
+  def broadcast_votes
+    broadcast_update_to [self, :votes],
+                        target: dom_id(self, :votes),
+                        partial: 'shared/vote_with_heart',
+                        locals: { comment: self }
   end
 end

@@ -47,6 +47,9 @@ Rails.application.routes.draw do
 
   resources :comments do
     resources :comments, module: :comments
+    member do
+      patch :upvote
+    end
   end
 
   resources :friendships, only: %i[create update destroy]

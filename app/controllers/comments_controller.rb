@@ -18,18 +18,27 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    commentable = @comment.commentable
     @comment.destroy
     respond_to do |format|
-      format.turbo_stream {}
-      format.html { redirect_to commentable }
+      format.turbo_stream { head :ok }
+      format.html { redirect_to @comment.commentable }
     end
+  end
+
+  def upvote
+    if current_user.voted_up_on?(@comment)
+      @comment.unvote_by(current_user)
+    else
+      @comment.upvote_by(current_user)
+    end
+
+    head :ok
   end
 
   private
 
   def set_comment
-    @comment = current_user.authored_comments.find(params[:id])
+    @comment = Comment.find(params[:id])
   end
 
   def comment_params

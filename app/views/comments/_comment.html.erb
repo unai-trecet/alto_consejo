@@ -1,22 +1,29 @@
 <%= turbo_stream_from comment %>
 <%= turbo_frame_tag comment do %>
-  <div class="border border-light p-2 mb-3">
-    <div class="d-flex align-items-start">
-      <%= image_tag comment.user.avatar, class: "me-2 avatar-sm rounded-circle" %>
-      <div class="w-100">
-        <h5 class="mt-0"><%= comment.user.username %><small class="text-muted"> <%= time_ago_in_words(comment.created_at)%></small>
-        </h5>
-        <% unless @resource == comment.commentable %>
-          <%= link_to t('.commented_item_site'), polymorphic_path(comment.commentable), data: { turbo_frame: "_top" } %>
-        <% end %>
+  <div id="<%= dom_id(comment) %>" data-user-id="<%= comment.user_id %>">
+    <div class="border border-light p-2 mb-3">
+      <div class="d-flex align-items-start">
+        <%= image_tag comment.user.avatar, class: "me-2 avatar-sm rounded-circle" %>
+        <div class="w-100">
+          <h5 class="mt-0"><%= comment.user.username %><small class="text-muted"> <%= time_ago_in_words(comment.created_at)%></small>
+          </h5>
+          <% unless @resource == comment.commentable %>
+            <%= link_to t('.commented_item_site'), polymorphic_path(comment.commentable), data: { turbo_frame: "_top" } %>
+          <% end %>
 
-        <br>
-        <%= comment.body %>
-        <br>
+          <br>
+          <%= comment.body %>
+          <br>
 
-        <div class="d-flex">
-          <%= link_to t('.edit'), edit_comment_path(comment), class: "d-flex me-2" %>
-          <%= link_to t('.delete'), comment_path(comment), method: :delete, data: { confirm: t('.confirm') }, class: "mr-2" %>
+          <%= turbo_stream_from [comment, :votes] %>
+          <%= turbo_frame_tag dom_id(comment, :votes) do %>
+            <%= render 'shared/vote_with_heart', comment: comment %>
+          <% end %>
+
+          <div class="comment-actions d-flex d-none">
+            <%= link_to t('.edit'), edit_comment_path(comment), class: "d-flex me-2" %>
+            <%= link_to t('.delete'), comment_path(comment), method: :delete, data: { confirm: t('.confirm') }, class: "mr-2" %>
+          </div>
         </div>
       </div>
     </div>

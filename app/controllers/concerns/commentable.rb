@@ -9,7 +9,7 @@ module Commentable
     @comment = Comment.new
   end
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize
     @comment = @commentable.comments.new(comment_params)
     @comment.user = current_user
     @comment.parent_id = @parent&.id
