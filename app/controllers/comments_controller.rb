@@ -10,18 +10,28 @@ class CommentsController < ApplicationController
   def edit; end
 
   def update
-    if @comment.update(comment_params)
-      render @comment
+    if @comment.user == current_user
+      if @comment.update(comment_params)
+        render @comment
+      else
+        render :edit, status: :unprocessable_entity
+      end
     else
-      render :edit, status: :unprocessable_entity
+      flash[:notice] = 'You are not authorized to edit this comment.'
+      head :unauthorized
     end
   end
 
   def destroy
-    @comment.destroy
-    respond_to do |format|
-      format.turbo_stream { head :ok }
-      format.html { redirect_to @comment.commentable }
+    if @comment.user == current_user
+      @comment.destroy
+      respond_to do |format|
+        format.turbo_stream { head :ok }
+        format.html { redirect_to @comment.commentable }
+      end
+    else
+      flash[:notice] = 'You are not authorized to delete this comment.'
+      head :unauthorized
     end
   end
 

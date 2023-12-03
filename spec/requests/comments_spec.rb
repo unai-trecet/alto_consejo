@@ -85,13 +85,23 @@ RSpec.describe '/comments', type: :request do
           expect(comment.body.body.as_json).to eq('Updating content.')
         end
 
-        it 'does not update another user\'s comment' do
-          comment = create(:comment, valid_attributes({ user: another_user }))
+        context 'when the user is not the owner of the comment' do
+          let(:comment) { create(:comment, valid_attributes({ user: another_user })) }
 
-          call_action(comment, { comment: new_attributes })
+          before { call_action(comment, { comment: new_attributes }) }
 
-          comment.reload
-          expect(comment.body.body.as_json).to eq('Testing comments controller.')
+          it 'does not update another user\'s comment' do
+            comment.reload
+            expect(comment.body.body.as_json).to eq('Testing comments controller.')
+          end
+
+          it 'returns an unauthorized status' do
+            expect(response).to have_http_status(:unauthorized)
+          end
+
+          it 'sets a flash message' do
+            expect(flash[:notice]).to eq('You are not authorized to edit this comment.')
+          end
         end
 
         context 'with invalid parameters' do
@@ -108,29 +118,54 @@ RSpec.describe '/comments', type: :request do
     end
   end
 
-  describe 'DELETE /destroy' do
-    def call_action(comment = create(:comment))
+  describe 'DELETE /comments/:id' do
+    let(:other_user) { FactoryBot.create(:user, :confirmed) }
+    let(:user_comment) { FactoryBot.create(:comment, user:) }
+
+    def call_action(comment = user_comment)
       delete comment_url(comment)
     end
 
     it_behaves_like 'not_logged_in'
 
-    context 'when authenticated' do
-      before { sign_in user }
+    context 'when the user is authorized' do
+      context 'when the user is the owner of the comment' do
+        before do
+          sign_in user
+          call_action
+        end
 
-      it 'destroys the requested comment' do
-        comment = create(:comment, valid_attributes)
-        expect do
-          call_action(comment)
-        end.to change(Comment, :count).by(-1)
+        it 'deletes the comment' do
+          expect(Comment.exists?(user_comment.id)).to be_falsey
+        end
+
+        it 'redirects to the commentable' do
+          expect(response).to redirect_to(user_comment.commentable)
+        end
       end
-    end
 
-    it 'does not destroy another user\'s comment' do
-      comment = create(:comment, valid_attributes({ user: another_user }))
-      expect do
-        call_action(comment)
-      end.not_to change(Comment, :count)
+      context 'when the user is not the owner of the comment' do
+        before do
+          sign_in other_user
+          call_action
+        end
+
+        it 'does not delete the comment' do
+          expect(Comment.exists?(user_comment.id)).to be_truthy
+        end
+
+        it 'returns an unauthorized status' do
+          expect(response).to have_http_status(:unauthorized)
+        end
+
+        it 'returns an unauthorized status' do
+          expect(response).to have_http_status(:unauthorized)
+        end
+
+        it 'sets a flash message' do
+          expect(flash[:notice]).to eq('You are not authorized to delete this comment.')
+        end
+      end
     end
   end
 end
