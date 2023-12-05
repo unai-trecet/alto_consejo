@@ -17,7 +17,7 @@
 
           <%= render 'shared/vote_with_heart', comment: comment %>
 
-          <div class="comment-actions d-flex">
+          <div class="comment-actions d-flex d-none">
             <%= link_to t('.edit'), edit_comment_path(comment), class: "d-flex me-2" %>
             <%= link_to t('.delete'), comment_path(comment), method: :delete, data: { confirm: t('.confirm') }, class: "mr-2" %>
           </div>
