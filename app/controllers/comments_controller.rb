@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
     if @comment.user == current_user
       @comment.destroy
       respond_to do |format|
-        format.turbo_stream { head :ok }
+        format.turbo_stream { render turbo_stream: turbo_stream.remove(@comment) }
         format.html { redirect_to @comment.commentable }
       end
     else
@@ -42,7 +42,15 @@ class CommentsController < ApplicationController
       @comment.upvote_by(current_user)
     end
 
-    head :ok
+    # head :ok
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(dom_id(@comment, :votes),
+                                                  partial: 'shared/vote_with_heart',
+                                                  locals: { comment: @comment,
+                                                            voted: @comment.voted_up_by?(current_user) })
+      end
+    end
   end
 
   private

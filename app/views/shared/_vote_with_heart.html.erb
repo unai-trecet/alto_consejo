@@ -1,3 +1,8 @@
-<%= button_to(upvote_comment_path(comment), method: :patch, class: "bg-transparent border-0 text-dark p-0") do %>
-  <i class="bi bi-heart-fill"></i> <span class="ms-2"><%= comment.cached_votes_up %></span>
+<% voted = local_assigns.fetch(:voted, false) %>
+
+<%= turbo_stream_from [comment, :votes] %>
+<%= turbo_frame_tag dom_id(comment, :votes) do %>
+  <%= button_to(upvote_comment_path(comment), method: :patch, class: "bg-transparent border-0 text-dark p-0") do %>
+    <i class="<%= voted ? 'bi bi-heart-fill text-danger' : 'bi bi-heart' %>"></i> <span class="ms-2"><%= comment.cached_votes_up %></span>
+  <% end %>
 <% end %>
