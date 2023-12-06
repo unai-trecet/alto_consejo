@@ -42,9 +42,9 @@ class Comment < ApplicationRecord
   private
 
   def broadcast_votes
-    broadcast_update_to [self, :votes],
-                        target: dom_id(self, :votes),
-                        partial: 'shared/vote_with_heart',
-                        locals: { comment: self }
+    broadcast_replace_later_to [self, :votes],
+                               target: dom_id(self, :votes),
+                               partial: 'shared/likes_counter',
+                               locals: { comment: self }
   end
 end

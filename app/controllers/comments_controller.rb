@@ -35,20 +35,20 @@ class CommentsController < ApplicationController
     end
   end
 
-  def upvote
+  def upvote # rubocop:disable Metrics/AbcSize
     if current_user.voted_up_on?(@comment)
       @comment.unvote_by(current_user)
     else
       @comment.upvote_by(current_user)
     end
 
-    # head :ok
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(dom_id(@comment, :votes),
-                                                  partial: 'shared/vote_with_heart',
+        render turbo_stream: turbo_stream.replace([@comment, :heart_icon],
+                                                  target: dom_id(@comment, :heart_icon),
+                                                  partial: 'shared/like_heart',
                                                   locals: { comment: @comment,
-                                                            voted: @comment.voted_up_by?(current_user) })
+                                                            user: current_user })
       end
     end
   end

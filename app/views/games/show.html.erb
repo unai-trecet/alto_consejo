@@ -80,7 +80,10 @@
     <br>
     <%= turbo_stream_from @game, :comments %>
     <%= tag.div id: "#{dom_id(@game)}_comments" do %>
-      <%= render partial: "comments/comment_with_replies", collection: @game.comments.where(parent_id: nil), as: :comment %>
+      <%= render partial: "comments/comment_with_replies", 
+                collection: @game.comments.where(parent_id: nil), 
+                as: :comment, 
+                locals: { user: current_user } %>
     <% end %>
   </div>
 </div>

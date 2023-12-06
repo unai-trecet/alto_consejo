@@ -1,6 +1,6 @@
 <%= turbo_stream_from comment, :comments %>
 <div id="<%= dom_id(comment) %>_with_comments" data-controller="comment-reply">
-  <%= render comment %>
+  <%= render partial: 'comments/comment', locals: {comment: comment, user: user } %>
   <div class="text-sm">
     <i class="mdi mdi-reply"></i><%= link_to(t('.reply'), "#", class: "text-muted font-13 d-inline-block mt-2", data: { action: "click->comment-reply#toggle" }) %>
   </div>
@@ -9,6 +9,6 @@
                                                     comment: Comment.new,
                                                     data: { comment_reply_target: "form" },
                                                     class: "d-none" } %>
-    <%= render partial: "comments/comment_with_replies", collection: comment.comments, as: :comment %>
+    <%= render partial: "comments/comment_with_replies", collection: comment.comments, as: :comment, locals: { user: user } %>
   </div>
 </div>

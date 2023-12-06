@@ -15,7 +15,7 @@
           <%= comment.body %>
           <br>
 
-          <%= render 'shared/vote_with_heart', comment: comment %>
+          <%= render partial: 'shared/vote_with_heart', locals: { comment: comment, user: user } %>
 
           <div class="comment-actions d-flex d-none">
             <%= link_to t('.edit'), edit_comment_path(comment), class: "d-flex me-2" %>
