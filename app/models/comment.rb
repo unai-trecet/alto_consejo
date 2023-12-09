@@ -17,7 +17,8 @@ class Comment < ApplicationRecord
   after_create_commit do
     broadcast_append_later_to [commentable, :comments],
                               target: "#{dom_id(parent || commentable)}_comments",
-                              partial: 'comments/comment_with_replies'
+                              partial: 'comments/comment_with_replies',
+                              locals: { user: nil }
   end
 
   after_update_commit :broadcast_comment_update, if: :body_changed?

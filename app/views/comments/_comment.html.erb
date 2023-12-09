@@ -14,13 +14,11 @@
           <br>
           <%= comment.body %>
           <br>
+          
+          <% liked = local_assigns[:liked] || false %>
+          <%= render partial: 'shared/vote_with_heart', locals: { comment: comment, liked: liked } %>
 
-          <%= render partial: 'shared/vote_with_heart', locals: { comment: comment, user: user } %>
-
-          <div class="comment-actions d-flex d-none">
-            <%= link_to t('.edit'), edit_comment_path(comment), class: "d-flex me-2" %>
-            <%= link_to t('.delete'), comment_path(comment), method: :delete, data: { confirm: t('.confirm') }, class: "mr-2" %>
-          </div>
+          <%= render partial: 'comments/comment_actions', locals: { comment: comment } %>
         </div>
       </div>
     </div>
