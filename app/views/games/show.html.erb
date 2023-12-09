@@ -73,18 +73,7 @@
       <%= link_to 'Back', games_path, class: "btn btn-light min-width-btn" %>
     </div>
     <br>
-    <h4><%= t('.comments') %></h4>
-    <%= turbo_frame_tag :comment_form do %>
-      <%= render partial: 'comments/form', locals: { comment: Comment.new, commentable: @game } %>
-    <% end %>
-    <br>
-    <%= turbo_stream_from @game, :comments %>
-    <%= tag.div id: "#{dom_id(@game)}_comments" do %>
-      <%= render partial: "comments/comment_with_replies", 
-                collection: @game.comments.where(parent_id: nil), 
-                as: :comment, 
-                locals: { user: current_user } %>
-    <% end %>
+    <%= render partial: 'shared/comments_block', locals: { commentable: @game } %>
   </div>
 </div>
 

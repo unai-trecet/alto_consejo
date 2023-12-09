@@ -1,0 +1,12 @@
+<h4><%= t('.comments') %></h4>
+<%= turbo_frame_tag :comment_form do %>
+  <%= render partial: 'comments/form', locals: { comment: Comment.new, commentable: commentable } %>
+<% end %>
+<br>
+<%= turbo_stream_from commentable, :comments %>
+<%= tag.div id: "#{dom_id(commentable)}_comments" do %>
+  <%= render partial: "comments/comment_with_replies", 
+            collection: commentable.comments.where(parent_id: nil), 
+            as: :comment, 
+            locals: { user: current_user } %>
+<% end %>
