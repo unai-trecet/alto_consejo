@@ -1,6 +1,6 @@
 <%= turbo_stream_from comment %>
 <%= turbo_frame_tag comment do %>
-  <div id="<%= dom_id(comment) %>" data-user-id="<%= comment.user_id %>">
+  <div id="<%= dom_id(comment) %>" data-controller="comment" data-comment-user-id="<%= comment.user_id %>">
     <div class="border border-light p-2 mb-3">
       <div class="d-flex align-items-start">
         <%= image_tag comment.user.avatar, class: "me-2 avatar-sm rounded-circle" %>

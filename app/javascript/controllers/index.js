@@ -8,4 +8,8 @@ import { Autocomplete } from "stimulus-autocomplete"
 import CommentReplyController from "./comment_reply_controller"
 application.register("comment-reply", CommentReplyController)
 
+import CommentController from "./comment_controller"
+application.register("comment", CommentController)
+
 application.register("autocomplete", Autocomplete)
+
