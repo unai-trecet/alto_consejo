@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_28_160553) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_09_172441) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -163,6 +163,17 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_28_160553) do
     t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient"
   end
 
+  create_table "ratings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "rateable_type", null: false
+    t.bigint "rateable_id", null: false
+    t.integer "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["rateable_type", "rateable_id"], name: "index_ratings_on_rateable"
+    t.index ["user_id"], name: "index_ratings_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -213,4 +224,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_28_160553) do
   add_foreign_key "match_participants", "users"
   add_foreign_key "matches", "games"
   add_foreign_key "matches", "users"
+  add_foreign_key "ratings", "users"
 end

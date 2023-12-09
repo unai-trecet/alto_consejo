@@ -42,10 +42,14 @@ class User < ApplicationRecord
 
   after_commit :add_default_avatar, on: %i[create update]
 
+  # COMMENTS
   has_many :authored_comments, class_name: 'Comment'
   has_many :comments, as: :commentable
 
   has_one_attached :avatar
+
+  # RATINGS
+  has_many :ratings
 
   def avatar_as_thumbnail
     avatar.variant(resize_to_limit: [150, 150]).processed

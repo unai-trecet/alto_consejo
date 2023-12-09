@@ -47,6 +47,10 @@ RSpec.describe User, type: :model do
 
   it { should have_one_attached(:avatar) }
 
+  it { should have_many(:authored_comments).class_name('Comment') }
+  it { should have_many(:comments).class_name('Comment') }
+  it { should have_many(:ratings) }
+
   # Friendships
   it {
     should have_many(:friendships)
