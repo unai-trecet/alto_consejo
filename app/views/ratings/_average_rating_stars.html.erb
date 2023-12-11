@@ -1,5 +1,5 @@
 <% average_rating = rated_resource.average_rating %>
-<% 5.times do |i| %>
+<% 10.times do |i| %>
   <% if i < average_rating.floor %>
     <i class="fas fa-star filled-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-action="click->rating#rate"></i>
   <% elsif i < average_rating %>

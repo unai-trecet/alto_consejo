@@ -9,14 +9,19 @@
       </div>
     <% end %>
   </div>
-  <div data-controller="rating" data-rating-id="<%= @game.id %>">
   <div class="form-group mb-3">
-    <p><strong><%= t('.rating') %>:</strong></p>
+    <p><strong><%= t('.average_rating') %>:</strong></p>
     <div>
       <%= render partial: 'ratings/average_rating_stars', locals: { rated_resource: @game } %>
     </div>
   </div>
-  </div>
+  <div class="form-group mb-3">
+    <p><strong><%= t('.your_rating') %>:</strong></p>
+    <div>
+      <%= button_tag t('.rate_this_game'), type: 'button', data: { bs_toggle: "modal", bs_target: "#ratingModal" }, class: 'btn btn-primary' %>
+      <%= render partial: 'ratings/rating_modal', locals: { rateable: @game } %>
+    </div>
+  </div>  
   <div class="form-group mb-3">
     <p><strong><%= t('.name') %>:</strong></p>
     <div>

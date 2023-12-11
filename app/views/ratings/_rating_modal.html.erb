@@ -1,0 +1,17 @@
+<div class="modal fade" id="ratingModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <h5 class="modal-title"><%= t('ratings.modal.title_html', name: rateable.name) %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        <div data-controller="rating">
+          <% 10.times do |i| %>
+            <i class="far fa-star empty-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-rateable-id="<%= rateable.id %>" data-rateable-type="<%= rateable.class.name %>" data-action="mouseover->rating#fill hoverout->rating#unfill click->rating#rate"></i>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

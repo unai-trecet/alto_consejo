@@ -11,5 +11,8 @@ application.register("comment-reply", CommentReplyController)
 import CommentController from "./comment_controller"
 application.register("comment", CommentController)
 
+import RatingController from "./rating_controller"
+application.register("rating", RatingController)
+
 application.register("autocomplete", Autocomplete)
 
