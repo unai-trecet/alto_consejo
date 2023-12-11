@@ -1,0 +1,10 @@
+<% 5.times do |i| %>
+  <% if i < average_rating.floor %>
+    <i class="fas fa-star filled-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-action="click->rating#rate"></i>
+  <% elsif i < average_rating %>
+    <i class="fas fa-star-half-alt filled-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-action="click->rating#rate"></i>
+  <% else %>
+    <i class="far fa-star empty-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-action="click->rating#rate"></i>
+  <% end %>
+<% end %>
+<%= average_rating %>

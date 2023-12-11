@@ -16,6 +16,8 @@ class Game < ApplicationRecord
   has_many_attached :game_pictures
   has_rich_text :description
 
+  has_many :ratings, as: :rateable
+
   validates :user_id, :name, presence: true
   validates :name, uniqueness: true
 
@@ -54,4 +56,9 @@ class Game < ApplicationRecord
   def image_as_card_img
     main_image.variant(resize_to_limit: [150, 150]).processed
   end
+
+  def average_rating
+    ratings.average(:value)&.round(1) || 0
+  end
+
 end

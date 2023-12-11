@@ -26,6 +26,8 @@ RSpec.describe Game, type: :model do
   it { should have_many_attached(:game_pictures) }
   it { should have_rich_text(:description) }
 
+  it { should have_many(:ratings) }
+
   it { should validate_presence_of(:name) }
   it { should validate_uniqueness_of(:name) }
 
@@ -56,6 +58,26 @@ RSpec.describe Game, type: :model do
       create(:match_participant, user: player3, match: future_match)
 
       expect(subject.players).to match_array([player1, player2])
+    end
+  end
+
+  describe '#average_rating' do
+    let(:game) { create(:game) }
+
+    context 'when there are ratings' do
+      let!(:rating1) { create(:rating, rateable: game, user: build(:user), value: 3) }
+      let!(:rating2) { create(:rating, rateable: game, user: build(:user), value: 4) }
+      let!(:rating3) { create(:rating, rateable: game, user: build(:user), value: 5) }
+
+      it 'returns the average rating rounded to one decimal place' do
+        expect(game.average_rating).to eq(4.0)
+      end
+    end
+
+    context 'when there are no ratings' do
+      it 'returns 0' do
+        expect(game.average_rating).to eq(0)
+      end
     end
   end
 end
