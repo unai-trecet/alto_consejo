@@ -50,6 +50,7 @@ es:
       num_players: "Número de jugadores que lo han jugado"
       main_image: "Imagen"
       game_pictures: "Fotos"
+      rating: "valoración"
     form:
       bgg_name_search: "Burcar nombre del juego en BGG"
       game_pictures: "Fotos del juego"
