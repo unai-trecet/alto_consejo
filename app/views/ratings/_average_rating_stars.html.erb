@@ -1,11 +1,14 @@
-<% average_rating = rated_resource.average_rating %>
-<% 10.times do |i| %>
-  <% if i < average_rating.floor %>
-    <i class="fas fa-star filled-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-action="click->rating#rate"></i>
-  <% elsif i < average_rating %>
-    <i class="fas fa-star-half-alt filled-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-action="click->rating#rate"></i>
-  <% else %>
-    <i class="far fa-star empty-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-action="click->rating#rate"></i>
+<%= turbo_stream_from [rateable, :average_rating] %>
+<%= turbo_frame_tag dom_id(rateable, :average_rating) do %>
+  <% average_rating = rateable.average_rating %>
+  <% 10.times do |i| %>
+    <% if i < average_rating.floor %>
+      <i class="fas fa-star filled-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-action="click->rating#rate"></i>
+    <% elsif i < average_rating %>
+      <i class="fas fa-star-half-alt filled-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-action="click->rating#rate"></i>
+    <% else %>
+      <i class="far fa-star empty-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-action="click->rating#rate"></i>
+    <% end %>
   <% end %>
+  <%= "#{average_rating} (#{rateable.ratings.size})" %>
 <% end %>
-<%= "#{average_rating} (#{rated_resource.ratings.size})" %>
