@@ -1,0 +1,13 @@
+<%= turbo_frame_tag :brasasmente do %>
+  <% value = rating.value %>
+  <% 10.times do |i| %>
+    <% if i < value.floor %>
+      <i class="fas fa-star filled-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-action="click->rating#rate"></i>
+    <% elsif i < value %>
+      <i class="fas fa-star-half-alt filled-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-action="click->rating#rate"></i>
+    <% else %>
+      <i class="far fa-star empty-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-action="click->rating#rate"></i>
+    <% end %>
+  <% end %>
+  <%= value %>
+<% end %>

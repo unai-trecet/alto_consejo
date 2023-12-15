@@ -25,10 +25,18 @@ export default class extends Controller {
     let rating = event.currentTarget.dataset.rating
     let rateableId = event.currentTarget.dataset.rateableId
     let rateableType = event.currentTarget.dataset.rateableType
+    let ratingId = event.currentTarget.dataset.ratingId
+
+    let url = '/ratings';
+    let method = 'POST';
+    if (ratingId) {
+      url += `/${ratingId}`;
+      method = 'PATCH';
+    }
 
     Rails.ajax({
-      url: "/ratings",
-      type: "post",
+      url: url,
+      type: method,
       data: `rating[value]=${rating}&rating[rateable_id]=${rateableId}&rating[rateable_type]=${rateableType}`,
       success: (response) => {
         this.starTargets.forEach((star, index) => {

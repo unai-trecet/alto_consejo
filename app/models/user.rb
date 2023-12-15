@@ -70,6 +70,14 @@ class User < ApplicationRecord
     %w[games]
   end
 
+  def already_rated?(rateable)
+    ratings.where(rateable:).exists?
+  end
+
+  def rating_for(rateable)
+    ratings.find_by(rateable:)
+  end
+
   private
 
   def add_default_avatar

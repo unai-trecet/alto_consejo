@@ -53,6 +53,7 @@ es:
       average_rating: "valoración"
       your_rating: "Tu valoración"
       rate_this_game: "Valora este juego"
+      change_rating: "Cambiar valoración"
     form:
       bgg_name_search: "Burcar nombre del juego en BGG"
       game_pictures: "Fotos del juego"

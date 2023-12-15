@@ -8,7 +8,7 @@
       <div class="modal-body d-flex justify-content-center">
         <div data-controller="rating">
           <% 10.times do |i| %>
-            <i class="far fa-star empty-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-rateable-id="<%= rateable.id %>" data-rateable-type="<%= rateable.class.name %>" data-action="mouseover->rating#fill hoverout->rating#unfill click->rating#rate"></i>
+            <i class="far fa-star empty-star" data-rating-target="star" data-rating="<%= i + 1 %>" data-rateable-id="<%= rateable.id %>" data-rateable-type="<%= rateable.class.name %>" data-rating-id="<%= rating ? rating.id : nil %>" data-action="mouseover->rating#fill hoverout->rating#unfill click->rating#rate"></i>
           <% end %>
         </div>
       </div>

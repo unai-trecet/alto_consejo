@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include ActionView::RecordIdentifier
+
   before_action :set_resource
   before_action :authenticate_user!
 

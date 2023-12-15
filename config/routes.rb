@@ -76,7 +76,7 @@ Rails.application.routes.draw do
     end
     resources :comments, module: :users
   end
-  resources :ratings, only: %i[create]
+  resources :ratings, only: %i[create update]
 
   get 'matches_calendar', to: 'calendars#matches_calendar'
   get 'username_search', to: 'users#username_search'
