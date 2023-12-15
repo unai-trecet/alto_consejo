@@ -1,92 +1,58 @@
 <div class="container-fluid">
-  <p id="notice"><%= notice %></p>
-  <div class="form-group mb-3">
-    <p><strong><%= t('.main_image') %>:</strong></p>
-    <% if allowed_pic?(@game.main_image) %>
-      <div>
-        <%= link_to(image_tag(@game.image_as_thumbnail, class: 'img-fluid img-thumbnail'), @game.main_image) %>
-        <%= link_to(t('attachments.delete_image'), purge_image_match_path(@game), method: :delete) if can_edit_game? %>
-      </div>
-    <% end %>
-  </div>
-  <div class="form-group mb-3">
-    <p><strong><%= t('.average_rating') %>:</strong></p>
-    <%= render partial: 'ratings/average_rating_stars', locals: { rateable: @game } %>
-  </div>
-  <div class="form-group mb-3">
-    <p><strong><%= t('.your_rating') %>:</strong></p>
-    <div>
-      <%= button_tag t('.rate_this_game'), type: 'button', data: { bs_toggle: "modal", bs_target: "#ratingModal" }, class: 'btn btn-primary' %>
-      <%= render partial: 'ratings/rating_modal', locals: { rateable: @game } %>
+  <% if notice %>
+    <div class="alert alert-info" role="alert">
+      <%= notice %>
     </div>
-  </div>  
-  <div class="form-group mb-3">
-    <p><strong><%= t('.name') %>:</strong></p>
-    <div>
-      <%= @game.name %>
-    </div>
-  </div>
-  <div class="form-group mb-3">
-    <p><strong><%= t('.description') %>:</strong></p>
-    <div>
-      <%= @game.description %>
-    </div>
-  </div>
-  <div class="form-group mb-3">
-    <p><strong><%= t('.author') %>:</strong></p>
-    <div>
-      <%= @game.author %>
-    </div>
-  </div>
-  <div class="form-group mb-3">
-    <p><strong><%= t('.added_by') %>:</strong></p>
-    <div>
-      <%= link_to(@game.added_by.username, @game.added_by) %>
-    </div>
-  </div>
-  <div class="form-group mb-3">
-    <p><strong><%= t('.played_matches') %>:</strong></p>
-    <div>
-      <%= @game.played_matches.count %>
-    </div>
-  </div>
-  <div class="form-group mb-3">
-    <p><strong><%= t('.planned_matches') %>:</strong></p>
-    <div>
-      <%= @game.planned_matches.count %>
-    </div>
-  </div>
-  <div class="form-group mb-3">
-    <p><strong><%= t('.num_players') %>:</strong></p>
-    <div>
-      <%= @game.players.count %>
-    </div>
-  </div>
-  <div class="form-group mb-3">
-    <p><strong><%= t('.bgg_link') %>:</strong></p>
-    <div>
-      <%= link_to(@game.bbg_link, @game.bbg_link) %>
-    </div>
-  </div>
-  <div class="form-group mb-3">
-    <strong><%= t('.game_pictures') %></strong>
-    <hr class="mt-2 mb-5">
-    <div class="row text-center text-lg-start">
-      <% @game.game_pictures.each do |pic| %>
-        <div class="col-lg-3 col-md-4 col-6">
-          <%= link_to(image_tag(picture_as_thumbnail(pic), class: 'img-fluid img-thumbnail'), pic, class: 'd-block mb-4 h-100') %>
-        </div>
-        <%= link_to(t('attachments.delete_image'), purge_attachment_path(pic), method: :delete) if can_edit_game? %>
-      <% end %>
-      <div>
-      </div>
-      <% if can_edit_game? %>
-        <%= link_to 'Edit', edit_game_path(@game), class: "btn btn-primary min-width-btn" %>
-      <% end %>
-      <%= link_to 'Back', games_path, class: "btn btn-light min-width-btn" %>
-    </div>
-    <br>
-    <%= render partial: 'shared/comments_block', locals: { commentable: @game } %>
-  </div>
-</div>
+  <% end %>
 
+  <div class="card mb-3">
+    <div class="card-body">
+      <% if allowed_pic?(@game.main_image) %>
+        <%= link_to(image_tag(@game.image_as_thumbnail, class: 'img-fluid img-thumbnail'), @game.main_image) %>
+        <%= link_to(t('attachments.delete_image'), purge_image_match_path(@game), method: :delete, class: 'btn btn-danger') if can_edit_game? %>
+      <% end %>
+      <h5 class="card-title"><%= @game.name %></h5>
+      <p class="card-text"><%= @game.description %></p>
+      <p class="card-text"><small class="text-muted"><%= t('.added_by') %>: <%= link_to(@game.added_by.username, @game.added_by) %></small></p>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title"><%= t('.average_rating') %></h5>
+      <%= render partial: 'ratings/average_rating_stars', locals: { rateable: @game } %>
+      <h5 class="card-title"><%= t('.your_rating') %></h5>
+      <%= render partial: 'ratings/user_rating_block', locals: { rateable: @game, user: current_user } %>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title"><%= t('.author') %>: <%= @game.author %></h5>
+      <p class="card-text"><%= t('.played_matches') %>: <span class="badge bg-primary"><%= @game.played_matches.count %></span></p>
+      <p class="card-text"><%= t('.planned_matches') %>: <span class="badge bg-primary"><%= @game.planned_matches.count %></span></p>
+      <p class="card-text"><%= t('.num_players') %>: <span class="badge bg-primary"><%= @game.players.count %></span></p>
+      <p class="card-text"><%= t('.bgg_link') %>: <%= link_to(@game.bbg_link, @game.bbg_link) %></p>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title"><%= t('.game_pictures') %></h5>
+      <div class="row text-center text-lg-start">
+        <% @game.game_pictures.each do |pic| %>
+          <div class="col-lg-3 col-md-4 col-6">
+            <%= link_to(t('attachments.delete_image'), purge_attachment_path(pic), method: :delete, class: 'btn btn-danger') if can_edit_game? %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <% if can_edit_game? %>
+    <%= link_to 'Edit', edit_game_path(@game), class: "btn btn-primary min-width-btn" %>
+  <% end %>
+  <%= link_to 'Back', games_path, class: "btn btn-light min-width-btn" %>
+
+  <%= render partial: 'shared/comments_block', locals: { commentable: @game } %>
+</div>
