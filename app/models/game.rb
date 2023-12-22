@@ -18,6 +18,8 @@ class Game < ApplicationRecord
 
   has_many :ratings, as: :rateable
 
+  scope :recent, -> { order(created_at: :desc).limit(5) }
+
   validates :user_id, :name, presence: true
   validates :name, uniqueness: true
 

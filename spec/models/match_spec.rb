@@ -43,6 +43,15 @@ RSpec.describe Match, type: :model do
       end
     end
 
+    describe '.closed' do
+      let!(:public_game) { create(:game, public: true) }
+      let!(:private_game) { create(:game, public: false) }
+
+      it 'returns only private games' do
+        expect(Game.closed).to match_array([private_game])
+      end
+    end
+
     describe 'played' do
       it 'returns only passed matches' do
         played_match1 = create(:match, end_at: DateTime.now - 1.day)

@@ -25,6 +25,7 @@ class Match < ApplicationRecord
   scope :played, -> { where('end_at < ?', DateTime.now) }
   scope :not_played, -> { where('end_at > ?', DateTime.now) }
   scope :open, -> { where(public: true) }
+  scope :closed, -> { where(public: false) }
 
   filter_scope :all_by_user, lambda { |user_id|
     left_joins(:match_participants, :match_invitations)

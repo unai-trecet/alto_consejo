@@ -43,6 +43,23 @@ RSpec.describe Game, type: :model do
     end
   end
 
+  describe 'scopes' do
+    describe '.recent' do
+      it 'returns 5 most recently created games' do
+        _game1 = create(:game)
+        game2 = create(:game)
+        game3 = create(:game)
+        game4 = create(:game)
+        game5 = create(:game)
+        game6 = create(:game)
+
+        expect(Game.recent).to eq([game6, game5, game4, game3, game2])
+      end
+    end
+  end
+
+  # METHODS
+
   describe '#players' do
     it 'returns users who have played at least one played match' do
       player1 = create(:user, :confirmed)
