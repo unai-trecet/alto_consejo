@@ -29,7 +29,7 @@ class RatingsController < ApplicationController
   def rating_params
     params.require(:rating).permit(:value, :rateable_id, :rateable_type)
   end
-
+  # TODO: make update rating work through stream
   def stream_rating_update # rubocop:disable Metrics/AbcSize
     render turbo_stream: turbo_stream.replace('brasasmente',
                                               target: 'brasasmente',

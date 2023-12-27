@@ -153,9 +153,13 @@ es:
       message: "Has recibido una solicitud de amistad de @%{sender}"
   pages:
     portal: "Alto Consejo"
-    dashboard:
-      overview: "Resumen"
-      played_games: "Partidas jugadas"
+  dashboard:
+    overview: "Resumen"
+    games: "Juegos subidos"
+    organised_matches: "Partidas organizadas"
+    played_matches: "Partidas jugadas"
+    not_played_matches: "Partidas por jugar"
+    played_games: "Juegos probados"
   users:
     index:
       players: "Jugadores"

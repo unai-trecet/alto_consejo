@@ -38,18 +38,28 @@ RSpec.describe UserFeedComposer do
       expect(result.success).to eq(true)
       expect(result.data).to be_a(Hash)
       expect(result.data.keys).to contain_exactly(
-        :current_user_played_matches,
-        :current_user_not_played_matches,
+        :user_played_matches_count,
+        :user_played_matches,
+        :user_not_played_matches_count,
+        :user_not_played_matches,
+        :user_organised_matches_count,
+        :user_organised_matches,
+        :user_played_games_count,
+        :user_played_games,
         :recent_public_matches,
         :recent_comments_from_friends,
-        :recent_comments_on_user_content,
-        :recent_games
+        :recent_comments_on_user_content
       )
 
-      expect(result.data[:current_user_played_matches]).to match_array([played_match, organised_match])
-      expect(result.data[:current_user_not_played_matches]).to match_array([not_played_match])
+      expect(result.data[:user_played_matches_count]).to eq(2)
+      expect(result.data[:user_played_matches]).to match_array([played_match, organised_match])
+      expect(result.data[:user_not_played_matches_count]).to eq(1)
+      expect(result.data[:user_not_played_matches]).to match_array([not_played_match])
+      expect(result.data[:user_organised_matches_count]).to eq(1)
+      expect(result.data[:user_organised_matches]).to match_array([organised_match])
+      expect(result.data[:user_played_games_count]).to eq(1)
+      expect(result.data[:user_played_games]).to match_array([user_game])
       expect(result.data[:recent_public_matches]).to match_array([public_match])
-      expect(result.data[:recent_games].count).to eq(5)
       expect(result.data[:recent_comments_from_friends]).to match_array([comment_from_friend])
       expect(result.data[:recent_comments_on_user_content]).to match_array([comment_on_user_game,
                                                                             comment_on_user_played_match, 
