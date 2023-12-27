@@ -82,4 +82,7 @@ Rails.application.routes.draw do
   get 'username_search', to: 'users#username_search'
   get 'search_game_name', to: 'games#search_game_name'
   delete 'attachments/:id/purge', to: 'attachments#purge', as: :purge_attachment
+
+  get 'graphs/user_played_matches', to: 'graphs#user_played_matches'
+  get 'graphs/user_organized_matches', to: 'graphs#user_organized_matches'
 end
