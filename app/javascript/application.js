@@ -1,3 +1,4 @@
+
 // Entry point for the build script in your package.json
 
 import Rails from "@rails/ujs";
@@ -7,6 +8,7 @@ import "@rails/actiontext"
 import "trix"
 import * as ActiveStorage from "@rails/activestorage";
 import * as bootstrap from "bootstrap"
+import "chartkick/chart.js"
 
 import "./customFlatpickr"
 import "./autocompleteUsername"
