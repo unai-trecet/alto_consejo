@@ -30,6 +30,12 @@ es:
       reply: "Responder"
     form:
       cancel: "Cancelar"
+    comment_actions:
+      reply: "Responder"
+      edit: "Modificar"
+      delete: "Borrar"
+      cancel: "Cancelar"
+      save: "Guardar"
   games:
     index:
       author: "Autor/a"
@@ -175,6 +181,9 @@ es:
     played_matches: "Partidas jugadas"
     not_played_matches: "Partidas por jugar"
     played_games: "Juegos probados"
+  shared:
+    comments_block:
+      comments: "Comentarios"
   users:
     index:
       players: "Jugadores"

@@ -1,4 +1,4 @@
-<h4><%= t('.comments') %></h4>
+<h5><%= t('.comments') %></h5>
 <%= turbo_frame_tag :comment_form do %>
   <%= render partial: 'comments/form', locals: { comment: Comment.new, commentable: commentable } %>
 <% end %>
