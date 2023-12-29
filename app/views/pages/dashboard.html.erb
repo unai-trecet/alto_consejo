@@ -134,168 +134,123 @@
 </div>
 <!--//row-->
 <div class="row g-4 mb-4">
-	<div class="col-12 col-lg-6">
-		<div class="app-card app-card-progress-list h-100 shadow-sm">
-			<div class="app-card-header p-3">
-				<div class="row justify-content-between align-items-center">
-					<div class="col-auto">
-						<h4 class="app-card-title">Apúntate a una partida!</h4>
-					</div>
-					<!--//col-->
-					<div class="col-auto">
-						<div class="card-header-action">
-							<%= link_to('Todas las partidas', matches_path) %>
-						</div>
-						<!--//card-header-actions-->
-					</div>
-					<!--//col-->
-				</div>
-				<!--//row-->
-			</div>
-			<!--//app-card-header-->
-				<% (@dashboard_data[:recent_public_matches] || []).each do |match| %>
-					<div class="p-3">
-						<div class="row align-items-center">
-							<%= render partial: 'matches/card', locals: { match: match } %>
-						</div>
-						<!--//row-->
-					</div>
-					<!--//item-->
-				<% end %>
-			<!--//app-card-body-->
-		</div>
-		<!--//app-card-->
-	</div>
+  <div class="col-12 col-lg-6">
+    <!-- PARTIDAS PÚBLICAS -->
+    <div class="app-card app-card-progress-list min-height-card shadow-sm mb-4">
+      <div class="app-card-header p-3">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-auto">
+            <h4 class="app-card-title">Apúntate a una partida!</h4>
+          </div>
+          <div class="col-auto">
+            <div class="card-header-action">
+              <%= link_to('Todas las partidas', matches_path) %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% (@dashboard_data[:recent_public_matches] || []).each do |match| %>
+        <div class="p-3">
+          <div class="row align-items-center">
+            <%= render partial: 'matches/card', locals: { match: match } %>
+          </div>
+        </div>
+      <% end %>
+    </div>
 
-	<!-- ULTIMAS PARTIDAS JUGADAS -->
-	<div class="col-12 col-lg-6">
-		<div class="app-card app-card-progress-list h-100 shadow-sm">
-			<div class="app-card-header p-3">
-				<div class="row justify-content-between align-items-center">
-					<div class="col-auto">
-						<h4 class="app-card-title">Últimas partidas jugadas</h4>
-					</div>
-					<!--//col-->
-					<div class="col-auto">
-						<div class="card-header-action">
-							<%= link_to('Todas las partidas', matches_path) %>
-						</div>
-						<!--//card-header-actions-->
-					</div>
-					<!--//col-->
-				</div>
-				<!--//row-->
-			</div>
-			<!--//app-card-header-->
-				<% (@dashboard_data[:user_played_matches] || []).each do |match| %>
-					<div class="p-3">
-						<div class="row align-items-center">
-							<%= render partial: 'matches/card', locals: { match: match } %>
-						</div>
-						<!--//row-->
-					</div>
-					<!--//item-->
-				<% end %>
-			<!--//app-card-body-->
-		</div>
-		<!--//app-card-->
-	</div>
+    <!-- PRÓXIMAS PARTIDAS -->
+    <div class="app-card app-card-progress-list min-height-card shadow-sm mb-4">
+      <div class="app-card-header p-3">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-auto">
+            <h4 class="app-card-title">Próximas partidas</h4>
+          </div>
+          <div class="col-auto">
+            <div class="card-header-action">
+              <%= link_to('Todas las partidas', matches_path) %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% (@dashboard_data[:user_not_played_matches] || []).each do |match| %>
+        <div class="p-3">
+          <div class="row align-items-center">
+            <%= render partial: 'matches/card', locals: { match: match } %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
 
-	<!-- PRÓXIMAS PARTIDAS -->
-	<div class="col-12 col-lg-6">
-		<div class="app-card app-card-progress-list h-100 shadow-sm">
-			<div class="app-card-header p-3">
-				<div class="row justify-content-between align-items-center">
-					<div class="col-auto">
-						<h4 class="app-card-title">Próximas partidas</h4>
-					</div>
-					<!--//col-->
-					<div class="col-auto">
-						<div class="card-header-action">
-							<%= link_to('Todas las partidas', matches_path) %>
-						</div>
-						<!--//card-header-actions-->
-					</div>
-					<!--//col-->
-				</div>
-				<!--//row-->
-			</div>
-			<!--//app-card-header-->
-				<% (@dashboard_data[:user_not_played_matches] || []).each do |match| %>
-					<div class="p-3">
-						<div class="row align-items-center">
-							<%= render partial: 'matches/card', locals: { match: match } %>
-						</div>
-						<!--//row-->
-					</div>
-					<!--//item-->
-				<% end %>
-			<!--//app-card-body-->
-		</div>
-		<!--//app-card-->
+  <div class="col-12 col-lg-6">
+    <!-- ULTIMAS PARTIDAS JUGADAS -->
+    <div class="app-card app-card-progress-list min-height-card shadow-sm mb-4">
+      <div class="app-card-header p-3">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-auto">
+            <h4 class="app-card-title">Últimas partidas jugadas</h4>
+          </div>
+          <div class="col-auto">
+            <div class="card-header-action">
+              <%= link_to('Todas las partidas', matches_path) %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% (@dashboard_data[:user_played_matches] || []).each do |match| %>
+        <div class="p-3">
+          <div class="row align-items-center mb-4">
+            <%= render partial: 'matches/card', locals: { match: match } %>
+          </div>
+        </div>
+      <% end %>
+    </div>
 	</div>
+</div>
 
+<div class="row g-4 mb-4">
 	<!-- COMENTARIOS AMIGOS -->
 	<div class="col-12 col-lg-6">
-		<div class="app-card app-card-stats-table h-100 shadow-sm">
+		<div class="app-card app-card-stats-table min-height-card shadow-sm mb-4">
 			<div class="app-card-header p-3">
 				<div class="row justify-content-between align-items-center">
 					<div class="col-auto">
 						<h4 class="app-card-title">Comentarios de tus amigos</h4>
 					</div>
-					<!--//col-->
 					<div class="col-auto">
 						<div class="card-header-action">
 							<a href="#">View report</a>
 						</div>
-						<!--//card-header-actions-->
 					</div>
-					<!--//col-->
 				</div>
-				<!--//row-->
 			</div>
-			<!--//app-card-header-->
 			<div class="app-card-body p-3 p-lg-4">
-				<div class="app-card-body p-3 p-lg-4">
-					<% @dashboard_data[:recent_comments_from_friends].each do |comment| %>
-						<%= render partial: 'comments/comment', locals: { comment: comment } %>
-					<% end %>
-				</div>
+				<% @dashboard_data[:recent_comments_from_friends].each do |comment| %>
+					<%= render partial: 'comments/comment', locals: { comment: comment } %>
+				<% end %>
 			</div>
-			<!--//app-card-body-->
 		</div>
-		<!--//app-card-->
 	</div>
-
 	<!-- COMENTARIOS EN CONTENIDO -->
 	<div class="col-12 col-lg-6">
-		<div class="app-card app-card-stats-table h-100 shadow-sm">
+		<div class="app-card app-card-stats-table min-height-card shadow-sm mb-4">
 			<div class="app-card-header p-3">
 				<div class="row justify-content-between align-items-center">
 					<div class="col-auto">
 						<h4 class="app-card-title">Comentarios en tu contenido</h4>
 					</div>
-					<!--//col-->
 					<div class="col-auto">
 						<div class="card-header-action">
 							<a href="#">View report</a>
 						</div>
-						<!--//card-header-actions-->
 					</div>
-					<!--//col-->
 				</div>
-				<!--//row-->
 			</div>
-			<!--//app-card-header-->
 			<div class="app-card-body p-3 p-lg-4">
-				<div class="app-card-body p-3 p-lg-4">
-					<% @dashboard_data[:recent_comments_on_user_content].each do |comment| %>
-						<%= render partial: 'comments/comment', locals: { comment: comment } %>
-					<% end %>
-				</div>
+				<% @dashboard_data[:recent_comments_on_user_content].each do |comment| %>
+					<%= render partial: 'comments/comment', locals: { comment: comment } %>
+				<% end %>
 			</div>
-			<!--//app-card-body-->
 		</div>
-		<!--//app-card-->
 	</div>
 </div>

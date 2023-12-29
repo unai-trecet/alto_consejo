@@ -1,6 +1,6 @@
 <div class="card rounded">
   <% if allowed_pic?(match.image) %>
-    <%= link_to(image_tag(match.image_as_thumbnail, class: 'card-img-top'), match.image) %>
+    <%= link_to(image_tag(match.image_as_thumbnail, class: 'card-img-top max-size'), match.image) %>
   <% end %>
 
   <div class="card-body">

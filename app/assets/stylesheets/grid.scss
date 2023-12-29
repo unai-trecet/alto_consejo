@@ -1,0 +1,10 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px; /* Adjust this value as needed */
+}
+
+.grid-item {
+  min-height: 200px;
+  /* Other styles as needed */
+}
