@@ -1,0 +1,22 @@
+@import 'variables';
+
+.title-color {
+  color: $color-title;
+}
+
+.description-color {
+  color: $color-description;
+}
+
+.icon-color {
+  color: $color-icon;
+}
+
+.link-color {
+  color: $color-link;
+}
+
+.match-button {
+  background-color: $color-button-bg;
+  border-color: $color-button-border;
+}

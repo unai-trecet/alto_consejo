@@ -1,20 +1,27 @@
-<div class="card rounded">
+<div class="card shadow-sm rounded">
   <% if allowed_pic?(match.image) %>
     <%= link_to(image_tag(match.image_as_thumbnail, class: 'card-img-top max-size'), match.image) %>
   <% end %>
 
   <div class="card-body">
-    <h5 class="card-title"><%= match.title %></h5>
+    <h5 class="card-title title-color"><%= match.title %></h5>
     
-    <p class="card-text"><%= match.description %></p>
+    <p class="card-text description-color"><%= match.description %></p>
 
-    <div class="card-text"><%= link_to(match.game_name, match.game, class: 'text-decoration-none') %></div>
-    <div class="card-text"><%= link_to(match.creator_name, match.creator, class: 'text-decoration-none') %></div>
+    <div class="card-text game-info">
+      <i class="fas fa-dice icon-color"></i> <%= link_to(match.game_name, match.game, class: 'text-decoration-none link-color') %>
+      <span style="margin: 0 10px;"></span>
+      <i class="fas fa-user icon-color"></i> <%= link_to(match.creator_name, match.creator, class: 'text-decoration-none link-color') %>
+    </div>
     
-    <p class="card-text"><small class="text-muted"><%= l(match.start_at, format: :short) %></small></p>
+    <p class="card-text mt-3 game-info">
+      <i class="fas fa-calendar-alt icon-color"></i> <small><%= l(match.start_at, format: :short) %></small>
+      <span style="margin: 0 10px;"></span>
+      <i class="fas fa-map-marker-alt icon-color"></i> <%= truncate(match.location, length: 25) %>
+    </p>
 
-    <div class="text-center">
-      <%= link_to(t('.go_to_match'), match, class: 'btn btn-info btn-sm stretched-link') %>
-    </div>  
+    <div class="text-center mt-3">
+      <%= link_to 'Go to Match', match, class: 'btn btn-sm btn-primary rounded-pill match-button' %>
+    </div>
   </div>
 </div>
