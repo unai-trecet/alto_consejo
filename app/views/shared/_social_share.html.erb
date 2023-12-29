@@ -1,0 +1,23 @@
+<div class="social-share">
+  <p>Share this <%= resource_name %> on:</p>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=<%= CGI.escape(url) %>&quote=<%= CGI.escape("Check out this #{resource_name} on My App: #{title}") %>" target="_blank">
+    <img src="/path/to/facebook-icon.png" alt="Share on Facebook">
+  </a>
+
+  <a href="https://twitter.com/intent/tweet?url=<%= CGI.escape("#{url} Check out this #{resource_name} on My App: #{title}") %>" target="_blank">
+    <img src="/path/to/twitter-icon.png" alt="Share on Twitter">
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= CGI.escape(url) %>&summary=<%= CGI.escape("Check out this #{resource_name} on My App: #{title}") %>" target="_blank">
+    <img src="/path/to/linkedin-icon.png" alt="Share on LinkedIn">
+  </a>
+
+  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=&su=<%= CGI.escape("Check out this #{resource_name} on My App") %>&body=<%= CGI.escape("#{title} - #{url}") %>" target="_blank">
+    <img src="/path/to/gmail-icon.png" alt="Share via Gmail">
+  </a>
+
+  <a href="https://api.whatsapp.com/send?text=<%= CGI.escape("Check out this #{resource_name} on My App: #{title} - #{url}") %>" target="_blank">
+    <img src="/path/to/whatsapp-icon.png" alt="Share on WhatsApp">
+  </a>
+</div>
