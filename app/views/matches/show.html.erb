@@ -1,117 +1,83 @@
 <div class="container-fluid">
-  <p id="notice">
+  <p id="notice" class="alert alert-info">
     <%= notice %>
   </p>
 
-  <div class="form-group mb-3">
-    <p><strong><%= t('.title') %>:</strong></p>
-    <div>
-      <%= @match.title %>
-    </div>
-  </div>
+  <div class="card shadow-sm rounded mb-4">
+    <div class="card-body">
+      <h4 class="card-title title-color text-center"><%= @match.title %></h4>
 
-  <div class="form-group mb-3">
-    <p><strong><%= t('.image') %>:</strong></p>
-    <% if allowed_pic?(@match.image) %>
-      <div>
-        <%= link_to(image_tag(@match.image_as_thumbnail, class: 'img-fluid img-thumbnail'), @match.image) %>
-        <%= link_to(t('attachments.delete_image'), purge_image_match_path(@match), method: :delete) if can_edit_match? %>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="form-group mb-3">
-    <p><strong><%= t('.description') %>:</strong></p>
-    <div>
-      <%= @match.description %>
-    </div>
-  </div>
-
-  <div class="form-group mb-3">
-    <p><strong><%= t('.creator') %>:</strong></p>
-    <div>
-      <%= link_to(@match.creator.username, @match.creator) %>
-    </div>
-  </div>
-
-  <div class="form-group mb-3">
-    <p><strong><%= t('.game') %>:</strong></p>
-    <div>
-      <%= link_to(@match.game.name, @match.game) %>
-    </div>
-  </div>
-
-  <div class="form-group mb-3">
-    <p><strong><%= t('.location') %>:</strong></p>
-    <div>
-      <%= @match.location %>
-    </div>
-  </div>
-
-  <div class="form-group mb-3">
-    <p><strong><%= t('.number_of_players') %>:</strong></p>
-    <div>
-      <%= @match.number_of_players %>
-    </div>
-  </div>
-
-  <div class="form-group mb-3">
-    <p><strong><%= t('.invited_users') %>:</strong></p>
-    <div>
-      <% User.where(username: @match.invited_users).each do |invitee| %>
-        <%= link_to(invitee.username, invitee) %>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="form-group mb-3">
-    <p><strong><%= t('.joined_players') %>:</strong></p>
-    <div>
-      <% @match.participants.each do |participant| %>
-        <%= link_to(participant.username, participant) %>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="form-group mb-3">
-    <p><strong><%= t('.start_at') %>:</strong></p>
-    <div>
-      <%= l(@match.start_at, format: :long) %>
-    </div>
-  </div>
-
-  <div class="form-group mb-3">
-    <p><strong><%= t('.end_at') %>:</strong></p>
-    <div>
-      <%= l(@match.end_at, format: :long) %>
-    </div>
-  </div>
-
-  <% if can_participate? && !already_participating? %>
-    <%= button_to t('.join') , match_participants_path(match_id: @match, user_id: current_user.id), class: "btn app-btn-primary theme-btn mx-auto" %>
-  <% end %>
-
-  <div class="form-group mb-3">
-
-    <strong><%= t('.pictures') %></strong>
-  
-    <hr class="mt-2 mb-5">
-  
-    <div class="row text-center text-lg-start">
-  
-      <% @match.pictures.each do |pic| %>
-        <div class="col-lg-3 col-md-4 col-6">
-          <%= link_to(image_tag(picture_as_thumbnail(pic), class: 'img-fluid img-thumbnail'), pic, class: 'd-block mb-4 h-100') %>
+      <% if allowed_pic?(@match.image) %>
+        <div class="text-center">
+          <%= link_to(image_tag(@match.image_as_thumbnail, class: 'img-fluid img-thumbnail'), @match.image) %>
+          <%= link_to(t('attachments.delete_image'), purge_image_match_path(@match), method: :delete, class: 'btn btn-danger') if can_edit_match? %>
         </div>
-        <%= link_to(t('attachments.delete_image'), purge_attachment_path(pic), method: :delete) if can_edit_match? %>
       <% end %>
 
-    <div>
+      <p class="card-text description-color mt-3"><%= @match.description %></p>
+
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <i class="fas fa-user icon-color"></i> <%= link_to(@match.creator.username, @match.creator, class: 'link-color') %>
+          <i class="fas fa-dice icon-color ml-3"></i> <%= link_to(@match.game.name, @match.game, class: 'link-color') %>
+        </div>
+        <div class="col-md-6">
+          <i class="fas fa-users icon-color"></i> <%= @match.number_of_players %>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <i class="fas fa-calendar-alt icon-color"></i> <%= l(@match.start_at, format: :long) %>
+        </div>
+        <div class="col-md-6">
+          <i class="fas fa-calendar-check icon-color"></i> <%= l(@match.end_at, format: :long) %>
+        </div>
+      </div>
+
+      <% if can_participate? && !already_participating? %>
+        <%= button_to t('.join') , match_participants_path(match_id: @match, user_id: current_user.id), class: "btn btn-sm btn-primary rounded-pill match-button mt-3" %>
+      <% end %>
+
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <i class="fas fa-users icon-color"></i> Participants
+          <ul class="list-unstyled">
+            <% @match.match_participants.each do |participant| %>
+              <li class="mb-2"><%= link_to participant.user.username, participant.user, class: 'link-color' %></li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <i class="fas fa-envelope icon-color"></i> Invitees
+          <ul class="list-unstyled">
+            <% @match.invitees.each do |invitee| %>
+              <li class="mb-2"><%= link_to invitee.username, invitee, class: 'link-color' %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <%= link_to t('.edit') , edit_match_path(@match), class: "btn btn-primary min-width-btn" if can_edit_match? %>
-  <%= link_to t('.back') , matches_path, class: "btn btn-light min-width-btn" %>
+  <div class="mt-3">
+    <strong class="title-color"><%= t('.pictures') %></strong>
+    <hr class="mt-2 mb-5">
+    <div class="row text-center text-lg-start">
+      <% if @match.pictures.any? %>
+        <% @match.pictures.each do |pic| %>
+          <div class="col-lg-3 col-md-4 col-6">
+            <%= link_to(image_tag(picture_as_thumbnail(pic), class: 'img-fluid img-thumbnail'), pic, class: 'd-block mb-4 h-100', data: { lightbox: 'gallery' }) %>
+          </div>
+          <%= link_to(t('attachments.delete_image'), purge_attachment_path(pic), method: :delete, class: 'btn btn-danger') if can_edit_match? %>
+        <% end %>
+      <% else %>
+        <p class="text-muted">No pictures have been uploaded yet.</p>
+      <% end %>
+    </div>
+  </div>
+  
+  <%= link_to t('.edit') , edit_match_path(@match), class: "btn btn-sm btn-primary rounded-pill match-button mt-3" if can_edit_match? %>
+
+  <%= render partial: 'shared/comments_block', locals: { commentable: @match } %>
 </div>
-
-<%= render partial: 'shared/comments_block', locals: { commentable: @match } %>
-
