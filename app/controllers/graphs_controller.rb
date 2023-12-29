@@ -17,9 +17,26 @@ class GraphsController < ApplicationController
 
   def from_date
     if params[:from_date]
-      DateTime.parse(params[:from_date])
+      date_from_params
     else
+      1.month.ago
+    end
+  end
+
+  def date_from_params
+    case params[:from_date]
+    when 'last_week'
+      1.week.ago
+    when 'last_month'
+      1.month.ago
+    when 'last_three_months'
       3.months.ago
+    when 'last_six_months'
+      6.months.ago
+    when 'last_year'
+      1.year.ago
+    else
+      1.month.ago
     end
   end
 end

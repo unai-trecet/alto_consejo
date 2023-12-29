@@ -14,5 +14,8 @@ application.register("comment", CommentController)
 import RatingController from "./rating_controller"
 application.register("rating", RatingController)
 
+import ChartsController from "./charts_controller"
+application.register("charts", ChartsController)
+
 application.register("autocomplete", Autocomplete)
 

@@ -26,15 +26,15 @@ class UserFeedComposer
   end
 
   def user_played_matches
-    @user_played_matches ||= @user.played_matches.order(end_at: :desc).to_a
+    @user_played_matches ||= @user.played_matches.order(end_at: :desc)
   end
 
   def user_not_played_matches
-    @user_not_played_matches ||= @user.not_played_matches.to_a
+    @user_not_played_matches ||= @user.not_played_matches.order(start_at: :asc)
   end
 
   def user_organised_matches
-    @user_organised_matches ||= @user.matches.to_a
+    @user_organised_matches ||= @user.matches.order(created_at: :desc)
   end
 
   def user_played_games
