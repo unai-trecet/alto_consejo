@@ -1,6 +1,6 @@
 <%= turbo_stream_from comment, :comments %>
 <div id="<%= dom_id(comment) %>_with_comments" data-controller="comment-reply" class="card mb-3">
-  <% liked = user ? comment.voted_up_by?(user) : false %>
+  <% liked = defined?(user) && user ? comment.voted_up_by?(user) : false %>
   <div class="card-body">
     <%= render partial: 'comments/comment', locals: {comment: comment, liked: liked } %>
     <div class="text-sm mt-2">
