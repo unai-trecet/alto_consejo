@@ -40,6 +40,7 @@ class User < ApplicationRecord
                                  }, class_name: 'Friendship'
   has_many :friends, through: :accepted_friendships, source: :user
 
+
   after_commit :add_default_avatar, on: %i[create update]
 
   # COMMENTS
@@ -48,8 +49,9 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
-  # RATINGS
+  # RATINGS & REVIEWS
   has_many :ratings
+  has_many :reviews
 
   def avatar_as_thumbnail
     avatar.variant(resize_to_limit: [150, 150]).processed

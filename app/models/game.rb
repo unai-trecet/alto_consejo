@@ -17,6 +17,7 @@ class Game < ApplicationRecord
   has_rich_text :description
 
   has_many :ratings, as: :rateable
+  has_many :reviews
 
   scope :recent, -> { order(created_at: :desc).limit(5) }
 

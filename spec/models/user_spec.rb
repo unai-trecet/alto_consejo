@@ -50,6 +50,7 @@ RSpec.describe User, type: :model do
   it { should have_many(:authored_comments).class_name('Comment') }
   it { should have_many(:comments).class_name('Comment') }
   it { should have_many(:ratings) }
+  it { should have_many(:reviews) }
 
   # Friendships
   it {
