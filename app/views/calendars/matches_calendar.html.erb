@@ -1,19 +1,23 @@
 <div class="container-fluid">
-  <p id="notice"><%= notice %></p>
+  <div class="alert alert-info description-color" role="alert" id="notice"><%= notice %></div>
 
-  <h1><%= t('.title') %></h1>
-  <br>
+  <h1 class="my-4 title-color"><%= t('.title') %></h1>
   
   <%= month_calendar events: @matches, attribute: :start_at, end_attribute: :end_at do |date, matches| %>
-    <%= date %>
-
-    <% matches.each do |match| %>
-      <div>
-        <%= link_to(match.title, match) %>
+    <div class="card mb-4">
+      <div class="card-header icon-color">
+        <%= date %>
       </div>
-    <% end %>    
+      <div class="card-body">
+        <% matches.each do |match| %>
+          <p class="card-text">
+            <%= link_to(match.title, match, class: "btn match-button link-color") %>
+          </p>
+        <% end %>
+      </div>
+    </div>   
   <% end %>
 
-  <%= link_to 'New Game', new_game_path, class: "btn btn-success min-width-btn" %>
+  <%= link_to 'New Game', new_game_path, class: "btn match-button link-color min-width-btn my-4" %>
 
 </div>
