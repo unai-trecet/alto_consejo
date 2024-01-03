@@ -5,11 +5,11 @@ RSpec.describe LikesController, type: :request do
   let(:user) { create(:user, :confirmed) }
   let(:likeable) { create(:comment) } # replace :comment with your likeable model
 
-  describe 'POST #like' do
+  describe 'PATCH #like' do
     it_behaves_like 'not_logged_in'
 
     def call_action
-      post like_url(likeable_type: likeable.class.name, likeable_id: likeable.id)
+      patch like_url(likeable_type: likeable.class.name, likeable_id: likeable.id)
     end
 
     context 'when authenticated' do

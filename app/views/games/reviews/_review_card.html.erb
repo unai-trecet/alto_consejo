@@ -13,8 +13,8 @@
         <% end %>
         <p class="card-text"><%= review.content %></p>
         
-        <%# <% liked = local_assigns[:liked] || false %>
-        <%# <%= render partial: 'shared/vote_with_heart', locals: { comment: comment, liked: liked } %>
+        <% liked = local_assigns[:liked] || false %>
+        <%= render partial: 'shared/vote_with_heart', locals: { likeable: review, liked: liked } %>
       </div>
     </div>
   </div>

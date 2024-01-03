@@ -8,5 +8,5 @@
   <%= render partial: "comments/comment_with_replies", 
             collection: commentable.comments.where(parent_id: nil), 
             as: :comment, 
-            locals: { user: current_user } %>
+            locals: { user: user } %>
 <% end %>

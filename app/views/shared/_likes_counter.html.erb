@@ -1,4 +1,4 @@
-<%= turbo_stream_from [comment, :votes] %>
-<%= turbo_frame_tag dom_id(comment, :votes) do %>
-  </i> <span class="ms-2"><%= comment.cached_votes_up %></span>
+<%= turbo_stream_from [likeable, :votes] %>
+<%= turbo_frame_tag dom_id(likeable, :votes) do %>
+  </i> <span class="ms-2"><%= likeable.cached_votes_up %></span>
 <% end %>

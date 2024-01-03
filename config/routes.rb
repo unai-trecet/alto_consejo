@@ -81,7 +81,7 @@ Rails.application.routes.draw do
   end
   resources :ratings, only: %i[create update]
 
-  post 'like', to: 'likes#like'
+  patch 'like', to: 'likes#like'
   get 'matches_calendar', to: 'calendars#matches_calendar'
   get 'username_search', to: 'users#username_search'
   get 'search_game_name', to: 'games#search_game_name'

@@ -1,4 +1,4 @@
-<%= turbo_frame_tag dom_id(comment, :heart_icon) do %>
+<%= turbo_frame_tag dom_id(likeable, :heart_icon) do %>
   <% klass = liked ? 'bi bi-heart-fill text-danger' : 'bi bi-heart' %>
   <i class="<%= klass %>"></i>
 <% end %>

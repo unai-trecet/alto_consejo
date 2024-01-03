@@ -1,3 +1,3 @@
-<%= button_to(upvote_comment_path(comment), method: :patch, class: "bg-transparent border-0 text-dark p-0") do %>
-  <%= render partial: 'shared/like_heart', locals: { comment: comment, liked: liked } %><%= render partial: 'shared/likes_counter', locals: { comment: comment } %>
+<%= button_to(like_path(likeable_type: likeable.class.name, likeable_id: likeable.id), method: :patch, class: "bg-transparent border-0 text-dark p-0") do %>
+  <%= render partial: 'shared/like_heart', locals: { likeable: likeable, liked: liked } %><%= render partial: 'shared/likes_counter', locals: { likeable: likeable } %>
 <% end %>

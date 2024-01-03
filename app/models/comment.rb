@@ -45,6 +45,6 @@ class Comment < ApplicationRecord
     broadcast_replace_later_to [self, :votes],
                                target: dom_id(self, :votes),
                                partial: 'shared/likes_counter',
-                               locals: { comment: self }
+                               locals: { likeable: self }
   end
 end

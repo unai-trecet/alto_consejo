@@ -16,7 +16,7 @@
           <br>
           
           <% liked = local_assigns[:liked] || false %>
-          <%= render partial: 'shared/vote_with_heart', locals: { comment: comment, liked: liked } %>
+          <%= render partial: 'shared/vote_with_heart', locals: { likeable: comment, liked: liked } %>
 
           <%= render partial: 'comments/comment_actions', locals: { comment: comment } %>
         </div>

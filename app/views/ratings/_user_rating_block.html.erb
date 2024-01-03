@@ -1,5 +1,5 @@
 <% if rating = user.rating_for(rateable) %>
-  <%= render partial: 'ratings/user_rating_stars', locals: { rating: rating, user: user } %>
+  <%= render partial: 'ratings/user_rating_stars', locals: { rating: rating } %>
   <%= button_tag t('.change_rating'), type: 'button', data: { bs_toggle: "modal", bs_target: "#ratingModal" }, class: 'btn btn-primary btn-sm' %>
 <% else %>
   <%= button_tag t('.rate_this_game'), type: 'button', data: { bs_toggle: "modal", bs_target: "#ratingModal" }, class: 'btn btn-primary' %>
