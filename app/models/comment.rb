@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Comment < ApplicationRecord
-  include ActionView::RecordIdentifier
   acts_as_votable
 
   belongs_to :user

@@ -79,5 +79,5 @@
   
   <%= link_to t('.edit') , edit_match_path(@match), class: "btn btn-sm btn-primary rounded-pill match-button mt-3" if can_edit_match? %>
 
-  <%= render partial: 'shared/comments_block', locals: { commentable: @match } %>
+  <%= render partial: 'shared/comments_block', locals: { commentable: @match, user: current_user } %>
 </div>

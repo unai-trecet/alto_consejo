@@ -241,6 +241,10 @@ es:
             unique_user_and_match: "Esta invitación ya existe"
         notification:
           sender_not_present: "El usuario iniciador de la notificación debe estar presente."
+        review:
+          attributes:
+            user_id:
+              taken: "Solo se puede revisar un juego una vez"
       messages:
         record_invalid: "La validación falló: %{errors}"
         restrict_dependent_destroy:

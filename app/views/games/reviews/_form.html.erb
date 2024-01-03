@@ -1,0 +1,13 @@
+<%= turbo_frame_tag dom_id(game, :review_form) do %>
+  <% unless user_has_reviewed_game?(user, game) %>
+    <h5 class="mb-3">Write a Review</h5>
+
+    <%= form_for([game, game.reviews.build], html: { class: 'p-3' }) do |f| %>
+      <div class="mb-3">
+        <%= f.rich_text_area :content, class: 'form-control', required: true %>
+      </div>
+
+      <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    <% end %>
+  <% end %>
+<% end %>

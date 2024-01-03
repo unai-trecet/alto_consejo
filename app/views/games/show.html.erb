@@ -54,5 +54,11 @@
   <% end %>
   <%= link_to 'Back', games_path, class: "btn btn-light min-width-btn" %>
 
-  <%= render partial: 'shared/comments_block', locals: { commentable: @game } %>
+  <br>
+  <br>
+  <br>
+  <%= render partial: 'games/reviews/form', locals: { game: @game, user: current_user } %>
+  <%= render partial: 'games/reviews', locals: { game: @game } %>
+  
+  <%# <%= render partial: 'shared/comments_block', locals: { commentable: @game, user: current_user  } %>
 </div>

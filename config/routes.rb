@@ -62,15 +62,18 @@ Rails.application.routes.draw do
   end
 
   resources :games do
+    resources :reviews, only: %i[index create update destroy], module: :games
     resources :comments, module: :games
     member do
       delete 'purge_main_image'
     end
   end
+
   resources :match_participants, only: %i[create destroy]
   resources :match_invitations, only: %i[create destroy]
   resources :notifications, only: %i[index show new create destroy]
   resources :users, only: %i[index show edit update] do
+    resources :reviews, only: %i[index], module: :users
     member do
       delete 'purge_avatar'
     end
