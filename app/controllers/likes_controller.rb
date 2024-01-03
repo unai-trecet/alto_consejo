@@ -14,7 +14,7 @@ class LikesController < ApplicationController
                                                   target: dom_id(@likeable, :heart_icon),
                                                   partial: 'shared/like_heart',
                                                   locals: { likeable: @likeable,
-                                                            liked: @likeable.voted_up_by?(current_user) })
+                                                            user: current_user })
       end
       format.html { redirect_to @likeable }
     end

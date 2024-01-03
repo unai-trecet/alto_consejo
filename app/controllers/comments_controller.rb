@@ -35,24 +35,6 @@ class CommentsController < ApplicationController
     end
   end
 
-  def upvote # rubocop:disable Metrics/AbcSize
-    if current_user.voted_up_on?(@comment)
-      @comment.unvote_by(current_user)
-    else
-      @comment.upvote_by(current_user)
-    end
-
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace([@comment, :heart_icon],
-                                                  target: dom_id(@comment, :heart_icon),
-                                                  partial: 'shared/like_heart',
-                                                  locals: { comment: @comment,
-                                                            liked: @comment.voted_up_by?(current_user) })
-      end
-    end
-  end
-
   private
 
   def set_comment

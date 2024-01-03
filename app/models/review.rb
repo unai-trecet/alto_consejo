@@ -18,7 +18,7 @@ class Review < ApplicationRecord
     broadcast_replace_to [game, :reviews],
                          target: dom_id(game, :reviews),
                          partial: 'games/reviews',
-                         locals: { game: }
+                         locals: { game: , user: nil}
   end
 
   def broadcast_likes
