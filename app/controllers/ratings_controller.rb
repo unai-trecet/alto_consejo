@@ -16,7 +16,7 @@ class RatingsController < ApplicationController
         format.turbo_stream do
           stream_rating_update
         end
-        # format.html { redirect_to @rating.rateable }
+        format.html { redirect_to @rating.rateable }
       end
     else
       flash[:error] = @rating.errors.full_messages
@@ -29,6 +29,7 @@ class RatingsController < ApplicationController
   def rating_params
     params.require(:rating).permit(:value, :rateable_id, :rateable_type)
   end
+
   # TODO: make update rating work through stream
   def stream_rating_update # rubocop:disable Metrics/AbcSize
     render turbo_stream: turbo_stream.replace('brasasmente',
