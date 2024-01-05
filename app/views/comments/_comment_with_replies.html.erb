@@ -1,7 +1,7 @@
 <%= turbo_stream_from comment, :comments %>
 <div id="<%= dom_id(comment) %>_with_comments" data-controller="comment-reply" class="card mb-3">
   <div class="card-body">
-    <%= render partial: 'comments/comment', locals: {comment: comment, liked: liked } %>
+    <%= render partial: 'comments/comment', locals: {comment: comment, user: user } %>
     <div class="text-sm mt-2">
       <i class="mdi mdi-reply"></i><%= link_to(t('.reply'), "#", class: "text-muted font-13 d-inline-block", data: { action: "click->comment-reply#toggle" }) %>
     </div>
