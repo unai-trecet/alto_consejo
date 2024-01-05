@@ -101,7 +101,7 @@ RSpec.describe Games::ReviewsController, type: :request do
       before do
         sign_in other_user
       end
-  
+
       it 'does not update the review' do
         call_action(valid_params)
         review.reload
@@ -143,13 +143,13 @@ RSpec.describe Games::ReviewsController, type: :request do
       before do
         sign_in other_user
       end
-  
+
       it 'does not delete the review and responds with unauthorized' do
         expect do
           call_action
         end.not_to change(Review, :count)
         expect(response).to have_http_status(:unauthorized)
       end
-    end    
+    end
   end
 end
