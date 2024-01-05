@@ -57,7 +57,7 @@
   <br>
   <br>
   <br>
-  <%= render partial: 'games/reviews/form', locals: { game: @game, user: current_user } %>
+  <%= render partial: 'games/reviews/new_review', locals: { game: @game, user: current_user } %>
   <%= render partial: 'games/reviews', locals: { game: @game, user: current_user } %>
   
   <%# <%= render partial: 'shared/comments_block', locals: { commentable: @game, user: current_user  } %>

@@ -62,7 +62,7 @@ Rails.application.routes.draw do
   end
 
   resources :games do
-    resources :reviews, only: %i[index create update destroy], module: :games
+    resources :reviews, only: %i[index create edit update destroy], module: :games
     resources :comments, module: :games
     member do
       delete 'purge_main_image'

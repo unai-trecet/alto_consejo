@@ -1,21 +1,31 @@
-<div class="card mb-3 review-card">
-  <div class="card-body p-2 mb-3">
-    <div class="d-flex align-items-start">
-      <% review_user = review.user %>
-      <%= image_tag review_user.avatar, class: "me-2 avatar-sm rounded-circle" %>
-      <div class="w-100">
-        <h5 class="mt-0"><%= review_user.username %><small class="text-muted"> <%= time_ago_in_words(review.created_at)%></small></h5>
-        <h6 class="mt-0">Review for <%= review.game.name %></h6>
-        <% if rating = review_user.rating_for(review.game) %>
-          <div class="rating-small">
-            <%= render partial: 'ratings/user_rating_stars', locals: { rating: rating } %>
-          </div>
-        <% end %>
-        <p class="card-text"><%= review.content %></p>
-        
-        <% liked = local_assigns[:liked] || false %>
-        <%= render partial: 'shared/vote_with_heart', locals: { likeable: review, user: user } %>
+<%= turbo_stream_from dom_id(review) %>
+<%= turbo_frame_tag dom_id(review) do %>
+  <div class="card mb-3 review-card">
+    <div class="card-body p-2 mb-3">
+      <div class="d-flex align-items-start">
+        <% review_user = review.user %>
+        <%= image_tag review_user.avatar, class: "me-2 avatar-sm rounded-circle" %>
+        <div class="w-100">
+          <h5 class="mt-0"><%= review_user.username %><small class="text-muted"> <%= time_ago_in_words(review.created_at)%></small></h5>
+          <h6 class="mt-0">Review for <%= review.game.name %></h6>
+          <% if rating = review_user.rating_for(review.game) %>
+            <div class="rating-small">
+              <%= render partial: 'ratings/user_rating_stars', locals: { rating: rating } %>
+            </div>
+          <% end %>
+          <p class="card-text"><%= review.content %></p>
+          
+          <% user = local_assigns.fetch(:user, nil) %>
+          <%= render partial: 'shared/vote_with_heart', locals: { likeable: review, user: user } %>
+
+          <% if user == review_user %>
+            <div class="edit-delete-buttons">
+              <%= link_to 'Edit', edit_game_review_path(review.game, review), class: 'btn btn-outline-primary btn-sm' %>
+              <%= link_to 'Delete', game_review_path(review.game, review), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger btn-sm' %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>

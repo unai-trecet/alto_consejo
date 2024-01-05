@@ -1,0 +1,6 @@
+<%= turbo_frame_tag dom_id(game, :review_form) do %>
+  <% unless user_has_reviewed_game?(user, game) %>
+    <h5 class="mb-3">Write a Review</h5>
+    <%= render partial: 'games/reviews/form', locals: { game: game, user: current_user, review: nil } %>
+  <% end %>
+<% end %>

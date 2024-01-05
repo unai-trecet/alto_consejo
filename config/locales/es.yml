@@ -222,6 +222,18 @@ es:
       rating: "Valoración"
       submit: "Enviar"
       cancel: "Cancelar"
+  controllers:
+    games:
+      reviews:
+        create:
+          success: "Reseña creada con éxito."
+          error: "Error al crear la reseña."
+        update:
+          success: "Reseña actualizada con éxito."
+          error: "Error al actualizar la reseña."
+        destroy:
+          success: "Reseña borrada con éxito."
+          error: "Error al borrar la reseña."
 
   activerecord:
     models:

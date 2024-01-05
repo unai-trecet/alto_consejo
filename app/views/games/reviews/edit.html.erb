@@ -1,0 +1,3 @@
+<%= turbo_frame_tag @review do %>
+  <%= render 'form', review: @review, game: @review.game, user: current_user %>
+<% end %>
