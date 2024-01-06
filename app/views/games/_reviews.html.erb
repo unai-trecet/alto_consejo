@@ -1,6 +1,9 @@
 <%= turbo_stream_from [game, :reviews] %>
 <%= turbo_frame_tag dom_id(game, :reviews) do %>
-  <% game.reviews.each do |review| %>
-    <%= render partial: 'games/reviews/review_card', locals: { review: review , user: user} %>
+  <% if game.reviews.present?%>
+    <h5 class="my-3"><%= t('games.reviews.title') %></h5>
+    <% game.reviews.each do |review| %>
+      <%= render partial: 'games/reviews/review_card', locals: { review: review , user: user} %>
+    <% end %>
   <% end %>
 <% end %>

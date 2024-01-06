@@ -44,6 +44,9 @@ es:
       page_title: "Juegos"
       played_matches: "Partidas"
       bgg_link: "BGG link"
+    reviews:
+      title: "Reseñas"
+      write_review: "Escribir reseña"
     show:
       added_by: "Añadido por"
       author: "Autor/a"

@@ -39,11 +39,29 @@
   <div class="card mb-3">
     <div class="card-body">
       <h5 class="card-title"><%= t('.game_pictures') %></h5>
-      <div class="row text-center text-lg-start">
-        <% @game.game_pictures.each do |pic| %>
-          <div class="col-lg-3 col-md-4 col-6">
-            <%= link_to(t('attachments.delete_image'), purge_attachment_path(pic), method: :delete, class: 'btn btn-danger') if can_edit_game? %>
-          </div>
+      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <% @game.game_pictures.each_with_index do |pic, index| %>
+            <div class="carousel-item <%= 'active' if index.zero? %>">
+              <%= image_tag url_for(pic), class: 'd-block w-100' %>
+              <% if can_edit_game? %>
+                <%= link_to(t('attachments.delete_image'), purge_attachment_path(pic), method: :delete, class: 'btn btn-danger') %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <% @game.game_pictures.each_with_index do |pic, index| %>
+          <img src="<%= url_for(pic) %>" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="m-1" style="width: 60px; cursor: pointer;">
         <% end %>
       </div>
     </div>
@@ -54,8 +72,6 @@
   <% end %>
   <%= link_to 'Back', games_path, class: "btn btn-light min-width-btn" %>
 
-  <br>
-  <br>
   <br>
   <%= render partial: 'games/reviews/new_review', locals: { game: @game, user: current_user } %>
   <%= render partial: 'games/reviews', locals: { game: @game, user: current_user } %>
