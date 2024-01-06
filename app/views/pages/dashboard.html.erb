@@ -24,7 +24,7 @@
 	<div class="col-6 col-lg-3">
 		<div class="app-card app-card-stat shadow-sm h-100">
 			<div class="app-card-body p-3 p-lg-4">
-				<h4 class="stats-type mb-1"><%= t('dashboard.played_matches') %></h4>
+				<h4 class="stats-type mb-1"><%= t('.played_matches') %></h4>
 				<div class="stats-figure"><%= @dashboard_data[:user_played_matches_count] %></div>
 				<!-- Add your stats-meta here if needed -->
 			</div>
@@ -35,15 +35,15 @@
 	<div class="col-6 col-lg-3">
 		<div class="app-card app-card-stat shadow-sm h-100">
 			<div class="app-card-body p-3 p-lg-4">
-				<h4 class="stats-type mb-1"><%= t('dashboard.not_played_matches') %></h4>
+				<h4 class="stats-type mb-1"><%= t('.not_played_matches') %></h4>
 				<div class="stats-figure"><%= @dashboard_data[:user_not_played_matches_count]  %></div>
-				<!-- Add your stats-meta here if needed -->
 			</div>
 			<a class="app-card-link-mask" href="#"></a>
 		</div>
 	</div>
 </div>
 <!--//row-->
+<!-- GRAFICAS -->
 <div class="row g-4 mb-4" data-controller="charts">
 	<div class="col-12 col-lg-6">
 		<div class="app-card app-card-chart h-100 shadow-sm">
@@ -140,7 +140,7 @@
       <div class="app-card-header p-3">
         <div class="row justify-content-between align-items-center">
           <div class="col-auto">
-            <h4 class="app-card-title">Apúntate a una partida!</h4>
+            <h4 class="app-card-title"><%= t('.join_a_match') %></h4>
           </div>
           <div class="col-auto">
             <div class="card-header-action">
@@ -163,7 +163,7 @@
       <div class="app-card-header p-3">
         <div class="row justify-content-between align-items-center">
           <div class="col-auto">
-            <h4 class="app-card-title">Próximas partidas</h4>
+            <h4 class="app-card-title"><%= t('.next_matches') %></h4>
           </div>
           <div class="col-auto">
             <div class="card-header-action">
@@ -188,7 +188,7 @@
       <div class="app-card-header p-3">
         <div class="row justify-content-between align-items-center">
           <div class="col-auto">
-            <h4 class="app-card-title">Últimas partidas jugadas</h4>
+            <h4 class="app-card-title"><%= t('.last_played_matches') %></h4>
           </div>
           <div class="col-auto">
             <div class="card-header-action">
@@ -215,7 +215,7 @@
 			<div class="app-card-header p-3">
 				<div class="row justify-content-between align-items-center">
 					<div class="col-auto">
-						<h4 class="app-card-title">Comentarios de tus amigos</h4>
+						<h4 class="app-card-title"><%= t('.comments_from_friends') %></h4>
 					</div>
 					<div class="col-auto">
 						<div class="card-header-action">
@@ -237,7 +237,7 @@
 			<div class="app-card-header p-3">
 				<div class="row justify-content-between align-items-center">
 					<div class="col-auto">
-						<h4 class="app-card-title">Comentarios en tu contenido</h4>
+						<h4 class="app-card-title"><%= t('.comments_from_friends') %></h4>
 					</div>
 					<div class="col-auto">
 						<div class="card-header-action">
