@@ -1,3 +1,30 @@
-// Place all the styles related to the matches controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+.match-card {
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+
+  .icon-separator {
+    margin: 0 10px;
+  }
+
+  .info-container {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  .date {
+    margin-left: 5px;
+  }
+
+  .location-container {
+    display: flex;
+    align-items: baseline;
+
+    span {
+      margin-left: 5px;
+    }
+  }
+}

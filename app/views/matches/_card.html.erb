@@ -1,4 +1,4 @@
-<div class="card shadow-sm rounded">
+<div class="card match-card">
   <% if allowed_pic?(match.image) %>
     <%= link_to(image_tag(match.image_as_thumbnail, class: 'card-img-top max-size'), match.image) %>
   <% end %>
@@ -10,14 +10,20 @@
 
     <div class="card-text game-info">
       <i class="fas fa-dice icon-color"></i> <%= link_to(match.game_name, match.game, class: 'text-decoration-none link-color') %>
-      <span style="margin: 0 10px;"></span>
+      <span class="icon-separator"></span>
       <i class="fas fa-user icon-color"></i> <%= link_to(match.creator_name, match.creator, class: 'text-decoration-none link-color') %>
     </div>
     
     <p class="card-text mt-3 game-info">
-      <i class="fas fa-calendar-alt icon-color"></i> <small><%= l(match.start_at, format: :short) %></small>
-      <span style="margin: 0 10px;"></span>
-      <i class="fas fa-map-marker-alt icon-color"></i> <%= truncate(match.location, length: 25) %>
+      <div class="info-container">
+        <span class="nowrap">
+          <i class="fas fa-calendar-alt icon-color"></i> <small class="date"><%= l(match.start_at, format: :short) %></small>
+        </span>
+        <span class="icon-separator"></span>
+        <div class="location-container">
+          <i class="fas fa-map-marker-alt icon-color"></i> <span><%= truncate(match.location, length: 25) %></span>
+        </div>
+      </div>
     </p>
 
     <div class="text-center mt-3">
