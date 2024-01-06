@@ -17,16 +17,14 @@ Rails.application.routes.draw do
                sign_in: 'login',
                sign_out: 'logout',
                password: 'secret',
-               confirmation: 'verification',
-               registration: 'register',
-               sign_up: 'cmon_let_me_in'
+               confirmation: 'verification'
              },
              controllers: {
                confirmations: 'admins/confirmations',
                passwords: 'admins/passwords',
-               registrations: 'admins/registrations',
                sessions: 'admins/sessions'
-             }
+             },
+             skip: [:registrations]
 
   devise_for :users,
              path: 'auth',
@@ -80,6 +78,16 @@ Rails.application.routes.draw do
     resources :comments, module: :users
   end
   resources :ratings, only: %i[create update]
+
+  namespace :admin do
+    resources :comments
+    resources :games
+    resources :matches
+    resources :match_participants
+    resources :match_invitations
+    resources :notifications
+    resources :users
+  end
 
   patch 'like', to: 'likes#like'
   get 'matches_calendar', to: 'calendars#matches_calendar'
