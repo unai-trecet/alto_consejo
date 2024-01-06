@@ -1,46 +1,104 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-    <span class="fs-4">Your App</span>
-  </a>
-  <hr>
-  <ul class="nav nav-pills flex-column mb-auto">
-    <li class="nav-item">
-      <%= link_to dashboard_path, class: 'nav-link active', aria_current: 'page' do %>
-        <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
-        Dashboard
+ <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+<div id="app-sidepanel" class="app-sidepanel">
+  <div id="sidepanel-drop" class="sidepanel-drop"></div>
+  <div class="sidepanel-inner d-flex flex-column">
+    <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+    <div class="app-branding">
+      <%= link_to dashboard_path do %>
+        <%= image_tag("app-logo.svg", class: "logo-icon me-2", alt: "logo") %>
+        <span class="logo-text"><%= t('pages.portal') %></span>
       <% end %>
-    </li>
-    <li>
-      <%= link_to matches_path, class: 'nav-link' do %>
-        <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-        Matches
-      <% end %>
-    </li>
-    <li>
-      <%= link_to games_path, class: 'nav-link' do %>
-        <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-        Games
-      <% end %>
-    </li>
-    <li>
-      <%= link_to users_path, class: 'nav-link' do %>
-        <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-        Players
-      <% end %>
-    </li>
-    <li>
-      <%= link_to notifications_path, class: 'nav-link' do %>
-        <svg class="bi me-2" width="16" height="16"><use xlink:href="#bell"></use></svg>
-        Notifications
-      <% end %>
-    </li>
-    <li>
-      <%= link_to matches_calendar_path, class: 'nav-link' do %>
-        <svg class="bi me-2" width="16" height="16"><use xlink:href="#calendar3"></use></svg>
-        Calendar
-      <% end %>
-    </li>
-  </ul>
-  <hr>
+    </div>
+
+    <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
+      <ul class="app-menu list-unstyled accordion" id="menu-accordion">
+        <li class="nav-item">
+          <%= link_to dashboard_path, class: 'nav-link active' do %>
+            <span class="nav-icon">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z" />
+                <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+              </svg>
+            </span>
+            <span class="nav-link-text"><%= t('.overview') %></span>
+          <% end %>
+        </li>
+        <li class="nav-item has-submenu">
+          <%= link_to matches_path, class: 'nav-link submenu-toggle', "aria-controls" => "submenu-1", "aria-expanded" => "false", "data-bs-target" => "#submenu-1", "data-bs-toggle" => "collapse" do %>
+            <span class="nav-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-dice-6" viewBox="0 0 16 16">
+                <path d="M1 1.5A1.5 1.5 0 0 1 2.5 0h11A1.5 1.5 0 0 1 15 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 14.5v-13zm1.5-.5a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5v-13a.5.5 0 0 0-.5-.5h-11z"/>
+                <circle cx="4" cy="4" r="1.5"/>
+                <circle cx="12" cy="4" r="1.5"/>
+                <circle cx="4" cy="8" r="1.5"/>
+                <circle cx="12" cy="8" r="1.5"/>
+                <circle cx="4" cy="12" r="1.5"/>
+                <circle cx="12" cy="12" r="1.5"/>
+              </svg>
+            </span>
+            <span class="nav-link-text"><%= t('.matches') %></span>
+		        <span class="submenu-arrow">
+		          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+	            </svg>
+	          </span><!--//submenu-arrow-->
+          <% end %>
+          <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
+            <ul class="submenu-list list-unstyled">
+              <li class="submenu-item"><%= link_to(t('.all_matches'), matches_path(all_by_user: current_user.id), class: "submenu-link") %></li>
+              <li class="submenu-item"><%= link_to(t('.my_played_matches'), matches_path(played_by_user: current_user.id), class: "submenu-link") %></li>
+              <li class="submenu-item"><%= link_to(t('.my_future_matches'), matches_path(not_played_by_user: current_user.id), class: "submenu-link") %></li>
+              <li class="submenu-item"><%= link_to(t('.my_invitations'), matches_path(invitations_by_user: current_user.id), class: "submenu-link") %></li>
+              <li class="submenu-item"><%= link_to(t('.created_by_user'), matches_path(created_by_user: current_user.id), class: "submenu-link") %></li>
+              <li class="submenu-item"><%= link_to(t('.new_match'), new_match_path, class: "submenu-link") %></li>
+            </ul>
+          </div>    
+        </li>
+        <li class="nav-item">
+          <%= link_to games_path, class: 'nav-link' do %>
+            <span class="nav-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 1a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0zm-2.5 3A2.5 2.5 0 1 1 8 6.5a2.5 2.5 0 0 1-2.5-2.5zm5 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0zM8 7a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0zm-2.5 3a2.5 2.5 0 1 1 5 0 2.5 2.5 0 1 1-5 0zm5 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0zm-2.5 3a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z"/>
+              </svg>
+            </span>
+            <span class="nav-link-text"><%= t('.games') %></span>
+          <% end %>  
+        </li>
+        <li class="nav-item has-submenu">
+          <%= link_to users_path, class: 'nav-link' do %>
+            <span class="nav-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+              </svg>
+            </span>
+            <span class="nav-link-text"><%= t('.players') %></span>
+          <% end %>
+        </li>
+        <li class="nav-item has-submenu">
+          <%= link_to notifications_path, class: 'nav-link' do %>
+            <span class="nav-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.25-3a.75.75 0 0 1 .75-.75h-1.5a.75.75 0 0 1 .75.75zM8 1.318l-.597.92a4.002 4.002 0 0 0-1.703 4.748l-.714 1.228A.5.5 0 0 1 4.5 8.5v2a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1-.286-.45l-.714-1.228a4.002 4.002 0 0 0-1.703-4.74L8 1.318z"/>
+              </svg>
+            </span>
+            <span class="nav-link-text"><%= t('.notifications') %></span>
+          <% end %>
+        </li>
+
+        <li class="nav-item">
+          <%= link_to matches_calendar_path, class: 'nav-link' do %>
+            <span class="nav-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-calendar4">
+                <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM2 3.857h12V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1.857zm12 10.285H2V5.714h12v8.428z"/>
+                <path d="M4.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm2.5 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1H7a.5.5 0 0 1-.5-.5zm2.5 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1H9a.5.5 0 0 1-.5-.5zm2.5 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-6 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm2.5 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1H7a.5.5 0 0 1-.5-.5zm2.5 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1H9a.5.5 0 0 1-.5-.5zm2.5 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </span>
+            <span class="nav-link-text"><%= t('.calendar') %></span>
+          <% end %>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </div>
