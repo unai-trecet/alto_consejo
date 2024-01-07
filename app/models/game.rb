@@ -38,7 +38,7 @@ class Game < ApplicationRecord
   end
 
   def self.ransackable_attributes(_auth_object = nil)
-    %w[added_by admin_id author bbg_link created_at description id id_value image
+    %w[added_by author bbg_link created_at description id id_value image
        matches_count name updated_at user_id]
   end
 
