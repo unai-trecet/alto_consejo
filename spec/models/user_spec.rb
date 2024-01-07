@@ -8,70 +8,72 @@ RSpec.describe User, type: :model do
     FileUtils.rm_rf(ActiveStorage::Blob.service.root)
   end
 
-  # VALIDATIONS
-  it { should validate_presence_of(:email) }
-  it { should validate_presence_of(:username) }
+  describe 'validations' do
+    it { should validate_presence_of(:email) }
+    it { should validate_presence_of(:username) }
 
-  it { should validate_uniqueness_of(:email) }
-  it { should validate_uniqueness_of(:username) }
+    it { should validate_uniqueness_of(:email) }
+    it { should validate_uniqueness_of(:username) }
 
-  it { should validate_inclusion_of(:role).in_array(%w[user admin]) }
+    it { should validate_inclusion_of(:role).in_array(%w[user admin]) }
+  end
 
-  # ASSOCIATIONS
-  it { should have_many(:notifications) }
-  it { should have_many(:games) }
-  it { should have_many(:matches) }
-  it { should have_many(:match_participants) }
-  it {
-    should have_many(:participations)
-      .through(:match_participants)
-      .source(:match)
-  }
-  it { should have_many(:match_invitations) }
-  it {
-    should have_many(:invitations)
-      .through(:match_invitations)
-      .source(:match)
-  }
-  it {
-    should have_many(:played_matches)
-      .through(:match_participants)
-      .source(:match)
-  }
-  it {
-    should have_many(:not_played_matches)
-      .through(:match_participants)
-      .source(:match)
-  }
-  it {
-    should have_many(:played_games)
-      .through(:played_matches)
-      .source(:game)
-  }
+  describe 'associations' do
+    it { should have_many(:notifications) }
+    it { should have_many(:games) }
+    it { should have_many(:matches) }
+    it { should have_many(:match_participants) }
+    it {
+      should have_many(:participations)
+        .through(:match_participants)
+        .source(:match)
+    }
+    it { should have_many(:match_invitations) }
+    it {
+      should have_many(:invitations)
+        .through(:match_invitations)
+        .source(:match)
+    }
+    it {
+      should have_many(:played_matches)
+        .through(:match_participants)
+        .source(:match)
+    }
+    it {
+      should have_many(:not_played_matches)
+        .through(:match_participants)
+        .source(:match)
+    }
+    it {
+      should have_many(:played_games)
+        .through(:played_matches)
+        .source(:game)
+    }
 
-  it { should have_one_attached(:avatar) }
+    it { should have_one_attached(:avatar) }
 
-  it { should have_many(:authored_comments).class_name('Comment') }
-  it { should have_many(:comments).class_name('Comment') }
-  it { should have_many(:ratings) }
-  it { should have_many(:reviews) }
+    it { should have_many(:authored_comments).class_name('Comment') }
+    it { should have_many(:comments).class_name('Comment') }
+    it { should have_many(:ratings) }
+    it { should have_many(:reviews) }
 
-  # Friendships
-  it {
-    should have_many(:friendships)
-      .conditions("user_id = #{subject.id} OR friend_id = #{subject.id}")
-  }
-  it {
-    should have_many(:accepted_friendships)
-      .class_name('Friendship')
-      .conditions("friendships.accepted_at IS NOT NULL AND user_id = #{subject.id} OR friend_id = #{subject.id}")
-  }
+    # Friendships
+    it {
+      should have_many(:friendships)
+        .conditions("user_id = #{subject.id} OR friend_id = #{subject.id}")
+    }
+    it {
+      should have_many(:accepted_friendships)
+        .class_name('Friendship')
+        .conditions("friendships.accepted_at IS NOT NULL AND user_id = #{subject.id} OR friend_id = #{subject.id}")
+    }
 
-  it {
-    should have_many(:pending_friendships)
-      .class_name('Friendship')
-      .conditions("friendships.accepted_at IS  NULL AND user_id = #{subject.id} OR friend_id = #{subject.id}")
-  }
+    it {
+      should have_many(:pending_friendships)
+        .class_name('Friendship')
+        .conditions("friendships.accepted_at IS  NULL AND user_id = #{subject.id} OR friend_id = #{subject.id}")
+    }
+  end
 
   describe '#friends' do
     let(:user) { create(:user, :confirmed) }
