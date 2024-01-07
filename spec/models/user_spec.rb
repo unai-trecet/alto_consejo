@@ -8,12 +8,16 @@ RSpec.describe User, type: :model do
     FileUtils.rm_rf(ActiveStorage::Blob.service.root)
   end
 
+  # VALIDATIONS
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:username) }
 
   it { should validate_uniqueness_of(:email) }
   it { should validate_uniqueness_of(:username) }
 
+  it { should validate_inclusion_of(:role).in_array(%w[user admin]) }
+
+  # ASSOCIATIONS
   it { should have_many(:notifications) }
   it { should have_many(:games) }
   it { should have_many(:matches) }

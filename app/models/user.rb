@@ -8,6 +8,7 @@ class User < ApplicationRecord
          :confirmable, :trackable, :lockable
 
   validates :email, :username, presence: true, uniqueness: true
+  validates :role, inclusion: { in: %w[user admin] }
 
   acts_as_voter
 
@@ -52,6 +53,10 @@ class User < ApplicationRecord
   # RATINGS & REVIEWS
   has_many :ratings
   has_many :reviews
+
+  def admin?
+    role == 'admin'
+  end
 
   def avatar_as_thumbnail
     avatar.variant(resize_to_limit: [150, 150]).processed
