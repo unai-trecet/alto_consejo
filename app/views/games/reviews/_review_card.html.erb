@@ -17,8 +17,8 @@
           
           <% user = local_assigns.fetch(:user, nil) %>
           <%= render partial: 'shared/vote_with_heart', locals: { likeable: review, user: user } %>
-
-          <% if user == review_user %>
+      
+          <% if user == review_user || (user && user.admin?) %>
             <div class="edit-delete-buttons">
               <%= link_to 'Edit', edit_game_review_path(review.game, review), class: 'btn btn-outline-primary btn-sm' %>
               <%= link_to 'Delete', game_review_path(review.game, review), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger btn-sm' %>

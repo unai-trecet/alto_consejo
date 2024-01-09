@@ -12,5 +12,10 @@ FactoryBot.define do
       confirmation_sent_at { Time.zone.now }
       confirmation_token { '12345' }
     end
+
+    trait :admin do
+      confirmed
+      role { 'admin' }
+    end
   end
 end

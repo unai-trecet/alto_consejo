@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.describe MatchesHelper, type: :helper do
   let(:user) { create(:user, :confirmed, username: 'sure_invited') }
+  let(:admin) { create(:user, :admin) }
+
   before { sign_in(user) }
 
   describe 'can_participate?' do
@@ -21,7 +23,7 @@ RSpec.describe MatchesHelper, type: :helper do
   end
 
   describe 'already_participating?' do
-    it 'returns true if current_user isa match participant' do
+    it 'returns true if current_user is a match participant' do
       match = create(:match, invited_users: [user.username])
       assign(:match, match)
       create(:match_participant, user:, match:)
@@ -33,6 +35,24 @@ RSpec.describe MatchesHelper, type: :helper do
       assign(:match, create(:match))
 
       expect(helper.already_participating?).to eq(false)
+    end
+  end
+
+  describe '#can_edit_match?' do
+    it 'returns true if current user is the match creator' do
+      match = create(:match, user:)
+      assign(:match, match)
+
+      allow(helper).to receive(:current_user).and_return(user)
+      expect(helper.can_edit_match?).to be true
+    end
+
+    it 'returns true if current user is an admin' do
+      match = create(:match)
+      assign(:match, match)
+
+      allow(helper).to receive(:admin?).and_return(true)
+      expect(helper.can_edit_match?).to be true
     end
   end
 end

@@ -10,6 +10,6 @@ module MatchesHelper
   end
 
   def can_edit_match?
-    @match.creator == current_user
+    @match.user == current_user || admin?
   end
 end

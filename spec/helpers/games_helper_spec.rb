@@ -1,16 +1,25 @@
-# frozen_string_literal: true
-
-require 'rails_helper'
-
-# Specs in this file have access to a helper object that includes
-# the GamesHelper. For example:
-#
-# describe GamesHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe GamesHelper, type: :helper do
+  describe '#can_edit_game?' do
+    let(:user) { create(:user, :confirmed) }
+    let(:admin) { create(:user, :admin) }
+    let(:game) { Game.new(added_by: user) }
+
+    context 'when the user can edit the game' do
+      it 'returns true' do
+        allow(helper).to receive(:current_user).and_return(user)
+        allow(helper).to receive(:admin?).and_return(false)
+
+        expect(helper.can_edit_game?).to be true
+      end
+    end
+
+    context 'when the user cannot edit the game' do
+      it 'returns false' do
+        allow(helper).to receive(:current_user).and_return(User.new)
+        allow(helper).to receive(:admin?).and_return(false)
+
+        expect(helper.can_edit_game?).to be false
+      end
+    end
+  end
 end
