@@ -1,66 +1,37 @@
-<div class="app-login p-0">    	
-  <div class="row g-0 app-auth-wrapper">
-    <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
-      <div class="d-flex flex-column align-content-end">
-        <div class="app-auth-body mx-auto">	
-          <div class="app-auth-branding mb-4"><a class="app-logo" href="index.html"><%= image_tag("app-logo.svg", class: "logo-icon me-2", alt: "logo") %></a></div>
-        <h2 class="auth-heading text-center mb-5">Log in to Portal</h2>
-            <div class="auth-form-container text-start">
-              <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: 'auth-form login-form') do |f| %>
-                <div class="field email mb-3">
-                  <%= f.label :email, class: "sr-only" %><br />
-                  <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control signin-email", required: true, placeholder: "Email" %>
-                </div>
-
-                <div class="field password mb-3">
-                  <%= f.label :password, class: "sr-only" %><br />
-                  <%= f.password_field :password, autocomplete: "current-password", class: "form-control signin-password", placeholder: "Password", required: true %>
-                </div>
-
-                <% if devise_mapping.rememberable? %>
-                  <div class="extra mt-3 row justify-content-between">
-                    <div class="col-6">                
-                      <div class="field form-check">
-                        <%= f.check_box :remember_me, class: "form-check-input" %>
-                        <%= f.label :recuerdame, class: "form-check-label" %>
-                      </div>
-                    </div>
-                  </div>
-                <% end %>
-
-                <div class="actions">
-                  <%= f.submit "Log in", class: "btn app-btn-primary w-100 theme-btn mx-auto" %>
-                </div>
-              <% end %>
-
-              
-          <div class="auth-option text-center pt-5">
-            <%= render "users/shared/links" %>
-          </div>
-        </div><!--//auth-form-container-->	
-
-        </div><!--//auth-body-->
-      
-        <footer class="app-auth-footer">
-          <div class="container text-center py-3">
-               <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
-            <small class="copyright">Designed with <i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
-             
-          </div>
-        </footer><!--//app-auth-footer-->	
-      </div><!--//flex-column-->   
-    </div><!--//auth-main-col-->
-    <div class="col-12 col-md-5 col-lg-6 h-100 auth-background-col">
-      <div class="auth-background-holder">
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="text-center mb-4">
+        <img src="app-logo.svg" class="mb-3" alt="logo" width="72" height="72">
+        <h1 class="h3 mb-3 fw-normal">Log in to Portal</h1>
       </div>
-      <div class="auth-background-mask"></div>
-      <div class="auth-background-overlay p-3 p-lg-5">
-        <div class="d-flex flex-column align-content-end h-100">
-          <div class="h-100"></div>
-      </div>
-      </div><!--//auth-background-overlay-->
-    </div><!--//auth-background-col-->
-  
-  </div><!--//row-->
 
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: 'form-signin') do |f| %>
+        <div class="form-floating mb-3">
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", required: true, placeholder: "Email" %>
+          <%= f.label :email %>
+        </div>
+
+        <div class="form-floating mb-3">
+          <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "Password", required: true %>
+          <%= f.label :password %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="checkbox mb-3">
+            <%= f.check_box :remember_me, class: "form-check-input" %>
+            <%= f.label :remember_me, class: "form-check-label" %>
+          </div>
+        <% end %>
+
+        <%= f.submit "Log in", class: "w-100 btn btn-lg btn-primary" %>
+      <% end %>
+
+      <div class="mt-5 text-center">
+        <%= render "users/shared/links" %>
+      </div>
+
+      <p class="mt-5 mb-3 text-muted text-center">&copy; 2024</p>
+    </div>
+  </div>
 </div>
