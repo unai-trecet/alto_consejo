@@ -9,19 +9,19 @@ RSpec.describe UserFeedComposer do
       user_game = create(:game, user:)
       create_list(:game, 5)
 
-      organised_match = create(:match, user:, public: false, end_at: 1.day.ago)
+      organised_match = create(:match, title: 'organised_match', user:, public: false, end_at: 1.day.ago)
       create(:match_participant, user:, match: organised_match)
 
-      played_match = create(:match, public: true, end_at: 1.day.ago)
+      played_match = create(:match, title: 'played_match', public: true, end_at: 1.day.ago)
       create(:match_participant, user:, match: played_match)
 
-      not_played_match = create(:match, public: true, end_at: DateTime.now + 1)
+      not_played_match = create(:match, title: 'not_played_match', public: true, end_at: DateTime.now + 1)
       create(:match_participant, user:, match: not_played_match)
-      public_match = create(:match, public: true, end_at: DateTime.now + 1)
+      public_match = create(:match, title: 'public_match', public: true, start_at: DateTime.now + 1)
 
-      _not_participated_played_match = create(:match, public: true, end_at: 2.day.ago)
-      _not_public_match = create(:match, public: false, end_at: DateTime.now + 1)
-      _old_public_match = create(:match, public: true, created_at: 8.days.ago)
+      _not_participated_played_match = create(:match, title: '_not_participated_played_match', public: true, end_at: 2.day.ago)
+      _not_public_match = create(:match, title: '_not_public_match', public: false, end_at: DateTime.now + 1)
+      _old_public_match = create(:match, title: '_old_public_match', public: true, start_at: 8.days.ago)
 
       friend = create(:user, :confirmed)
       create(:friendship, user:, friend:, accepted_at: DateTime.now)
@@ -57,8 +57,8 @@ RSpec.describe UserFeedComposer do
       expect(result.data[:user_not_played_matches]).to match_array([not_played_match])
       expect(result.data[:user_organised_matches_count]).to eq(1)
       expect(result.data[:user_organised_matches]).to match_array([organised_match])
-      expect(result.data[:user_played_games_count]).to eq(1)
-      expect(result.data[:user_played_games]).to match_array([user_game])
+      expect(result.data[:user_played_games_count]).to eq(2)
+      expect(result.data[:user_played_games]).to match_array([played_match.game, organised_match.game])
       expect(result.data[:recent_public_matches]).to match_array([public_match])
       expect(result.data[:recent_comments_from_friends]).to match_array([comment_from_friend])
       expect(result.data[:recent_comments_on_user_content]).to match_array([comment_on_user_game,
