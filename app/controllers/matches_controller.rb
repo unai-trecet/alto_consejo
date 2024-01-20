@@ -2,7 +2,6 @@
 
 class MatchesController < ApplicationController
   before_action :set_match, only: %i[purge_image]
-  before_action :require_permission, only: %i[edit update destroy]
   before_action :inspect_filters, only: %i[index]
 
   # GET /matches or /matches.json
@@ -26,16 +25,9 @@ class MatchesController < ApplicationController
 
   # POST /matches or /matches.json
   def create
-    @match = Match.new(match_params)
-
+    @match = MatchCreator.new(match_params, current_user).call
     respond_to do |format|
-      if @match.save
-        if params['match']['creator_participates']
-          MatchParticipationManager.new(match_id: @match.id,
-                                        user_id: @match.creator.id).call
-        end
-        MatchInvitationsManager.new(match: @match, sender: @match.creator).call
-
+      if @match.persisted?
         format.html { redirect_to @match, notice: t('.created') }
         format.json { render :show, status: :created, location: @match }
       else
@@ -47,14 +39,9 @@ class MatchesController < ApplicationController
 
   # PATCH/PUT /matches/1 or /matches/1.json
   def update
+    @match = MatchUpdater.new(@match, match_params).call
     respond_to do |format|
-      if @match.update(match_params)
-        if params['match']['creator_participates']
-          MatchParticipationManager.new(match_id: @match.id,
-                                        user_id: @match.creator.id).call
-        end
-        MatchInvitationsManager.new(match: @match, sender: @match.creator).call
-
+      if @match.errors.empty?
         format.html { redirect_to @match, notice: 'Match was successfully updated.' }
         format.json { render :show, status: :ok, location: @match }
       else
@@ -91,12 +78,6 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
   end
 
-  def require_permission
-    return if current_user_creator?
-
-    redirect_to unauthorized_path
-  end
-
   def current_user_creator?
     current_user == @match.creator
   end
@@ -106,15 +87,26 @@ class MatchesController < ApplicationController
   end
 
   def filtering_params
-    return { all_by_user: current_user.id } if (@filter ||= params.slice(*Match.filter_scopes)).blank?
+    @filtering_params ||= build_filtering_params
+  end
 
-    @filter
+  def build_filtering_params
+    if filter_provided?
+      params.slice(*Match.filter_scopes)
+    else
+      { all_by_user: current_user.id }
+    end
+  end
+
+  def filter_provided?
+    params.slice(*Match.filter_scopes).present?
   end
 
   def match_params
     permited_params = params.require(:match).permit(:title, :description, :user_id, :game_id,
                                                     :location, :number_of_players, :start_at,
-                                                    :end_at, :public, :invited_users, :image, pictures: [])
+                                                    :end_at, :public, :invited_users, :image, :creator_participates,
+                                                    pictures: [])
     permited_params[:invited_users] = usernames
     permited_params
   end
