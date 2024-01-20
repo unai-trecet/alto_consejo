@@ -1,38 +1,33 @@
-# frozen_string_literal: true
-
 class ApplicationController < ActionController::Base
   include ActionView::RecordIdentifier
 
-  before_action :set_resource
   before_action :authenticate_user!
+  before_action :set_resource, only: %i[show destroy update edit]
+  before_action :authorize_user, only: %i[destroy update edit]
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ActionController::RoutingError, with: :render_not_found
 
   private
 
-  def record_not_found(exception)
-    @exception = exception
-    render template: '/error_pages/404', status: 404
+  def record_not_found
+    raise ActionController::RoutingError, 'Not Found'
   end
 
-  def render_internal_server_error(exception)
-    @exception = exception
-    render template: '/errors/500', status: 500
+  def render_not_found
+    raise ActionController::RoutingError, 'Not Found'
   end
 
   def set_resource
-    return unless params[:id]
+    resource = controller_name.classify.constantize.find(params[:id]) if params[:id]
+    instance_variable_set("@#{controller_name.singularize}", resource)
+    @resource = resource
+  end
 
-    @resource = case controller_name
-                when 'games'
-                  Game.find(params[:id])
-                when 'matches'
-                  Match.find(params[:id])
-                when 'users'
-                  User.find(params[:id])
-                when 'comments'
-                  Comment.find(params[:id])
-                end
+  def authorize_user
+    return if @resource.user == current_user || current_user.admin?
+
+    flash[:notice] = t('.error')
+    redirect_to unauthorized_path
   end
 end

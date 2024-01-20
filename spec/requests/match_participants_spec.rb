@@ -96,7 +96,7 @@ RSpec.describe 'MatchParticipants', type: :request do
           call_action(new_participant)
         end.not_to change(MatchParticipant, :count)
 
-        expect(response).to have_http_status(:unauthorized)
+        expect(response).to redirect_to(unauthorized_path)
       end
     end
   end

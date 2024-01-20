@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class NotificationsController < ApplicationController
+  skip_before_action :authorize_user, :set_resource
   before_action :set_notification, only: %i[show edit update destroy]
 
   # GET /notifications or /notifications.json

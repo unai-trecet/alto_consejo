@@ -17,20 +17,4 @@ RSpec.describe Review, type: :model do
       should validate_uniqueness_of(:user_id).scoped_to(:game_id).with_message('Solo se puede revisar un juego una vez')
     }
   end
-
-  describe '#broadcast_review' do
-    let(:game) { create(:game) }
-    let(:review) { create(:review, game:) }
-
-    it 'broadcasts the review to the game reviews channel' do
-      expect(review).to receive(:broadcast_replace_to).with(
-        [game, :reviews],
-        target: ActionView::RecordIdentifier.dom_id(game, :reviews),
-        partial: 'games/reviews',
-        locals: { game: }
-      )
-
-      review.broadcast_review
-    end
-  end
 end

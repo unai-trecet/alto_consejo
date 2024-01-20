@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class AttachmentsController < ApplicationController
+  skip_before_action :authorize_user, :set_resource
   before_action :set_attachment
 
   def purge
@@ -18,6 +19,6 @@ class AttachmentsController < ApplicationController
   end
 
   def can_be_purged?
-    @attachment.record.respond_to?(:user) && @attachment.record.user == current_user
+    @attachment.record.respond_to?(:user) && (@attachment.record.user == current_user || current_user.admin?)
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MatchesController < ApplicationController
-  before_action :set_match, only: %i[show edit update destroy purge_image]
+  before_action :set_match, only: %i[purge_image]
   before_action :require_permission, only: %i[edit update destroy]
   before_action :inspect_filters, only: %i[index]
 

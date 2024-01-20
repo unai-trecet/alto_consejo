@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class MatchParticipantsController < ApplicationController
+  skip_before_action :authorize_user
   before_action :set_match_participant, only: :destroy
   skip_forgery_protection(only: :create)
 
@@ -26,7 +27,7 @@ class MatchParticipantsController < ApplicationController
 
       head :no_content
     else
-      head :unauthorized
+      redirect_to unauthorized_path
     end
   end
 

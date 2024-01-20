@@ -10,7 +10,6 @@ class RatingsController < ApplicationController
   end
 
   def update
-    @rating = Rating.find(params[:id])
     if @rating.update(rating_params)
       respond_to do |format|
         format.turbo_stream do

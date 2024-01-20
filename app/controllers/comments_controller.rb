@@ -3,43 +3,27 @@
 class CommentsController < ApplicationController
   include Commentable
 
-  before_action :set_comment
-
   def show; end
 
   def edit; end
 
   def update
-    if @comment.user == current_user
-      if @comment.update(comment_params)
-        render @comment
-      else
-        render :edit, status: :unprocessable_entity
-      end
+    if @comment.update(comment_params)
+      render @comment
     else
-      flash[:notice] = 'You are not authorized to edit this comment.'
-      head :unauthorized
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    if @comment.user == current_user
-      @comment.destroy
-      respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.remove(@comment) }
-        format.html { redirect_to @comment.commentable }
-      end
-    else
-      flash[:notice] = 'You are not authorized to delete this comment.'
-      head :unauthorized
+    @comment.destroy
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@comment) }
+      format.html { redirect_to @comment.commentable }
     end
   end
 
   private
-
-  def set_comment
-    @comment = Comment.find(params[:id])
-  end
 
   def comment_params
     params.require(:comment).permit(:body)

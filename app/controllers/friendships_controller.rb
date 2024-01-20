@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class FriendshipsController < ApplicationController
+  skip_before_action :authorize_user
   before_action :set_friendship, only: %i[update destroy]
 
   def show

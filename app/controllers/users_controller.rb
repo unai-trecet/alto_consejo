@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update purge_avatar]
+  skip_before_action :authorize_user
+  before_action :set_user, only: %i[purge_avatar]
   before_action :require_permission, except: %i[show index username_search]
 
   def index

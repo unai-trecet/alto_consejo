@@ -106,7 +106,41 @@ RSpec.describe Games::ReviewsController, type: :request do
         call_action(valid_params)
         review.reload
         expect(review.content.body.to_plain_text).not_to eq('Updated content!')
-        expect(response).to have_http_status(:unauthorized)
+        expect(response).to redirect_to(unauthorized_path)
+      end
+    end
+
+    context 'when the user is an admin' do
+      let(:admin) { create(:user, :admin) }
+
+      before do
+        sign_in admin
+      end
+
+      context 'with valid parameters' do
+        it 'updates the review' do
+          call_action(valid_params)
+          review.reload
+          expect(review.content.body.to_plain_text).to eq('Updated content!')
+        end
+
+        it 'redirects to the game' do
+          call_action(valid_params)
+          expect(response).to redirect_to(game)
+        end
+      end
+
+      context 'with invalid parameters' do
+        it 'does not update the review' do
+          call_action(invalid_params)
+          review.reload
+          expect(review.content).not_to eq('')
+        end
+
+        it 'renders the edit view' do
+          call_action(invalid_params)
+          expect(response).to render_template(:edit)
+        end
       end
     end
   end
@@ -148,7 +182,26 @@ RSpec.describe Games::ReviewsController, type: :request do
         expect do
           call_action
         end.not_to change(Review, :count)
-        expect(response).to have_http_status(:unauthorized)
+        expect(response).to redirect_to(unauthorized_path)
+      end
+    end
+
+    context 'when the user is an admin' do
+      let(:admin) { create(:user, :admin) }
+
+      before do
+        sign_in admin
+      end
+
+      it 'deletes the review' do
+        expect do
+          call_action
+        end.to change(Review, :count).by(-1)
+      end
+
+      it 'redirects to the game' do
+        call_action
+        expect(response).to redirect_to(game)
       end
     end
   end

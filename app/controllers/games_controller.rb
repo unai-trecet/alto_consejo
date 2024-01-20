@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GamesController < ApplicationController
-  before_action :set_game, only: %i[show edit update destroy purge_main_image]
+  before_action :set_game, only: %i[purge_main_image]
   before_action :require_permission, only: %i[edit update destroy purge_main_image]
 
   # GET /games or /games.json

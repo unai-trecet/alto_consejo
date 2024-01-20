@@ -1,8 +1,4 @@
 class Games::ReviewsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_review, only: %i[destroy update edit]
-  before_action :authorize_user, only: %i[destroy update]
-
   def create
     @review = current_user.reviews.build(review_params.merge(game_id: params[:game_id]))
 
@@ -30,15 +26,8 @@ class Games::ReviewsController < ApplicationController
 
   private
 
-  def set_review
-    @review = Review.find(params[:id])
-  end
-
-  def authorize_user
-    unless @review.user == current_user
-      flash[:notice] = t('.error')
-      head :unauthorized
-    end
+  def review_params
+    params.require(:review).permit(:content)
   end
 
   def handle_successful_save
@@ -48,23 +37,6 @@ class Games::ReviewsController < ApplicationController
       end
       format.html { redirect_to @review.game }
     end
-  end
-
-  def handle_unsuccessful_save
-    respond_to do |format|
-      format.html { redirect_to @review.game, notice: @review.errors.full_messages }
-    end
-  end
-
-  def respond_to_destroy
-    respond_to do |format|
-      format.turbo_stream { render turbo_stream: stream_review_form }
-      format.html { redirect_to @review.game }
-    end
-  end
-
-  def review_params
-    params.require(:review).permit(:content)
   end
 
   def stream_review
@@ -82,6 +54,19 @@ class Games::ReviewsController < ApplicationController
       partial: 'games/reviews/new_review',
       locals: { game: @review.game, user: current_user }
     )
+  end
+
+  def handle_unsuccessful_save
+    respond_to do |format|
+      format.html { redirect_to @review.game, notice: @review.errors.full_messages }
+    end
+  end
+
+  def respond_to_destroy
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: stream_review_form }
+      format.html { redirect_to @review.game }
+    end
   end
 
   def respond_successfully_to_update

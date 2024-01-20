@@ -2,6 +2,6 @@
 
 module GamesHelper
   def can_edit_game?
-    @game.added_by == current_user || admin?
+    @game.user == current_user || admin?
   end
 end

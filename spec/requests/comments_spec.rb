@@ -18,7 +18,7 @@ RSpec.describe '/comments', type: :request do
   end
 
   describe 'GET /show' do
-    def call_action(comment = create(:comment))
+    def call_action(comment = create(:comment, user:))
       get comment_url(comment)
     end
 
@@ -96,11 +96,7 @@ RSpec.describe '/comments', type: :request do
           end
 
           it 'returns an unauthorized status' do
-            expect(response).to have_http_status(:unauthorized)
-          end
-
-          it 'sets a flash message' do
-            expect(flash[:notice]).to eq('You are not authorized to edit this comment.')
+            expect(response).to redirect_to(unauthorized_path)
           end
         end
 
@@ -155,15 +151,7 @@ RSpec.describe '/comments', type: :request do
         end
 
         it 'returns an unauthorized status' do
-          expect(response).to have_http_status(:unauthorized)
-        end
-
-        it 'returns an unauthorized status' do
-          expect(response).to have_http_status(:unauthorized)
-        end
-
-        it 'sets a flash message' do
-          expect(flash[:notice]).to eq('You are not authorized to delete this comment.')
+          expect(response).to redirect_to(unauthorized_path)
         end
       end
     end

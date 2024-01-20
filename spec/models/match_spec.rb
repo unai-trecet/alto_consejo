@@ -44,11 +44,11 @@ RSpec.describe Match, type: :model do
     end
 
     describe '.closed' do
-      let!(:public_game) { create(:game, public: true) }
-      let!(:private_game) { create(:game, public: false) }
+      let!(:public_match) { create(:match, public: true) }
+      let!(:private_match) { create(:match, public: false) }
 
       it 'returns only private games' do
-        expect(Game.closed).to match_array([private_game])
+        expect(Match.closed).to match_array([private_match])
       end
     end
 
