@@ -23,6 +23,9 @@ class LikesController < ApplicationController
   private
 
   def find_likeable
-    @likeable = params[:likeable_type].classify.constantize.find(params[:likeable_id])
+    likeable_type = ['Comment'].find { |type| type == params[:likeable_type].classify }
+    raise 'Invalid likeable type' unless likeable_type
+
+    @likeable = likeable_type.constantize.find(params[:likeable_id])
   end
 end
