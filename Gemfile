@@ -11,6 +11,7 @@ gem 'acts_as_votable'
 gem 'awesome_print'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'bundle-audit'
 gem 'chartkick'
 gem 'cssbundling-rails', '~> 1.1'
 gem 'devise'
