@@ -79,7 +79,7 @@ RSpec.describe MatchParticipationManager do
       expect(MatchParticipant.count).to eq(0)
       expect(MatchInvitation.count).to eq(1)
       expect(result).to eq({ participation: nil,
-                             errors: ['Noticed::ValidationError Param `match` is required for MatchParticipationNotification.'] })
+                             errors: ['Param `match` is required for MatchParticipationNotification.'] })
     end
 
     it 'does nothing if recording fails' do
