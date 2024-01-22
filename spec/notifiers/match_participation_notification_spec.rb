@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+require 'rails_helper'
 
 RSpec.describe MatchParticipationNotification do
   describe '.deliver' do
@@ -21,20 +21,21 @@ RSpec.describe MatchParticipationNotification do
         .to receive(:match_participation_email)
         .and_call_original
 
-      expect do
-        subject.deliver(recipients)
-      end.to change(ActionMailer::Base.deliveries, :size)
-        .from(0).to(2)
-        .and change(Notification, :count)
-        .from(0).to(2)
+      perform_enqueued_jobs do
+        expect do
+          subject.deliver(recipients)
+        end.to change { ActionMailer::Base.deliveries.count }
+          .from(0).to(2)
+          .and change(Noticed::Notification, :count)
+          .from(0).to(2)
+      end
 
       expect(ActionMailer::Base.deliveries.map { |el| el.to.join })
         .to match_array(recipients.pluck(:email))
 
-      expect(Notification.pluck(:recipient_id)).to match_array(recipients.pluck(:id))
-      expect(Notification.count).to eq(2)
+      expect(Noticed::Notification.pluck(:recipient_id)).to match_array(recipients.pluck(:id))
 
-      Notification.all.each do |notification|
+      Noticed::Notification.all.each do |notification|
         expect(notification.params[:match]).to eq(match)
         expect(notification.params[:sender]).to eq(player)
         expect(notification.params[:player]).to eq(player)

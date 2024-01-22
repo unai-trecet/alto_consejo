@@ -20,17 +20,17 @@ RSpec.describe FriendshipsCreationManager do
     end
 
     context 'when friendship does not exist' do
-      let(:notification) { instance_double(ActionMailer::MessageDelivery) }
+      let(:notification) { instance_double(FriendshipRequestNotification) }
 
       before do
         allow(FriendshipRequestNotification).to receive(:with).and_return(notification)
-        allow(notification).to receive(:deliver_later)
+        allow(notification).to receive(:deliver)
       end
 
       it 'creates a new friendship and sends a notification' do
         expect { subject.call }.to change { Friendship.count }.by(1)
         expect(FriendshipRequestNotification).to have_received(:with).with(friendship: kind_of(Friendship), sender: user)
-        expect(notification).to have_received(:deliver_later)
+        expect(notification).to have_received(:deliver)
       end
 
       it 'returns a result with success: true' do

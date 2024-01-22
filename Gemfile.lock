@@ -475,7 +475,7 @@ DEPENDENCIES
   jsbundling-rails
   kaminari
   mailcatcher
-  noticed
+  noticed (~> 2.0)
   pg
   pry
   puma

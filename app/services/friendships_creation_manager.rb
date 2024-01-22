@@ -35,7 +35,7 @@ class FriendshipsCreationManager
   def send_notification
     FriendshipRequestNotification
       .with(friendship: @friendship, sender: @user)
-      .deliver_later(@friend)
+      .deliver(@friend)
   end
 
   def handle_error(e)

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class MatchParticipationManager
   attr_reader :errors
 
@@ -46,7 +44,7 @@ class MatchParticipationManager
   def send_notifications
     recipients = @match.reload.participants.reject { |participant| participant == @player }
     MatchParticipationNotification.with(match: @match, player: @player, sender: @player)
-                                  .deliver_later(recipients)
+                                  .deliver(recipients)
   end
 
   def fill_error(message)

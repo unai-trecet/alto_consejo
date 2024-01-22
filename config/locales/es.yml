@@ -132,7 +132,7 @@ es:
       players: "Jugadores"
       notifications: "Notificaciones"
       calendar: "Calendario"
-  notifications:
+  notifiers:
     index:
       title: "Notificaciones"
       message: "Mensaje"

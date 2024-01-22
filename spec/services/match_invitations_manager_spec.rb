@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+require 'rails_helper'
 
 RSpec.describe MatchInvitationsManager do
   describe '#call' do
@@ -36,18 +36,18 @@ RSpec.describe MatchInvitationsManager do
         create(:match_invitation, user: invited_users.first, match:)
         create(:match_invitation, user: invited_users.last, match:)
 
-        expect do
-          subject.call
-        end.not_to have_enqueued_job(Noticed::DeliveryMethods::Email)
+        perform_enqueued_jobs do
+          expect { subject.call }.not_to(change { ActionMailer::Base.deliveries.count })
+        end
       end
 
       it 'does nothing if no users were invited' do
         match = create(:match, user: creator, invited_users: [])
 
         subject = described_class.new(match:, sender: creator)
-        expect do
-          subject.call
-        end.not_to have_enqueued_job(Noticed::DeliveryMethods::Email)
+        perform_enqueued_jobs do
+          expect { subject.call }.not_to(change { ActionMailer::Base.deliveries.count })
+        end
       end
 
       it 'triggers invited users notifications' do
@@ -55,9 +55,9 @@ RSpec.describe MatchInvitationsManager do
           .to receive(:with).with(match:, sender: creator)
                             .and_call_original
 
-        expect do
-          subject.call
-        end.to have_enqueued_job(Noticed::DeliveryMethods::Email).twice
+        perform_enqueued_jobs do
+          expect { subject.call }.to change { ActionMailer::Base.deliveries.count }.by(2)
+        end
       end
 
       it 'does nothing if something fails' do

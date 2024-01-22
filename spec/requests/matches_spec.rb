@@ -174,11 +174,13 @@ RSpec.describe '/matches', type: :request do
           expect_any_instance_of(MatchInvitationsManager)
             .to receive(:call).and_call_original
 
-          expect do
-            call_action
-          end.to change(Match, :count).from(0).to(1)
-                                      .and change(MatchParticipant, :count).from(0).to(1)
-                                                                           .and have_enqueued_job(Noticed::DeliveryMethods::Email).twice
+          perform_enqueued_jobs do
+            expect do
+              call_action
+            end.to change(Match, :count).from(0).to(1)
+                  .and change(MatchParticipant, :count).from(0).to(1)
+                  .and change { ActionMailer::Base.deliveries.count }.by(2)
+          end
 
           expect(MatchParticipant.last.user).to eq(user)
 
@@ -278,9 +280,6 @@ RSpec.describe '/matches', type: :request do
           expect do
             call_action(new_params)
           end.not_to change(MatchParticipant, :count)
-
-          expect(ActiveJob::Base.queue_adapter.enqueued_jobs.last['job_class'])
-            .to eq('Noticed::DeliveryMethods::Email')
 
           match.reload
           expect(match.title).to eq('New title')

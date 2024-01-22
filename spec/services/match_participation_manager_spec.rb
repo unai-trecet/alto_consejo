@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+require 'rails_helper'
 
 RSpec.describe MatchParticipationManager do
   let(:player) { create(:user, :confirmed) }
@@ -51,12 +51,12 @@ RSpec.describe MatchParticipationManager do
         .to receive(:with)
         .with(match:, player:, sender: player)
         .and_call_original
-      expect_any_instance_of(MatchParticipationNotification).to receive(:deliver_later)
+      expect_any_instance_of(MatchParticipationNotification).to receive(:deliver)
         .with(recipients).and_call_original
 
-      expect do
-        subject.call
-      end.to have_enqueued_job(Noticed::DeliveryMethods::Email).exactly(3).times
+      perform_enqueued_jobs do
+        expect { subject.call }.to change { ActionMailer::Base.deliveries.count }.by(3)
+      end
     end
 
     it 'does nothing if notification fails' do
@@ -78,7 +78,8 @@ RSpec.describe MatchParticipationManager do
 
       expect(MatchParticipant.count).to eq(0)
       expect(MatchInvitation.count).to eq(1)
-      expect(result).to eq({ participation: nil, errors: ['Noticed::ValidationError match is missing.'] })
+      expect(result).to eq({ participation: nil,
+                             errors: ['Noticed::ValidationError Param `match` is required for MatchParticipationNotification.'] })
     end
 
     it 'does nothing if recording fails' do

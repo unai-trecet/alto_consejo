@@ -33,6 +33,6 @@ class MatchInvitationsManager
     new_recipients = @invited_users.select { |user| @created_invitations_user_ids.include?(user.id) }
     MatchInvitationNotification
       .with(match: @match, sender: @sender)
-      .deliver_later(new_recipients)
+      .deliver(new_recipients)
   end
 end

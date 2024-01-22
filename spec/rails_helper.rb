@@ -101,4 +101,9 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :helper
   config.include Devise::Test::IntegrationHelpers, type: :feature
   config.include Devise::Test::IntegrationHelpers, type: :request
+
+  config.include ActiveJob::TestHelper
+  config.after(:each) do
+    clear_enqueued_jobs
+  end
 end

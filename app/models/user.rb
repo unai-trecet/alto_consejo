@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   acts_as_voter
 
-  has_many :notifications, as: :recipient
+  has_many :notifications, as: :recipient, dependent: :destroy, class_name: "Noticed::Notification"
 
   has_many :games
 
