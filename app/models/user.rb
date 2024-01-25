@@ -70,11 +70,38 @@ class User < ApplicationRecord
     %w[confirmation_sent_at confirmation_token confirmed_at created_at created_matches
        current_sign_in_at current_sign_in_ip email encrypted_password id id_value last_sign_in_at last_sign_in_ip
        remember_created_at reset_password_sent_at reset_password_token sign_in_count unconfirmed_email updated_at
-       username]
+       username played_matches_count played_games_count]
   end
 
   def self.ransackable_associations(_auth_object = nil)
     %w[games]
+  end
+
+  # RANSACKERS
+  ransacker :played_matches_count do
+    query = <<-SQL
+      (
+        SELECT COUNT(match_participants.user_id)
+        FROM match_participants
+        INNER JOIN matches ON match_participants.match_id = matches.id
+        WHERE match_participants.user_id = users.id AND matches.end_at < NOW()
+        GROUP BY match_participants.user_id
+      )
+    SQL
+    Arel.sql(query)
+  end
+
+  ransacker :played_games_count do
+    query = <<-SQL
+      (
+        SELECT COUNT(games.id) FROM games 
+        INNER JOIN matches ON games.id = matches.game_id 
+        INNER JOIN match_participants ON matches.id = match_participants.match_id 
+        WHERE match_participants.user_id = users.id AND matches.end_at < NOW()
+      )
+    SQL
+
+    Arel.sql(query)
   end
 
   def already_rated?(rateable)
