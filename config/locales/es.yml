@@ -200,6 +200,7 @@ es:
       created_matches: "Partidas organizadas"
       played_matches: "Partidas jugadas"
       added_games: "Juegos añadidos"
+      played_games: "Juegos probados"
       edit: "editar"
       delete: "borrar"
       block: "bloquear"
